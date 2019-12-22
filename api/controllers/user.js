@@ -1,7 +1,10 @@
 'use strict'
-
-var User = require('../models/User');
+//MODULOS EXTERNOS
 var bcrypt = require('bcrypt-nodejs');
+var mongoosePaginate = require('mongoose-pagination');
+
+//VARIABLES LOCALES
+var User = require('../models/User');
 var jwt = require('../services/jwt');
 
 function home(req, res) {
@@ -104,25 +107,48 @@ function loginUser(req, res) {
     );
 }
 //DATOS DE UN USUARIO
-function getUser(req,res) {
-    var  userId = req.params.id;
+function getUser(req, res) {
+    var userId = req.params.id;
 
-    User.findById(userId,(err,user)=>{
-        if(err) return res.status(500).send({ message: 'error en la peticion' });
+    User.findById(userId, (err, user) => {
+        if (err) return res.status(500).send({ message: 'error en la peticion' });
 
-        if(!user) return res.status(404).send({ message: 'El Usuario no existe' });
+        if (!user) return res.status(404).send({ message: 'El Usuario no existe' });
 
-        return res.status(200).send({user});
+        return res.status(200).send({ user });
 
     });
-
-
-    
 }
+//LISTADO DE USUARIOS
+function getUsers(req, res) {
+    //pasamos a una variable el id del usuario que esta logeado
+    var identity_users_id = req.user.sub;
+
+    var page = 1;
+    if (req.params.page) {
+        page = req.params.page
+    }
+    var itemsPerPage = 5;
+
+    User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) => {
+        if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
+
+        if (!users) return res.status(404).send({ mesagge: 'no hay usuarios disponibles' });
+
+        //obtenemos los usuarios registrados,el total de usuarios y la cantidad de paginas
+        return res.status(200).send({
+            users,
+            total,
+            pages: Math.ceil(total / itemsPerPage)
+        });
+    });
+}
+
 module.exports = {
     home,
     pruebas,
     saveUser,
     loginUser,
-    getUser
+    getUser,
+    getUsers
 }
