@@ -3,7 +3,7 @@
 var jwt = require('jwt-simple');
 var moment = require('moment');
 var secret = 'clave_secreta_NefosSocialApp';
-
+//crear token
 exports.createToken = function(user){
     var payload = {
         sub: user._id,
