@@ -143,6 +143,49 @@ function getUsers(req, res) {
         });
     });
 }
+//----------------------------------------------------------------------------------------------------
+//EDITAR DATOS EL USUARIO - /update-user
+//----------------------------------------------------------------------------------------------------
+function updateUser(req, res) {
+    var userId = req.params.id;
+    var update = req.body;
+    // borrar la propiedad password
+    delete update.password;
+    //corroborar si es el usuario registrado el que quiere actualizar datos
+    if (userId != req.user.sub) {
+        return res.status(500).send({ message: 'No tienes permisos para actualizar datos' });
+    }
+    //busca al usuario por id 
+    User.findByIdAndUpdate(userId, update, { new: true }, (err, userUpdated) => {
+        //comprueba si hay error en la peticion
+        if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
+        //comprueba si no hay usuario en la peticion
+        if (!userUpdated) return res.status(404).send({ message: 'No se ha podido actualizar el usuario' });
+        //actualiza los datos del usuario
+        return res.status(200).send({ user: userUpdated });
+    });
+}
+//----------------------------------------------------------------------------------------------------
+//SUBIR ARCHIVOS DE IMAGENES/AVATAR DE USUARIO - /uploadImage
+//----------------------------------------------------------------------------------------------------
+function uploadImage(req,res) {
+    //obtenenos el id del usuario
+    var userId = req.params.id;
+    //corroborar si es el usuario registrado el que quiere subir la imagen
+    if (userId != req.user.sub) {
+        return res.status(500).send({ message: 'No tienes permisos para subir/actualizar su imagen' });
+    }
+    if (req.files) {
+        //sacamos el path completo de la imagen que tratamos de subir
+        var file_path = req.files.image.path;
+        console.log(file_path);
+        //cortamos el nombre del archivo que intentamos subir
+        var file_split = file_path.split('\\');
+        console.log(file_split);
+        
+    }
+    
+}
 
 module.exports = {
     home,
@@ -150,5 +193,7 @@ module.exports = {
     saveUser,
     loginUser,
     getUser,
-    getUsers
+    getUsers,
+    updateUser,
+    uploadImage
 }
