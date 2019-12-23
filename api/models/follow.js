@@ -3,11 +3,16 @@
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
+var ObjetId = Schema.Types.ObjectId;
 
-var followSchema = Schema({
-    user: { type: schema.ObjetId, ref: 'user' },
-    followed: { type: schema.ObjetId, ref: 'user' }
-    
+var FollowSchema = Schema({
+    user: { 
+        type: ObjetId, 
+        ref: 'user' },      
+    followed: { 
+        type: ObjetId, 
+        ref: 'user' }   
 });
 
-module.exports = mongoose.model('follow', followSchema);
+
+module.exports = mongoose.model('Follow', FollowSchema);
