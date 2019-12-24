@@ -8,10 +8,10 @@ var ObjetId = Schema.Types.ObjectId;
 var FollowSchema = Schema({
     user: { 
         type: ObjetId, 
-        ref: 'user' },      
+        ref: 'User' },      
     followed: { 
         type: ObjetId, 
-        ref: 'user' }   
+        ref: 'User' }   
 });
 
 

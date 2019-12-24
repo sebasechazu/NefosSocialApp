@@ -31,34 +31,47 @@ function saveFollow(req, res) {
 //--------------------------------------------------------------------------------------------
 //DEJAR DE SEGUIR A UN USUARIO /deleteFollow
 //--------------------------------------------------------------------------------------------
-function deleteFollow(req,res) {
+function deleteFollow(req, res) {
     var userId = req.user.sub;
     var followId = req.params.id;
 
-    Follow.find({'user':userId,'followed':followId}).remove(err =>{
+    Follow.find({ 'user': userId, 'followed': followId }).remove(err => {
         if (err) return res.status(500).send({ mesagge: 'error al dejar de seguir' });
 
-        return res.status(200).send({message:'el follow se ha eliminado!!!'})
-    })   
+        return res.status(200).send({ message: 'el follow se ha eliminado!!!' })
+    })
 }
-function getFollowingUsers(req,res) {
+//--------------------------------------------------------------------------------------------
+//LISTA DE SEGUIDOS /following/:id?/:page?
+//--------------------------------------------------------------------------------------------
+function getFollowingUsers(req, res) {
+
     var userId = req.user.sub;
-    
+    //comprueba si ingresamos id
     if (req.params.id) {
-        userId = req.params.id;       
+        userId = req.params.id;
     }
-
     var page = 1;
-
+    //comprueba si ingresamos page
     if (req.params.page) {
         page = req.params.page;
-        
     }
-
     var itemsPerPage = 4;
-    
-}
+    //buscamos las listas de usuarios que estamos siguiendo y con populate cambiamos 
+    Follow.find({ user: userId }).populate({ path: 'followed' })
+        .paginate(page, itemsPerPage, (err, follows, total) => {
+            
+            if (err) return res.status(500).send({ mesagge: 'error en el servidor' });
 
+            if (!follows) return res.status(404).send({ mesagge: 'no esta siguiendo a ningun usuario' });
+
+            return res.status(200).send({
+                total: total,
+                pages: Math.ceil(total / itemsPerPage),
+                follows
+            });
+        });
+}
 
 //--------------------------------------------------------------------------------------------
 //EXPORTS
@@ -66,6 +79,8 @@ function getFollowingUsers(req,res) {
 module.exports = {
     prueba,
     saveFollow,
-    deleteFollow
+    deleteFollow,
+    getFollowingUsers
+
 
 }
