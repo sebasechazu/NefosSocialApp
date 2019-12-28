@@ -10,6 +10,7 @@ var path = require('path');//trabajar con path de archivos
 //VARIABLES
 //-------------------------------------------------------------------------------------------------
 var User = require('../models/User');//modelo de usuario
+var Follow = require('../models/Follow');//modelo de follow
 var jwt = require('../services/jwt');//servicios 
 
 function pruebas(req, res) {
@@ -121,10 +122,38 @@ function getUser(req, res) {
         if (err) return res.status(500).send({ message: 'error en la peticion' });
         //si el usuario no existe
         if (!user) return res.status(404).send({ message: 'El Usuario no existe' });
-        //si lo encontramos devolvemos los datos del usario
-        return res.status(200).send({ user });
+
+        followThisUser(req.user.sub, userId).then((value) => {
+            user.password = undefined;
+            return res.status(200).send({
+                user,
+                following: value.following,
+                followed: value.followed
+
+            });
+        });
     });
 }
+//-------------------------------------------------------------------------------------------------
+//FUNCION ASYNCRONA PARA OBTENER LOS RESULTADOS DE FOLLOWING DENTRO DE USER - /user/:id
+//-------------------------------------------------------------------------------------------------
+async function followThisUser(identity_user_id, user_id) {
+
+    var following = await Follow.findOne({ "user": identity_user_id, "followed": user_id })
+        .exec().then((follow) => {
+            return follow;
+        }).catch((err) => { return handleError(err) });
+
+    var followed = await Follow.findOne({ "user": user_id, "followed": identity_user_id })
+        .exec().then((follow) => {
+            return follow;
+        }).catch((err) => { return handleError(err) });
+    return {
+        following: following,
+        followed: followed
+    }
+}
+
 //-------------------------------------------------------------------------------------------------
 //LISTADO DE USUARIOS - /users/:page?
 //-------------------------------------------------------------------------------------------------
@@ -143,15 +172,52 @@ function getUsers(req, res) {
         //si no existe usuarios
         if (!users) return res.status(404).send({ mesagge: 'no hay usuarios disponibles' });
         //obtenemos los usuarios registrados,el total de usuarios y la cantidad de paginas
-        return res.status(200).send({
-            //devuelve la cantidad de susarios s
-            users,
-            total,
-            //devuelve la paginas
-            pages: Math.ceil(total / itemsPerPage)
+        followUserIds(identity_users_id).then((value) => {
+            return res.status(200).send({
+
+                //devuelve la cantidad de usuarios 
+                users,
+                users_following: value.following,
+                users_follow_me: value.followed,
+                total,
+                //devuelve la paginas
+                pages: Math.ceil(total / itemsPerPage)
+            });
         });
     });
 }
+//-------------------------------------------------------------------------------------------------
+//FUNCION ASYNCRONA PARA OBTENER LOS RESULTADOS DE FOLLOWING DENTRO DE USERs - /users/:id
+//-------------------------------------------------------------------------------------------------
+async function followUserIds(user_id) {
+    try {
+        var following = await Follow.find({ "user": user_id }).select({ '_id': 0, '__v': 0, 'user': 0 }).exec()
+            .then((follows) => { return follows; }).catch((err) => { return handleError(err) });
+
+        var followed = await Follow.find({ "followed": user_id }).select({ '_id': 0, '__v': 0, 'followed': 0 }).exec()
+            .then((follows) => { return follows; }).catch((err) => { return handleError(err) });
+
+        //Procesar following Ids
+        var following_clean = [];
+        following.forEach((follow) => {
+            following_clean.push(follow.followed);
+        });
+
+        //Procesar followed Ids
+        var followed_clean = [];
+        followed.forEach((follow) => {
+            followed_clean.push(follow.user);
+        });
+        return {
+            following: following_clean,
+            followed: followed_clean
+        }
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 //-------------------------------------------------------------------------------------------------
 //EDITAR DATOS EL USUARIO - /update-user
 //-------------------------------------------------------------------------------------------------
@@ -221,7 +287,6 @@ function uploadImage(req, res) {
 //-------------------------------------------------------------------------------------------------
 //DEVOLVER DE IMAGEN DE USUARIO - /get-Image-file/imageFile
 //-------------------------------------------------------------------------------------------------
-
 function getImageFile(req, res) {
     var image_File = req.params.imageFile;
 
@@ -235,11 +300,47 @@ function getImageFile(req, res) {
         }
     });
 }
+//-------------------------------------------------------------------------------------------------
 //FUNCION LOCAL PARA ELIMINAR ARCHIVOS DEL CACHE
+//-------------------------------------------------------------------------------------------------
 function removeFilesOfUploads(res, file_path, mensage) {
     fs.unlink(file_path, (err) => {
         return res.status(200).send({ mesagge: mensage });
     });
+}
+//-------------------------------------------------------------------------------------------------
+//FUNCION LOCAL OBTENER CONTADORES
+//-------------------------------------------------------------------------------------------------
+function getCounters(req, res) {
+
+    var userId = req.user.sub;
+    if (req.params.id) {
+        userId = req.params.id;
+    }
+    getCountFollow(userId).then((value) => {
+        return res.status(200).send(value);
+    });
+}
+async function getCountFollow(user_id) {
+    var following = await Follow.countDocuments({ "user": user_id })
+        .exec()
+        .then((count) => {
+            return count;
+        })
+        .catch((err) => { return handleError(err); });
+ 
+    var followed = await Follow.countDocuments({ "followed": user_id })
+        .exec()
+        .then((count) => {
+            return count;
+        })
+        .catch((err) => { return handleError(err); });
+ 
+    return { 
+        following: following,
+        followed: followed
+     }
+ 
 }
 //-------------------------------------------------------------------------------------------------
 // EXPORTS - A ROUTES
@@ -252,6 +353,7 @@ module.exports = {
     getUsers,
     updateUser,
     uploadImage,
-    getImageFile
+    getImageFile,
+    getCounters
 
 }
