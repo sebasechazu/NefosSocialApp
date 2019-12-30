@@ -7,13 +7,15 @@ var mongoosePaginate = require('mongoose-pagination');//paginacion en mongoose
 var fs = require('fs');//trabajar con archivos
 var path = require('path');//trabajar con path de archivos
 //-------------------------------------------------------------------------------------------------
-//VARIABLES
+//MODELS AND VARS
 //-------------------------------------------------------------------------------------------------
 var User = require('../models/User');//modelo de usuario
 var Follow = require('../models/Follow');//modelo de follow
 var Publication = require('../models/Publication');//modelo de publicaciones
 var jwt = require('../services/jwt');//servicios 
-
+//-------------------------------------------------------------------------------------------------
+//METODO DE PRUEBA
+//-------------------------------------------------------------------------------------------------
 function pruebas(req, res) {
     console.log(req.body)
     res.status(200).send({message: "metodo de pruebas desde user.js en controller"});
