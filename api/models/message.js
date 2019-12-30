@@ -5,8 +5,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjetId = Schema.Types.ObjectId;
 
-var mesaggeSchema = Schema({
-    emmiter: { 
+var messageSchema = Schema({
+    emitter: { 
         type: ObjetId, 
         ref: 'User' },
     receiver: { 
@@ -18,4 +18,4 @@ var mesaggeSchema = Schema({
     
 });
 
-module.exports = mongoose.model('Mesagge', mesaggeSchema);
+module.exports = mongoose.model('Message', messageSchema);
