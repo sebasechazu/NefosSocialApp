@@ -120,24 +120,22 @@ function uploadImage(req, res) {
         //cortamos la extension del archivo
         var ext_split = file_name.split('\.');
         var file_ext = ext_split[1];
-        
+
         //comprobar si el documento tiene una extension de archivo logueado
         if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jepg' || file_ext == 'gif') {
 
-            Publication.findOne({ 'user': req.user.sub, '_id': PublicationId }).exec((err,publication) => {
-                console.log(publication);
-                if (publication && publication.length > 0) {
+            Publication.findOne({ 'user': req.user.sub, '_id': PublicationId }).exec((err, publication) => {
+                if (publication) {
                     // actualizar documento de la publicacion
-                    Publication.findByIdAndUpdate(PublicationId, { file: file_name }, { new: true, useFindAndModify: false },
-                        (err, publicationUpdated) => {
-                            //comprueba si hay error en la peticion
-                            if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
-                            //comprueba si no hay usuario en la peticion
-                            if (!publicationUpdated) return res.status(404).send({ message: 'No se ha podido actualizar la publicacion' });
-                            //actualiza los datos del usuario
-                            return res.status(200).send({ publication: publicationUpdated });
-                        });
-                }else{
+                    Publication.findByIdAndUpdate(PublicationId, { file: file_name }, (err, publicationUpdated) => {
+                        //comprueba si hay error en la peticion
+                        if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
+                        //comprueba si no hay usuario en la peticion
+                        if (!publicationUpdated) return res.status(404).send({ message: 'No se ha podido actualizar la publicacion' });
+                        //actualiza los datos del usuario
+                        return res.status(200).send({ publication: publicationUpdated });
+                    });
+                } else {
                     return removeFilesOfUploads(res, file_path, 'no tienes permiso para actualizar la publicacion');
                 }
             });

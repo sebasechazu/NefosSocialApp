@@ -11,13 +11,12 @@ var path = require('path');//trabajar con path de archivos
 //-------------------------------------------------------------------------------------------------
 var User = require('../models/User');//modelo de usuario
 var Follow = require('../models/Follow');//modelo de follow
+var Publication = require('../models/Publication');//modelo de publicaciones
 var jwt = require('../services/jwt');//servicios 
 
 function pruebas(req, res) {
     console.log(req.body)
-    res.status(200).send({
-        message: "metodo de pruebas desde user.js en controller"
-    });
+    res.status(200).send({message: "metodo de pruebas desde user.js en controller"});
 }
 //-------------------------------------------------------------------------------------------------
 //GUARDAR USUARIO - /register
@@ -38,7 +37,6 @@ function saveUser(req, res) {
         //guardamos estos valores por defecto
         user.role = 'ROLE_USER';
         user.image = null;
-
         //Verificamos si ya existe en la base de datos un usuario y un email
         User.find({
             $or: [
@@ -67,12 +65,10 @@ function saveUser(req, res) {
                 });
             }
         });
-
     } else {
         //si faltan campos en el formulario
         res.status(200).send({ mesagge: 'Envia todos los campos necesarios!!!' });
     }
-
 }
 //-------------------------------------------------------------------------------------------------
 //LOGIN DE USUARIO - /login
@@ -335,10 +331,18 @@ async function getCountFollow(user_id) {
             return count;
         })
         .catch((err) => { return handleError(err); });
+    
+    var publications = await Publication.countDocuments({'user':user_id})
+        .exec()
+        .then((count)=>{
+            return count;
+        })
+        .catch((err)=> {return handleError(err);});
  
     return { 
         following: following,
-        followed: followed
+        followed: followed,
+        publications: publications
      }
  
 }
