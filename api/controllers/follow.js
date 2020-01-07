@@ -1,7 +1,5 @@
 'use strict'
 // variables
-//var path = require('path');
-//var  fs = require('fs');
 var mongoseePaginate = require('mongoose-pagination');
 
 var User = require('../models/User');
