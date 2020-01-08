@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Router,ActivatedRoute,Params} from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,9 @@ export class LoginComponent implements OnInit {
 
   public title: string;
   public user: User;
+  public status: string;
+  public identity;
+  public token;
 
   constructor(
     private _route: ActivatedRoute,
@@ -21,16 +25,62 @@ export class LoginComponent implements OnInit {
 
   ) {
     this.title = 'identificate';
-    this.user = new User("","","","","","","ROLE_USER","")
+    this.user = new User("", "", "", "", "", "", "ROLE_USER", "")
   }
 
   ngOnInit() {
-    console.log('Componente de login cargando...'); 
+    console.log('Componente de login cargando...');
   }
 
-  onSubmit(){
-    alert(this.user.email);
-    alert(this.user.password);
-    console.log(this.user);
+  onSubmit() {
+    //loguear al usuario y conseguir sus datos
+    this._userService.signup(this.user).subscribe(
+      response => {
+        this.identity = response.user;
+        console.log(this.identity);
+        if (!this.identity || !this.identity._id) {
+          this.status = 'error';
+
+        } else {
+          this.status = "success";
+          //PERSISTIR DATOS DEL USUARIO
+          localStorage.setItem('identity',JSON.stringify(this.identity));
+          //CONSEGUIR EL TOQUEN
+          this.getToken()
+        }
+      }, error => {
+        var errorMessage = <any>error;
+        console.log(errorMessage)
+        if (errorMessage != null) {
+          this.status = 'error';
+
+        }
+      }
+    );
+  }
+  getToken() {
+    this._userService.signup(this.user, 'true').subscribe(
+      response => {
+        this.token = response.token;
+        console.log(this.token);
+        if (this.token.lenght <= 0) {
+          this.status = 'error';
+
+        } else {
+          this.status = "success";
+          //PERSISTIR TOKEN DEL USUARIO
+          localStorage.setItem('token',JSON.stringify(this.token));
+          //CONSEGUIR LOS CONTADORES DEL USUARIO
+        }
+      }, error => {
+        var errorMessage = <any>error;
+        console.log(errorMessage)
+        if (errorMessage != null) {
+          this.status = 'error';
+
+        }
+      }
+    );
+
   }
 }

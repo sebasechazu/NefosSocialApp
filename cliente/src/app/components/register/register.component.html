@@ -36,7 +36,8 @@
         </p>
         <p>
             <label>Email</label>
-            <input type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" required />
+            <input type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" required
+                pattern=[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5} />
             <span *ngIf="!email.valid && email.touched">
                 el Email es obligatorio !!!
             </span>
