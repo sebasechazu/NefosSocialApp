@@ -1,0 +1,6 @@
+.active{
+    background: #102fa5;
+}
+.navigation .navbar a:hover{
+    background: blue !important;
+}
