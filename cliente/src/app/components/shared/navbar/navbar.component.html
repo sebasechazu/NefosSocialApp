@@ -29,9 +29,18 @@
                     {{identity.name}} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <a class="dropdown-item" href="#"><span class="fas fa-user"></span>Mi Perfil</a>
-                    <a class="dropdown-item" href="#"><span class="fas fa-cog"></span>Mis Datos</a>
-                    <a class="dropdown-item" href="#"><span class="fas fa-sign-out-alt"></span>Cerrar Sesion</a>
+                    <a class="dropdown-item" href="#">
+                        <span class="fas fa-user"></span>
+                        Mi Perfil
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <span class="fas fa-cog"></span>
+                        Mis Datos
+                    </a>
+                    <a class="dropdown-item" (click)="logout()" href="#">
+                        <span class="fas fa-sign-out-alt"></span>
+                        Cerrar Sesion
+                    </a>
                 </ul>
             </li>
         </ul>

@@ -71,6 +71,7 @@ export class LoginComponent implements OnInit {
           //PERSISTIR TOKEN DEL USUARIO
           localStorage.setItem('token',JSON.stringify(this.token));
           //CONSEGUIR LOS CONTADORES DEL USUARIO
+          this._router.navigate(['/']);
         }
       }, error => {
         var errorMessage = <any>error;

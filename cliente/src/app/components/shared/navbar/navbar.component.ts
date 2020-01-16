@@ -1,5 +1,6 @@
 import { Component, OnInit,DoCheck} from '@angular/core';
 import { UserService } from '../../../services/user.service';
+import {Router,ActivatedRoute,Params} from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,8 @@ export class NavbarComponent implements OnInit,DoCheck {
 
   constructor(
     private _userService: UserService,
+    private _route: ActivatedRoute,
+    private _router: Router
 
   ) {
     this.title = 'NefosSocial';
@@ -24,5 +27,12 @@ export class NavbarComponent implements OnInit,DoCheck {
   }
   ngDoCheck() {
     this.identity = this._userService.getIdentity();
+  }
+  logout(){
+    localStorage.clear();
+    this.identity = null;
+
+    this._router.navigate(['/home']);
+
   }
 }
