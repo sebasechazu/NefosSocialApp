@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
           this.status = 'error';
 
         } else {
-          this.status = "success";
+         
           //PERSISTIR DATOS DEL USUARIO
-          localStorage.setItem('identity',JSON.stringify(this.identity));
+          localStorage.setItem('identity', JSON.stringify(this.identity));
           //CONSEGUIR EL TOQUEN
           this.getToken()
         }
@@ -67,11 +67,11 @@ export class LoginComponent implements OnInit {
           this.status = 'error';
 
         } else {
-          this.status = "success";
+          
           //PERSISTIR TOKEN DEL USUARIO
-          localStorage.setItem('token',JSON.stringify(this.token));
-          //CONSEGUIR LOS CONTADORES DEL USUARIO
-          this._router.navigate(['/']);
+          localStorage.setItem('token', JSON.stringify(this.token));
+           //CONSEGUIR LOS CONTADORES DEL USUARIO
+          this.getCounters();
         }
       }, error => {
         var errorMessage = <any>error;
@@ -82,6 +82,17 @@ export class LoginComponent implements OnInit {
         }
       }
     );
-
+  }
+  getCounters() {
+    this._userService.getCounters().subscribe(
+      response=>{   
+          localStorage.setItem('stats',JSON.stringify(response));
+          this.status = 'success';
+          this._router.navigate(['/']);      
+      },
+      error=>{
+        console.log(<any>error)
+      }
+    )
   }
 }
