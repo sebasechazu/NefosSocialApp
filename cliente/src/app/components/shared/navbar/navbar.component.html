@@ -1,12 +1,14 @@
-<nav class="navbar">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a href="#" class="navbar-brand">{{title}}</a>
-        </div>
-        <ul class="nav justify-content-start" *ngIf="identity">
-            <li class="nav-item">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+    <div class="navbar-header">
+        <a href="#" class="navbar-brand">{{title}}</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <!-- BARRA DE NAVEGACION CON USUARIO ESTE IDENTIFICADO-->
+        <ul class="navbar-nav" *ngIf="identity">
+            <li class="nav-item active">
                 <a class="nav-link">
-                    <span class="fas fa-home" [routerLink]="['/home']" [routerLinkActive] ="['active']"></span>
+                    <span class="fas fa-home" [routerLink]="['/home']" [routerLinkActive]="['active']"></span>
                     Inicio
                 </a>
             </li>
@@ -22,16 +24,27 @@
                     gente
                 </a>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+                    {{identity.name}} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <a class="dropdown-item" href="#"><span class="fas fa-user"></span>Mi Perfil</a>
+                    <a class="dropdown-item" href="#"><span class="fas fa-cog"></span>Mis Datos</a>
+                    <a class="dropdown-item" href="#"><span class="fas fa-sign-out-alt"></span>Cerrar Sesion</a>
+                </ul>
+            </li>
         </ul>
-        <ul class="nav justify-content-start" *ngIf="!identity">
+        <!-- BARRA DE NAVEGACION EN CASO DEL QUE EL USUARIO NO ESTE IDENTIFICADO-->
+        <ul class="navbar-nav" *ngIf="!identity">
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/login']" [routerLinkActive] ="['active']">
+                <a class="nav-link" [routerLink]="['/login']" [routerLinkActive]="['active']">
                     <span class="fas fa-sign-in-alt"></span>
                     login
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/registro']" [routerLinkActive] ="['active']">
+                <a class="nav-link" [routerLink]="['/registro']" [routerLinkActive]="['active']">
                     <span class="fas fa-users"></span>
                     Registro
                 </a>
@@ -39,5 +52,6 @@
         </ul>
 
     </div>
+
 
 </nav>
