@@ -18,7 +18,7 @@ var jwt = require('../services/jwt');//servicios
 //-------------------------------------------------------------------------------------------------
 function pruebas(req, res) {
     console.log(req.body)
-    res.status(200).send({message: "metodo de pruebas desde user.js en controller"});
+    res.status(200).send({ message: "metodo de pruebas desde user.js en controller" });
 }
 //-------------------------------------------------------------------------------------------------
 //GUARDAR USUARIO - /register
@@ -228,15 +228,31 @@ function updateUser(req, res) {
     if (userId != req.user.sub) {
         return res.status(500).send({ message: 'No tienes permisos para actualizar datos' });
     }
-    //busca al usuario por id 
-    User.findByIdAndUpdate(userId, update, { new: true, useFindAndModify: false }, (err, userUpdated) => {
-        //comprueba si hay error en la peticion
-        if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
-        //comprueba si no hay usuario en la peticion
-        if (!userUpdated) return res.status(404).send({ message: 'No se ha podido actualizar el usuario' });
-        //actualiza los datos del usuario
-        return res.status(200).send({ user: userUpdated });
+    //corroborar si mail y contraseña se encuentran en la base de datos
+    User.find({
+        $or: [
+            { email: update.email.toLowerCase() },
+            { nickname: update.nickname.toLowerCase() }
+        ]
+    }).exec((err, users) => {
+        var userIsset = false;
+        users.forEach((user) => {
+            if (user && user._id != userId) userIsset = true;
+        });
+        if (userIsset) return res.status(404).send({ message: 'los datos ya estan en uso' });
+        
+        //busca al usuario por id 
+        User.findByIdAndUpdate(userId, update, { new: true, useFindAndModify: false }, (err, userUpdated) => {
+            //comprueba si hay error en la peticion
+            if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
+            //comprueba si no hay usuario en la peticion
+            if (!userUpdated) return res.status(404).send({ message: 'No se ha podido actualizar el usuario' });
+            //actualiza los datos del usuario
+            return res.status(200).send({ user: userUpdated });
+        });
+
     });
+
 }
 //-------------------------------------------------------------------------------------------------
 //SUBIR ARCHIVOS DE IMAGENES/AVATAR DE USUARIO - /uploadImage
@@ -326,27 +342,27 @@ async function getCountFollow(user_id) {
             return count;
         })
         .catch((err) => { return handleError(err); });
- 
+
     var followed = await Follow.countDocuments({ "followed": user_id })
         .exec()
         .then((count) => {
             return count;
         })
         .catch((err) => { return handleError(err); });
-    
-    var publications = await Publication.countDocuments({'user':user_id})
+
+    var publications = await Publication.countDocuments({ 'user': user_id })
         .exec()
-        .then((count)=>{
+        .then((count) => {
             return count;
         })
-        .catch((err)=> {return handleError(err);});
- 
-    return { 
+        .catch((err) => { return handleError(err); });
+
+    return {
         following: following,
         followed: followed,
         publications: publications
-     }
- 
+    }
+
 }
 //-------------------------------------------------------------------------------------------------
 // EXPORTS - A ROUTES
