@@ -11,7 +11,7 @@ var port = 3800;
 mongoose.Promise = global.Promise;
 
 //conexion a la base de datos
-mongoose.connect('mongodb://localhost:27017/NefosSocialDb',{useNewUrlParser: true,useUnifiedTopology: true})
+mongoose.connect('mongodb+srv://NefosAppUser:dana2002@cluster0-rxn0l.mongodb.net/test?retryWrites=true&w=majority',{useNewUrlParser: true,useUnifiedTopology: true})
     .then(()=> {
         console.log("la conexion a la base de datos NEFOSSOCIALAPP se realizo con exito");
 
