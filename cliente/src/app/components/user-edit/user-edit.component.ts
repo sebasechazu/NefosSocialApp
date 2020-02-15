@@ -19,6 +19,7 @@ export class UserEditComponent implements OnInit {
   public token;
   public status: string;
   public url: string;
+  public filesToUpload: Array<File>;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,10 +31,11 @@ export class UserEditComponent implements OnInit {
     this.identity = this.user;
     this.token = this.userService.getToken();
     this.url = GLOBAL.url;
+
   }
 
   ngOnInit() {
-    console.log('this.user');
+    console.log(this.user);
     console.log('user-edit componet se ha cargado');
   }
   onSubmit() {
@@ -49,8 +51,11 @@ export class UserEditComponent implements OnInit {
           //SUBIDA DE IMAGENES
           this.uploadService.makeFileRequest(this.url + 'upload-image-user/' + this.user._id, [], this.filesToUpload, this.token, 'image')
             .then((result: any) => {
-              this.user.image = result.user.image;
+              this.user.image = result.userUpdated.image;
               localStorage.setItem('identity', JSON.stringify(this.user));
+            }).catch(error => {
+              this.status = 'error';
+              console.log(error);
             });
         }
       }, error => {
@@ -62,10 +67,8 @@ export class UserEditComponent implements OnInit {
       }
     )
   }
-  public filesToUpload: Array<File>;
-
   fileChangeEvent(fileInput: any) {
-    this.filesToUpload = <Array<File>>fileInput.target.file;
+    this.filesToUpload = <Array<File>>fileInput.target.files;
     console.log(this.filesToUpload);
   }
 }
