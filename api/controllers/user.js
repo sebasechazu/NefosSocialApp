@@ -273,7 +273,7 @@ function uploadImage(req, res) {
         console.log(file_name);
         //cortamos la extension del archivo
         var ext_split = file_name.split('\.');
-        var file_ext = ext_split[1];
+        var file_ext = ext_split[1]; 
         console.log(file_ext);
         //permiso dl usuario para
         if (userId != req.user.sub) {
