@@ -15,14 +15,17 @@ export class UploadService {
         files: Array<File>,
         token: string,
         fileName: string) {
+        // tslint:disable-next-line: only-arrow-functions
         return new Promise(function(resolve, reject) {
-            let formData: any = new FormData();
-            var xhr = new XMLHttpRequest();
+            const formData: any = new FormData();
+            const xhr = new XMLHttpRequest();
 
+            // tslint:disable-next-line: prefer-for-of
             for (let i = 0; i < files.length; i++) {
                 formData.append(fileName, files[i], files[i].name);
             }
-            xhr.onreadystatechange = function () {
+            // tslint:disable-next-line: only-arrow-functions
+            xhr.onreadystatechange = function() {
                 console.log(xhr.readyState);
                 console.log(xhr.status);
                 if (xhr.readyState === 4) {
@@ -33,7 +36,7 @@ export class UploadService {
                     }
                 }
             };
-            xhr.open('POST', url, true)
+            xhr.open('POST', url, true);
             xhr.setRequestHeader('Authorization', token);
             xhr.send(formData);
         });
