@@ -50,7 +50,7 @@
         <!--SUBIDA DE IMAGES-->
         <p>
             <label>Sube tu avatar</label>
-            <input type="file" name="image" id="image" placeholder="subir image" (change)="fileChangeEvent($event)"/>
+            <input type="file"  placeholder="subir image" (change)="fileChangeEvent($event)"/>
         </p>
 
         <input type="submit" value="{{title}}" class="btn btn-warning" [disabled]="!userEditForm.form.valid" />

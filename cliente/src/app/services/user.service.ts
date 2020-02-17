@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user';
 import { GLOBAL } from './global';
@@ -13,13 +13,13 @@ export class UserService {
     public token;
     public stats;
 
-    constructor(public _http: HttpClient) {
+    constructor(public http: HttpClient) {
         this.url = GLOBAL.url;
     }
     register(user: User): Observable<any> {
-        let params = JSON.stringify(user);
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        return this._http.post(this.url + 'register', params, { headers: headers });
+        const params = JSON.stringify(user);
+        const headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this.http.post(this.url + 'register', params, { headers });
     }
     signup(user: any, gettoken = null): Observable<any> {
         if (gettoken != null) {
@@ -27,15 +27,15 @@ export class UserService {
 
         }
 
-        let params = JSON.stringify(user);
-        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+        const params = JSON.stringify(user);
+        const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-        return this._http.post(this.url + 'login', params, { headers: headers });
+        return this.http.post(this.url + 'login', params, { headers });
     }
     getIdentity() {
-        var identity = JSON.parse(localStorage.getItem('identity'));
+        const identity = JSON.parse(localStorage.getItem('identity'));
 
-        if (identity != "undefined") {
+        if (identity !== 'undefined') {
             this.identity = identity;
         } else {
             this.identity = null;
@@ -43,8 +43,8 @@ export class UserService {
         return this.identity;
     }
     getToken() {
-        var token = localStorage.getItem('token');
-        if (token != "undefined") {
+        const token = localStorage.getItem('token');
+        if (token !== 'undefined') {
             this.token = token;
         } else {
             this.token = null;
@@ -52,8 +52,8 @@ export class UserService {
         return this.token;
     }
     getStats() {
-        let stats = JSON.parse(localStorage.getItem('stats'));
-        if (stats != "undefined") {
+        const stats = JSON.parse(localStorage.getItem('stats'));
+        if (stats !== 'undefined') {
             this.stats = stats;
         } else {
             this.stats = stats;
@@ -61,20 +61,20 @@ export class UserService {
         return this.stats;
     }
     getCounters(userId = null): Observable<any> {
-        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+        const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', this.getToken());
         if (userId != null) {
-            return this._http.get(this.url + 'counters/' + userId, { headers: headers })
+            return this.http.get(this.url + 'counters/' + userId, { headers });
         } else {
-            return this._http.get(this.url + 'counters/', { headers: headers })
+            return this.http.get(this.url + 'counters/', { headers });
         }
     }
     updateUser(user: User): Observable<any> {
-        let params = JSON.stringify(user);
-        let headers = new HttpHeaders().set('Content-Type', 'application/json')
+        const params = JSON.stringify(user);
+        const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', this.getToken());
 
-        return this._http.put(this.url + 'update-user/' + user._id, params, { headers: headers });
+        return this.http.put(this.url + 'update-user/' + user._id, params, { headers });
 
     }
 }
