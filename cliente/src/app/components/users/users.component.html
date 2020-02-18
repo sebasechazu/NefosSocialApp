@@ -1,15 +1,41 @@
-<div class="col-leg-8">
-    <h1 class="h1-strong">{{title}}</h1>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <!--PAGINACION-->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" *ngIf="page > 1"><a class="page-link" [routerLink]="['/gente', prevPage]">
+                        anterior</a>
+                </li>
+                <li class="page-item" *ngIf="pages != page"><a class="page-link" [routerLink]="['/gente', nextPage]">
+                        siguiente</a> </li>
+            </ul>
+        </nav>
+        <!--LISTADO-->
+        <div class="card-columns">
+            <div class="card" *ngFor="let user of users">
+                <a href="#">
+                    <img src="{{url + 'get-image-user/' +user.image}}" alt="Card image cap" class="card-img-top"
+                        *ngIf="user.image">
+                    <img src="assets/usuario.jpg" alt="Card image cap" class="card-img-top" *ngIf="!user.image">
+                </a>
 
-    <div class="people">
-        <div *ngFor="let user of users" class="item-user">
-            <div class="panel panel-default">
-                <div class="user_name pull-left">
-                    {{user.name + ' '+ user.surname}}
+                <div class="card-body">
+                    <h5 class="card-title">{{user.nickname}}</h5>
+                    <p class="card-text">{{user.name + ' '+ user.surname}}</p>
+                   
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-success" *ngIf="follows.indexOf(user._id) <= 0" >
+                        <i class="fas fa-plus-circle"></i> Seguir </button>
+
+                    <button class="btn btn-default">
+                        <i class="fas fa-check-circle">
+
+                        </i> Siguiendo </button>
+                    <button class="btn btn-primary" >
+                        <i class="fas fa-minus-circle"></i> Dejar de seguir </button>
                 </div>
             </div>
-
         </div>
     </div>
-
 </div>

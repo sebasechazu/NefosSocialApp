@@ -78,13 +78,18 @@ export class UserService {
         return this.http.put(this.url + 'update-user/' + user._id, params, { headers });
 
     }
+    // --------------------------------------------------------------------------------------------
+    // OBTENER USUARIOS
+    // --------------------------------------------------------------------------------------------
     getUsers(page = null): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', this.getToken());
 
         return this.http.get(this.url + 'users/' + page, { headers });
-
     }
+    // --------------------------------------------------------------------------------------------
+    // OBTENER USUARIO
+    // --------------------------------------------------------------------------------------------
     getUser(): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', this.getToken());

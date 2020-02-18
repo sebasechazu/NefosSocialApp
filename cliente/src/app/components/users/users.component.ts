@@ -13,6 +13,7 @@ import { GLOBAL } from '../../services/global';
 export class UsersComponent implements OnInit {
 
   public title: string;
+  public url: string;
   public identity;
   public token;
   public page;
@@ -22,6 +23,7 @@ export class UsersComponent implements OnInit {
   public total;
   public pages;
   public users: User[];
+  public follows;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,6 +33,7 @@ export class UsersComponent implements OnInit {
     this.title = 'Gente';
     this.identity = this.userService.getIdentity();
     this.token = this.userService.getToken();
+    this.url = GLOBAL.url;
   }
 
   ngOnInit() {
@@ -40,9 +43,11 @@ export class UsersComponent implements OnInit {
 
   actualPage() {
     this.route.params.subscribe(params => {
-      // tslint:disable-next-line: no-string-literal
-      let page = + params['page'];
+      let page = + params.page;
       this.page = page;
+      if (!params.page) {
+        page = 1;
+      }
       if (!page) {
         page = 1;
       } else {
@@ -53,11 +58,11 @@ export class UsersComponent implements OnInit {
         }
       }
       // devoler listado de usuarios
-      this.getUser(page);
+      this.getUsers(page);
     });
   }
 
-  getUser(page) {
+  getUsers(page) {
     this.userService.getUsers(page).subscribe(
       response => {
         if (!response.users) {
@@ -65,7 +70,10 @@ export class UsersComponent implements OnInit {
         } else {
           this.total = response.total;
           this.users = response.users;
-          this.pages = response.page;
+          this.pages = response.pages;
+          this.follows = response.following;
+          console.log(response.following);
+
           page > this.pages ?  this.router.navigate(['/gente', 1]) : console.log(this.pages);
         }
 
