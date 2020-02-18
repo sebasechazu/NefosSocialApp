@@ -15,7 +15,6 @@ function saveFollow(req, res) {
     var params = req.body;
     //creo una instacia de seguimiento
     var follow = new Follow();
-
     follow.user = req.user.sub;
     follow.followed = params.followed;
     //guardamos el seguimiento
@@ -33,15 +32,24 @@ function deleteFollow(req, res) {
     var userId = req.user.sub;
     var followId = req.params.id;
 
-    Follow.find({ 'user': userId, 'followed': followId }).remove(err => {
-        if (err) return res.status(500).send({ mesagge: 'error al dejar de seguir' });
+    Follow.findOneAndDelete({
+        'user': userId,
+        'followed': followId
+    }, (err, seguimientoEliminado) => {
+        if (err) {
+            return res.status(500).send({
+                mesagge: 'error al dejar de seguir'
+            });
+        }
 
-        return res.status(200).send({ message: 'el follow se ha eliminado!!!' })
-    })
+        return res.status(200).send({ message: 'el follow se ha eliminado!!!' });
+
+    });
 }
-//-------------------------------------------------------------------------------------------------
-//LISTA DE SEGUIDOS /following/:id?/:page?
-//-------------------------------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------------------------------
+// LISTA DE SEGUIDOS /following/:id?/:page?
+// -------------------------------------------------------------------------------------------------
 function getFollowingUsers(req, res) {
     //obtenemos el datos del usuario logueado
     var userId = req.user.sub;
@@ -70,6 +78,9 @@ function getFollowingUsers(req, res) {
             });
         });
 }
+// -------------------------------------------------------------------------------------------------
+// LISTA DE SEGUIDORES following/:id?/:page?
+// -------------------------------------------------------------------------------------------------
 function getFollowedUser(req, res) {
     //obtenemos el datos del usuario logueado
     var userId = req.user.sub;

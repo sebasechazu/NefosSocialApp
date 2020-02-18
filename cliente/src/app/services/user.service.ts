@@ -17,11 +17,17 @@ export class UserService {
     constructor(public http: HttpClient) {
         this.url = GLOBAL.url;
     }
+    // --------------------------------------------------------------------------------------------
+    // REGISTRO USUARIO
+    // --------------------------------------------------------------------------------------------
     register(user: User): Observable<any> {
         const params = JSON.stringify(user);
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.http.post(this.url + 'register', params, { headers });
     }
+    // --------------------------------------------------------------------------------------------
+    // IDENTIFICAR USUARIO
+    // --------------------------------------------------------------------------------------------
     signup(user: any, gettoken = null): Observable<any> {
         if (gettoken != null) {
             user.gettoken = gettoken;
@@ -33,6 +39,9 @@ export class UserService {
 
         return this.http.post(this.url + 'login', params, { headers });
     }
+    // --------------------------------------------------------------------------------------------
+    // OBTENER IDENTIDAD USUARIO
+    // --------------------------------------------------------------------------------------------
     getIdentity() {
         const identity = JSON.parse(localStorage.getItem('identity'));
 
@@ -43,6 +52,9 @@ export class UserService {
         }
         return this.identity;
     }
+    // --------------------------------------------------------------------------------------------
+    // OBTENER TOKEN DE UN USUARIO
+    // --------------------------------------------------------------------------------------------
     getToken() {
         const token = localStorage.getItem('token');
         if (token !== 'undefined') {
@@ -52,6 +64,9 @@ export class UserService {
         }
         return this.token;
     }
+    // --------------------------------------------------------------------------------------------
+    // OBTENER INFO DE UN USUARIO
+    // --------------------------------------------------------------------------------------------
     getStats() {
         const stats = JSON.parse(localStorage.getItem('stats'));
         if (stats !== 'undefined') {
@@ -61,6 +76,9 @@ export class UserService {
         }
         return this.stats;
     }
+    // --------------------------------------------------------------------------------------------
+    // OBTENER CONTADORES DE UN USUARIO
+    // --------------------------------------------------------------------------------------------
     getCounters(userId = null): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', this.getToken());
@@ -70,6 +88,9 @@ export class UserService {
             return this.http.get(this.url + 'counters/', { headers });
         }
     }
+    // --------------------------------------------------------------------------------------------
+    // ACTUALIZAR USUARIOS
+    // --------------------------------------------------------------------------------------------
     updateUser(user: User): Observable<any> {
         const params = JSON.stringify(user);
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
