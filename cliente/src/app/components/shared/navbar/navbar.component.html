@@ -1,77 +1,97 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<header>
+    <div class="header-top sticky bg-white d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-5">
+                    <!-- header top navigation start -->
+                    <div class="header-top-navigation">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a [routerLink]="['/home']" [routerLinkActive]="['active']">
+                                        Inicio
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        Timeline
+                                    </a>
+                                </li>
+                                <li>
+                                    <a [routerLink]="['/gente']" [routerLinkActive]="['active']">
+                                        gente
+                                    </a>
+                                </li>
 
-    <div class="navbar-header">
-        <a href="#" class="navbar-brand">{{title}}</a>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- header top navigation start -->
+                </div>
+                <div class="col-md-2">
+                    <!-- brand logo start -->
+                    <div class="brand-logo text-center">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="index.html">
+                                        <img src="../assets/images/logo/logo.png" alt="brand logo">
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- brand logo end -->
+                </div>
+
+                <div class="col-md-5">
+
+                    <div class="header-top-right d-flex align-items-center justify-content-end">
+                        <div class="header-top-navigation">
+                            <div class="brand-logo text-center">
+                                <nav>
+                                    <ul>
+                                        <li>
+                                            <a [routerLink]="['/gente']" [routerLinkActive]="['active']">
+                                                Perfil
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- profile picture start -->
+                        <div class="profile-setting-box">
+                            <div class="profile-thumb-small">
+                                <a href="javascript:void(0)" class="profile-triger">
+                                    <figure>
+                                        <img src="{{url + 'get-image-user/'+ identity.image}}" alt="profile picture">
+                                    </figure>
+                                </a>
+                                <div class="profile-dropdown">
+                                    <div class="profile-head">
+                                        <h5 class="name"><a href="#">Madison Howard</a></h5>
+                                        <a class="mail" href="#">mailnam@mail.com</a>
+                                    </div>
+                                    <div class="profile-body">
+                                        <ul>
+                                            <li><a href="profile.html"><i class="flaticon-user"></i>Profile</a></li>
+                                            <li><a href="#"><i class="flaticon-message"></i>Inbox</a></li>
+                                            <li><a href="#"><i class="flaticon-document"></i>Activity</a></li>
+                                        </ul>
+                                        <ul>
+                                            <li><a href="#"><i class="flaticon-settings"></i>Setting</a></li>
+                                            <li><a href="signup.html"><i class="flaticon-unlock"></i>Sing out</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- profile picture end -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Toggler/collapsibe Button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <!-- BARRA DE NAVEGACION CON USUARIO ESTE IDENTIFICADO-->
-        <ul class="navbar-nav" *ngIf="identity">
-
-            <li class="nav-item" >
-                <a class="nav-link" [routerLink]="['/home']" [routerLinkActive]="['active']">
-                    <span class="fas fa-home" ></span>
-                    Inicio
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span class="fas fa-clipboard-list"></span>
-                    Timeline
-                </a>
-            </li>
-            <li class="nav-item" >
-                <a class="nav-link" [routerLink]="['/gente']" [routerLinkActive]="['active']">
-                    <span class="fas fa-user"></span>
-                    gente
-                </a>
-            </li>
-            
-            <li class="nav-item dropdown ">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
-                    {{identity.name}} <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <a class="dropdown-item" href="#">
-                        <span class="fas fa-user"></span>
-                        Mi Perfil
-                    </a>
-                    <a class="dropdown-item" [routerLink]="['/mis-datos']">
-                        <span class="fas fa-cog"></span>
-                        Mis Datos
-                    </a>
-                    <a class="dropdown-item" (click)="logout()" href="#">
-                        <span class="fas fa-sign-out-alt"></span>
-                        Cerrar Sesion
-                    </a>
-                </ul>
-            </li>
-            <li>
-                <img class="avatar" src="{{url + 'get-image-user/'+ identity.image}}"
-                    *ngIf="identity && identity.image">
-            </li>
-        </ul>
-        <!-- BARRA DE NAVEGACION EN CASO DEL QUE EL USUARIO NO ESTE IDENTIFICADO-->
-        <ul class="navbar-nav" *ngIf="!identity">
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/login']" [routerLinkActive]="['active']">
-                    <span class="fas fa-sign-in-alt"></span>
-                    login
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/registro']" [routerLinkActive]="['active']">
-                    <span class="fas fa-users"></span>
-                    Registro
-                </a>
-            </li>
-        </ul>
-
-    </div>
-
-
-</nav>
+</header>
