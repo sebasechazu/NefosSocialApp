@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 // MODELOS
 import { User } from '../../models/user';
-import { Follow } from "../../models/follow";
+import { Follow } from '../../models/follow';
 // SERVICIOS
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
@@ -29,6 +29,7 @@ export class UsersComponent implements OnInit {
   public pages;
   public users: User[];
   public follows;
+  public followUserOver;
 
   constructor(
     private route: ActivatedRoute,
@@ -63,7 +64,7 @@ export class UsersComponent implements OnInit {
           this.prevPage = 1;
         }
       }
-      // devoler listado de usuarios
+      // devolver listado de usuarios
       this.getUsers(page);
     });
   }
@@ -94,11 +95,11 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  public followUserOver;
-
+  // tslint:disable-next-line: variable-name
   mouseEnter(user_id) {
     this.followUserOver = user_id;
   }
+  // tslint:disable-next-line: variable-name
   mouseLeave(user_id) {
     this.followUserOver = 0;
   }
@@ -106,7 +107,7 @@ export class UsersComponent implements OnInit {
   // SEGUIR A UN USUARIO
   // ----------------------------------------------------------------------------------------------
   followUser(followed) {
-    let follow = new Follow('', this.identity._id, followed);
+    const follow = new Follow('', this.identity._id, followed);
 
     this.followService.addFollow(this.token, follow).subscribe(
       response => {
@@ -126,14 +127,13 @@ export class UsersComponent implements OnInit {
         }
       });
   }
-  unFollowUser(followed){
+  unFollowUser(followed) {
     this.followService.deleteFollow(this.token, followed).subscribe(
       response => {
-       var search = this.follows.indexOf(followed);
-        if (search != -1) {
+       const search = this.follows.indexOf(followed);
+       if (search !== -1) {
           this.follows.splice(search, 1);
         }
-        
       },
       error => {
         const errorMessage = error as any;
