@@ -1,34 +1,94 @@
-<div class="col-lg-5">
-    <h1 class="h1-strong">{{title}}</h1>
+<main>
+    <div class="main-wrapper pb-0 mb-0">
+        <div class="timeline-wrapper">
+            <div class="timeline-header">
+                <div class="container-fluid p-0">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-lg-6">
+                            <div class="timeline-logo-area d-flex align-items-center">
+                                <div class="timeline-logo">
+                                    <a href="index.html">
+                                        <img src="../../../assets/images/logo/logo.png" alt="timeline logo">
+                                    </a>
+                                </div>
+                                <div class="timeline-tagline">
+                                    <h6 class="tagline">Conectados por con la meteorologica</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="login-area">
+                                <div class="row align-items-center">
+                                    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="form-inline">
+                                        <div class="col-12 col-sm">
+                                            <input type="email" name="email" #email="ngModel" [(ngModel)]="user.email"
+                                                class="single-field" required
+                                                pattern=[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5} />
+                                            <span *ngIf="!email.valid && email.touched">
+                                                El email no es correcto
+                                            </span>
+                                        </div>
+                                        <div class="col-12 col-sm">
+                                            <input type="password" name="password" #password="ngModel"
+                                                [(ngModel)]="user.password" class="single-field" />
+                                            <span *ngIf="!password.valid && password.touched">
+                                                la contraseña es obligatoria
+                                            </span>
+                                        </div>
+                                        <div class="col-12 col-sm-auto">
+                                            <input type="submit" value="Entrar" class="login-btn"
+                                                [disabled]="!loginForm.form.valid" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="timeline-page-wrapper">
+                <div class="container-fluid p-0">
+                    <div class="row no-gutters">
+                        <div class="col-lg-6 order-2 order-lg-1">
+                            <div class="timeline-bg-content bg-img" data-bg="../../../assets/images/nubesLogin.jpg">
+                                <h3 class="timeline-bg-title">cuentanos como vives la meterologia.
+                                    Bienvenidos a Nefos Social.</h3>
+                            </div>
+                        </div>
 
-    <div class="alert alert-success" *ngIf="status == 'success'">
-        Te has identificado correctamente, bienvenido!!!
+                        <div class="col-lg-6 order-1 order-lg-2 d-flex align-items-center justify-content-center">
+                            <div class="signup-form-wrapper">
+                                <h1 class="create-acc text-center">Crear una cuenta</h1>
+                                <div class="signup-inner text-center">
+                                    <h3 class="title">Bienvenidos a Nefos Social</h3>
+                                    <form class="signup-inner--form">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <input type="email" class="single-field" placeholder="Email">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="text" class="single-field" placeholder="First Name">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="text" class="single-field" placeholder="Last Name">
+                                            </div>
+                                            <div class="col-12">
+                                                <input type="password" class="single-field" placeholder="Password">
+                                            </div>
+
+                                            <div class="col-12">
+                                                <button class="submit-btn">crear cuenta</button>
+                                            </div>
+                                        </div>
+                                        <h6 class="terms-condition">debe leer y aceptar <a href="#"> Terminos de uso</a>
+                                        </h6>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="alert alert-danger" *ngIf="status == 'error'">
-        No te has podido identificar correctamente
-    </div>
-
-
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit()" class="col-lg-12">
-        <p>
-            <label>Correo Electronico</label>
-            <input type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" required
-                pattern=[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5} />
-        </p>
-        <span *ngIf="!email.valid && email.touched">
-            El email no es correcto
-        </span>
-        <p>
-            <label>Contraseña</label>
-            <input type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
-                class="form-control" />
-        </p>
-        <span *ngIf="!password.valid && password.touched">
-            la contraseña es obligatoria
-        </span>
-        <input type="submit" value="Entrar" class="btn btn-success" [disabled]="!loginForm.form.valid" />
-    </form>
-
-
-</div>
+</main>

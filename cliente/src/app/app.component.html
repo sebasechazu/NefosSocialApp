@@ -1,4 +1,7 @@
-<div class="navigation col-lg-12">
-    <app-navbar></app-navbar>
+<div  *ngIf="!identity">
+<app-login></app-login>
 </div>
-<router-outlet></router-outlet>
+<div *ngIf="identity">
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
+</div>

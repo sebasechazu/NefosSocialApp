@@ -8,21 +8,14 @@
                         <nav>
                             <ul>
                                 <li>
-                                    <a [routerLink]="['/home']" [routerLinkActive]="['active']">
-                                        Inicio
-                                    </a>
+                                    <a [routerLink]="['/home']" [routerLinkActive]="['active']">Inicio</a>
                                 </li>
                                 <li>
-                                    <a href="#">
-                                        Timeline
-                                    </a>
+                                    <a href="#">Timeline</a>
                                 </li>
                                 <li>
-                                    <a [routerLink]="['/gente']" [routerLinkActive]="['active']">
-                                        gente
-                                    </a>
+                                    <a [routerLink]="['/gente']" [routerLinkActive]="['active']">gente</a>
                                 </li>
-
                             </ul>
                         </nav>
                     </div>
@@ -43,23 +36,8 @@
                     </div>
                     <!-- brand logo end -->
                 </div>
-
                 <div class="col-md-5">
-
                     <div class="header-top-right d-flex align-items-center justify-content-end">
-                        <div class="header-top-navigation">
-                            <div class="brand-logo text-center">
-                                <nav>
-                                    <ul>
-                                        <li>
-                                            <a [routerLink]="['/gente']" [routerLinkActive]="['active']">
-                                                Perfil
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
                         <!-- profile picture start -->
                         <div class="profile-setting-box">
                             <div class="profile-thumb-small">
@@ -70,7 +48,7 @@
                                 </a>
                                 <div class="profile-dropdown">
                                     <div class="profile-head">
-                                        <h5 class="name"><a href="#">Madison Howard</a></h5>
+                                        <h5 class="name"><a href="#">{{identity.name}}</a></h5>
                                         <a class="mail" href="#">mailnam@mail.com</a>
                                     </div>
                                     <div class="profile-body">
@@ -81,8 +59,10 @@
                                         </ul>
                                         <ul>
                                             <li><a href="#"><i class="flaticon-settings"></i>Setting</a></li>
-                                            <li><a href="signup.html"><i class="flaticon-unlock"></i>Sing out</a>
-                                            </li>
+
+                                            <li><a (click)="logout()" href="#"><span
+                                                        class="flaticon-unlock"></span>Cerrar Sesion
+                                                </a></li>
                                         </ul>
                                     </div>
                                 </div>
