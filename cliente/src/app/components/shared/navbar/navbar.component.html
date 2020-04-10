@@ -49,12 +49,12 @@
                                 <div class="profile-dropdown">
                                     <div class="profile-head">
                                         <h5 class="name"><a href="#">{{identity.name}}</a></h5>
-                                        <a class="mail" href="#">mailnam@mail.com</a>
+                                        <a class="mail" href="#">{{identity.email}}</a>
                                     </div>
                                     <div class="profile-body">
                                         <ul>
-                                           
-                                            <li> <a [routerLink]="['/mis-datos']" [routerLinkActive]="['active']">Profile</a></li>
+                                            <li> <a [routerLink]="['/mi-perfil']"
+                                                    [routerLinkActive]="['active']">Perfil</a></li>
                                             <li><a href="#"><i class="flaticon-message"></i>Inbox</a></li>
                                             <li><a href="#"><i class="flaticon-document"></i>Activity</a></li>
                                         </ul>

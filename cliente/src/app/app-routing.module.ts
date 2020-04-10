@@ -5,6 +5,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersComponent } from './components/users/users.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'registro', component: RegisterComponent},
   {path: 'mis-datos', component: UserEditComponent},
+  {path: 'mi-perfil', component: UserProfileComponent},
   {path: 'gente', component: UsersComponent},
   {path: 'gente/:page', component: UsersComponent},
   {path: '**', component: HomeComponent}

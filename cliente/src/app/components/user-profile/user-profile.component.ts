@@ -4,13 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GLOBAL } from 'src/app/services/global';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.css']
 })
-export class HomeComponent implements OnInit {
+export class UserProfileComponent implements OnInit {
+  public title: string;
   public identity;
   public url: string;
+
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
@@ -19,10 +21,8 @@ export class HomeComponent implements OnInit {
     this.url = GLOBAL.url;
   }
 
-
   ngOnInit() {
     this.identity = this.userService.getIdentity();
-    console.log('home componente cargado!!');
   }
 
 }

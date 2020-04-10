@@ -27,11 +27,12 @@ export class NavbarComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.identity = this.userService.getIdentity();
     console.log(this.identity);
-    //funcion de jquery para que funcione el dropdown del boton de perfil
-    $('.profile-triger').on('click', function(event){
+    // funcion de jquery para que funcione el dropdown del boton de perfil
+    // tslint:disable-next-line: only-arrow-functions
+    $('.profile-triger').on('click', function(event) {
       event.stopPropagation();
-          $(".profile-dropdown").slideToggle();
-    })
+      $('.profile-dropdown').slideToggle();
+    });
   }
   ngDoCheck() {
     this.identity = this.userService.getIdentity();
