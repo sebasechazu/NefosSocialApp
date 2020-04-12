@@ -1459,17 +1459,11 @@ input:focus, textarea:focus {
   box-shadow: none;
 }
 
-.card-profile {
-  padding: 0;
-}
-
 .card:last-child {
   margin-bottom: 0;
 }
 
-.card.widget-item {
-  padding: 25px;
-}
+
 
 .share-box-inner {
   display: -webkit-box;
@@ -1906,21 +1900,6 @@ input:focus, textarea:focus {
   background-color: #09ae82;
 }
 
-.profile-banner-small {
-  position: relative;
-}
-
-.profile-banner-small:before {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  content: '';
-  position: absolute;
-  pointer-events: none;
-  border: 10px solid rgba(198, 165, 107, 0.3);
-}
-
 .profile-thumb-2 {
   width: 80px;
   height: 80px;
@@ -1932,17 +1911,6 @@ input:focus, textarea:focus {
   right: 0;
   position: absolute;
   margin: auto;
-}
-
-.profile-desc {
-  padding: 30px;
-  margin-top: 25px;
-}
-
-.profile-desc p {
-  font-size: 13px;
-  color: #666666;
-  padding-top: 10px;
 }
 
 .profile-banner-large {
@@ -2181,42 +2149,6 @@ input:focus, textarea:focus {
   color: #50A4D3;
 }
 
-.unorder-list {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.unorder-list .like-button {
-  font-size: 20px;
-  margin-left: auto;
-  position: relative;
-}
-
-.unorder-list .like-button .heart-color {
-  top: 50%;
-  left: 0;
-  position: absolute;
-  opacity: 1;
-  visibility: hidden;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  -webkit-transition: 0.4s;
-  -o-transition: 0.4s;
-  transition: 0.4s;
-}
-
-.unorder-list .like-button:hover .heart, .unorder-list .like-button.active .heart {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.unorder-list .like-button:hover .heart-color, .unorder-list .like-button.active .heart-color {
-  opacity: 1;
-  visibility: visible;
-}
 
 /*------- like page list wrapper end -------*/
 

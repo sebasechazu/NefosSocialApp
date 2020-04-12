@@ -1,98 +1,97 @@
-<main>
-    <div class="main-wrapper">
-        <div class="profile-banner-large bg-img" data-bg="assets/images/banner/profile-banner.jpg">
-        </div>
-        <div class="profile-menu-area bg-white">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-3 col-md-3">
-                        <div class="profile-picture-box">
-                            <figure class="profile-picture">
-                                <a href="profile.html">
-                                    <img src="{{url + 'get-image-user/'+ identity.image}}" alt="profile picture">
-                                </a>
-                            </figure>
+<div class="main-wrapper">
+    <div class="profile-banner-large bg-img" data-bg="assets/images/banner/profile-banner.jpg">
+    </div>
+    <div class="profile-menu-area bg-white">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-3">
+                    <div class="profile-picture-box">
+                        <figure class="profile-picture">
+                            <a href="profile.html">
+                                <img src="{{url + 'get-image-user/'+ identity.image}}" alt="profile picture">
+                            </a>
+                        </figure>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 offset-lg-1">
+                    <div class="profile-menu-wrapper">
+                        <div class="main-menu-inner header-top-navigation">
+                            <nav>
+                                <ul class="main-menu">
+                                    <li class="active"><a href="#">timeline</a></li>
+                                    <li><a href="friends.html">friends</a></li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 offset-lg-1">
-                        <div class="profile-menu-wrapper">
-                            <div class="main-menu-inner header-top-navigation">
-                                <nav>
-                                    <ul class="main-menu">
-                                        <li class="active"><a href="#">timeline</a></li>                                       
-                                        <li><a href="friends.html">friends</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-3 d-none d-md-block">
-                        <div class="profile-edit-panel">
-                            <button class="edit-btn">edit profile</button>
-                        </div>
+                </div>
+                <div class="col-lg-2 col-md-3 d-none d-md-block">
+                    <div class="profile-edit-panel">
+                        <button class="edit-btn">edit profile</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 order-2 order-lg-1">
-                    <aside class="widget-area profile-sidebar">
-                        <!-- widget single item start -->
-                        <div class="card widget-item">
-                            <h4 class="widget-title">{{identity.name}}</h4>
-                            <div class="widget-body">
-                                <div class="about-author">
-                                    <p>{{identity.nickname}}</p>
-                                    <ul class="author-into-list">
-                                        <li><a href="#"><i class="bi bi-office-bag"></i>{{identity.surname}}</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- widget single item end -->
-                    </aside>
-                </div>
-                <!--Seccion Friend List -->
-                <div class="col-lg-8 order-1 order-lg-8">
-
-                    <div class="col-lg-3 col-sm-8 relative">
-                        <div class="friend-list-view">
-                            <!-- profile picture end -->
-                            <div class="profile-thumb">
-                                <a href="#">
-                                    <figure class="profile-thumb-middle">
-                                        <img src="assets/images/profile/profile-small-1.jpg" alt="profile picture">
-                                    </figure>
-                                </a>
-                            </div>
-                            <!-- profile picture end -->
-
-                            <div class="posted-author">
-                                <h6 class="author"><a href="profile.html">Kate Midiltoin</a></h6>
-                                <button class="add-frnd">add friend</button>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 order-2 order-lg-1">
+                <aside class="widget-area profile-sidebar">
+                    <!-- widget single item start -->
+                    <div class="card widget-item">
+                        <h4 class="widget-title">{{identity.name}}</h4>
+                        <div class="widget-body">
+                            <div class="about-author">
+                                <p>{{identity.nickname}}</p>
+                                <ul class="author-into-list">
+                                    <li><a href="#"><i class="bi bi-office-bag"></i>{{identity.surname}}</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-8 relative">
-                        <div class="friend-list-view">
-                            <!-- profile picture end -->
-                            <div class="profile-thumb">
-                                <a href="#">
-                                    <figure class="profile-thumb-middle">
-                                        <img src="assets/images/profile/profile-small-4.jpg" alt="profile picture">
-                                    </figure>
-                                </a>
-                            </div>
-                            <!-- profile picture end -->
+                    <!-- widget single item end -->
+                </aside>
+            </div>
+            <!--Seccion Friend List -->
+            <div class="col-lg-8 order-1 order-lg-8">
 
-                            <div class="posted-author">
-                                <h6 class="author"><a href="profile.html">Jon Wileyam</a></h6>
-                                <button class="add-frnd">add friend</button>
-                            </div>
+                <div class="col-lg-3 col-sm-8 relative">
+                    <div class="friend-list-view">
+                        <!-- profile picture end -->
+                        <div class="profile-thumb">
+                            <a href="#">
+                                <figure class="profile-thumb-middle">
+                                    <img src="assets/images/profile/profile-small-1.jpg" alt="profile picture">
+                                </figure>
+                            </a>
+                        </div>
+                        <!-- profile picture end -->
+
+                        <div class="posted-author">
+                            <h6 class="author"><a href="profile.html">Kate Midiltoin</a></h6>
+                            <button class="add-frnd">add friend</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-8 relative">
+                    <div class="friend-list-view">
+                        <!-- profile picture end -->
+                        <div class="profile-thumb">
+                            <a href="#">
+                                <figure class="profile-thumb-middle">
+                                    <img src="assets/images/profile/profile-small-4.jpg" alt="profile picture">
+                                </figure>
+                            </a>
+                        </div>
+                        <!-- profile picture end -->
+
+                        <div class="posted-author">
+                            <h6 class="author"><a href="profile.html">Jon Wileyam</a></h6>
+                            <button class="add-frnd">add friend</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>

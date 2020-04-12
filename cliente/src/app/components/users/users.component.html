@@ -1,20 +1,9 @@
 <div class="jumbotron">
     <div class="panel panel-default">
         <div class="panel-body">
-            <!--PAGINACION-->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item" *ngIf="page > 1"><a class="page-link" [routerLink]="['/gente', prevPage]">
-                            anterior</a>
-                    </li>
-                    <li class="page-item" *ngIf="pages != page"><a class="page-link"
-                            [routerLink]="['/gente', nextPage]">
-                            siguiente</a> </li>
-                </ul>
-            </nav>
             <!--LISTADO-->
             <div class="list-group">
-                <div class="list-group-item d-flex justify-content-between align-items-center"
+                 <div class="list-group-item d-flex justify-content-between align-items-center"
                     *ngFor="let user of users">
                     <div class="col-2">
                         <a class="image-parent" href="#">
@@ -31,7 +20,7 @@
                     <!--SEGUIR DEJAR DE SEGUIR-->
                     <div class="col-6" *ngIf="user._id != identity._id">
                         <!--BOTON PARA SEGUIR-->
-                        <button class="btn btn-success" *ngIf="follows.indexOf(user._id) <= 0"
+                        <button class="btn btn-success" *ngIf="follows.indexOf(user._id) < 0"
                             (click)="followUser(user._id)">
                             <span><i class="fas fa-plus-circle"></i></span> Seguir
                         </button>
@@ -45,11 +34,18 @@
                             <ng-template #following>
                                 <span> <i class="fas fa-check-circle"></i></span> Siguiendo
                             </ng-template>
-
                         </button>
                     </div>
                 </div>
             </div>
+            <ul class="pagination justify-content-center">
+                <li class="page-item" *ngIf="page > 1"><a class="page-link" [routerLink]="['/gente', prevPage]">
+                        anterior</a>
+                </li>
+                <li class="page-item" *ngIf="pages != page"><a class="page-link"
+                        [routerLink]="['/gente', nextPage]">
+                        siguiente</a> </li>
+            </ul>
         </div>
     </div>
 </div>

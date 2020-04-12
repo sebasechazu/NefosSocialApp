@@ -9,17 +9,17 @@ export class FollowService {
     public url: string;
 
 
-    constructor(private _http: HttpClient) {
+    constructor(private http: HttpClient) {
         this.url = GLOBAL.url;
     }
 
     addFollow(token, follow): Observable<any> {
-        
+
         const params = JSON.stringify(follow);
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', token);
 
-        return this._http.post(this.url + 'follow' , params, { headers });
+        return this.http.post(this.url + 'follow' , params, { headers });
     }
 
     deleteFollow(token, id): Observable<any> {
@@ -27,7 +27,7 @@ export class FollowService {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', token);
 
-        return this._http.delete(this.url + 'follow/' + id, { headers });
+        return this.http.delete(this.url + 'follow/' + id, { headers });
     }
 
 }
