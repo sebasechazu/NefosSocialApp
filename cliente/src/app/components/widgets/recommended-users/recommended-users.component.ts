@@ -37,7 +37,6 @@ export class RecommendedUsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Componente Usuarios recomendados a sido cargado');
     this.getUsers();
   }
   getUsers() {

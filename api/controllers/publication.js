@@ -13,13 +13,13 @@ var Publication = require('../models/Publication');
 var User = require('../models/User');
 var Follow = require('../models/Follow');
 //-------------------------------------------------------------------------------------------------
-//METODO DE PRUEBA
+// METODO DE PRUEBA
 //-------------------------------------------------------------------------------------------------
 function prueba(req, res) {
     res.status(200).send({ message: 'mensje de prueba desde el controlador de publicaciones' });
 }
 //-------------------------------------------------------------------------------------------------
-//GUARDAR PUBLICACIONES
+// GUARDAR PUBLICACIONES
 //-------------------------------------------------------------------------------------------------
 function savePublication(req, res) {
     var params = req.body;
@@ -56,6 +56,8 @@ function getPublications(req, res) {
         follows.forEach((follow) => {
             follows_clean.push(follow.followed);
         });
+        //agregamos nuestras publicaciones al timweline
+        follows_clean.push(req.user.sub);
         //usamos el operador $in para buscar dentro de una coleccion coincidencias
         Publication.find({ user: { "$in": follows_clean } }).sort('-created_at').populate('user').paginate(page, itemsPerPage, (err, publications, total) => {
 
@@ -67,15 +69,16 @@ function getPublications(req, res) {
                 total_items: total,
                 publications: publications,
                 page: page,
+                items_per_page: itemsPerPage,
                 pages: Math.ceil(total / itemsPerPage)
             });
         });
     });
 
 }
-//-------------------------------------------------------------------------------------------------
-//OBTENER PUBLICACION
-//-------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
+// OBTENER PUBLICACION
+// -------------------------------------------------------------------------------------------------
 function getPublication(req, res) {
     var publicationId = req.params.id;
 

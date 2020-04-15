@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MomentModule } from 'angular2-moment';
+import { HelperService } from './services/helper.service';
 // -------------------------------------------------------------------------------------------------
 // COMPONENTES
 // -------------------------------------------------------------------------------------------------
@@ -40,9 +42,10 @@ import { PublicationsComponent } from './components/widgets/publications/publica
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MomentModule
   ],
-  providers: [],
+  providers: [HelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -29,10 +29,10 @@ export class ProfileBannerComponent implements OnInit {
     this.stats = this.userService.getStats();
     this.url = GLOBAL.url;
 
-   }
+  }
 
-  ngOnInit( ) {
-    console.log('componente Profile Banner cargado');
+  ngOnInit() {
+
   }
 
 }
