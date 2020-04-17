@@ -12,7 +12,6 @@ import { Publication } from '../../../models/publication';
 // ------------------------------------------------------------------------------------------------
 import { UserService } from '../../../services/user.service';
 import { PublicationService } from '../../../services/publication.service';
-import { HelperService } from '../../../services/helper.service';
 // ------------------------------------------------------------------------------------------------
 // VARIABLE GLOBAL
 // ------------------------------------------------------------------------------------------------
@@ -22,7 +21,7 @@ import { GLOBAL } from '../../../services/global';
   selector: 'app-share-publication',
   templateUrl: './share-publication.component.html',
   styleUrls: ['./share-publication.component.css'],
-  providers: [UserService, PublicationService, HelperService]
+  providers: [UserService, PublicationService]
 })
 export class SharePublicationComponent implements OnInit {
 
@@ -31,7 +30,7 @@ export class SharePublicationComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private publicationService: PublicationService,
-    private helper: HelperService) {
+  ) {
 
     this.identity = this.userService.getIdentity();
     this.token = this.userService.getToken();

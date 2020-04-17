@@ -15,12 +15,11 @@ import { Publication } from '../../../models/publication';
 // ------------------------------------------------------------------------------------------------
 import { UserService } from '../../../services/user.service';
 import { PublicationService } from '../../../services/publication.service';
-import { HelperService } from '../../../services/helper.service';
 // ------------------------------------------------------------------------------------------------
 // VARIABLE GLOBAL
 // ------------------------------------------------------------------------------------------------
 import { GLOBAL } from '../../../services/global';
-import { EventEmitter } from 'protractor';
+
 
 
 @Component({
@@ -37,7 +36,7 @@ export class PublicationsComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private publicationService: PublicationService,
-    private helper: HelperService
+
 
   ) {
     this.identity = this.userService.getIdentity();
@@ -63,7 +62,7 @@ export class PublicationsComponent implements OnInit {
   ngOnInit() {
     this.getPublications(this.page);
   }
-  actualizar(event){
+  actualizar() {
     this.getPublications(this.page);
   }
   // -----------------------------------------------------------------------------------------------

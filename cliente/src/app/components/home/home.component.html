@@ -14,16 +14,15 @@
                 <!-------------------------------------->
                 <!----------Columnda Central------------>
                 <!-------------------------------------->
-                <div class="col-lg-6 order-1 order-lg-2">
-                    
+                <div class="col-lg-6 order-1 order-lg-2">                   
                     <!-------------------------------------->
                     <!--------Compartir Publicacion--------->
                     <!-------------------------------------->
-                    <app-share-publication (enviar)="procesarEstado($event)"></app-share-publication>
+                    <app-share-publication (enviar)="publications.actualizar()"></app-share-publication>
                     <!-------------------------------------->
                     <!--------TimeLine Publicaciones-------->
                     <!-------------------------------------->
-                    <app-publications #hijo></app-publications>
+                    <app-publications #publications></app-publications>
                 </div>
                 <!-------------------------------------->
                 <!----------Columnda izquierda---------->
