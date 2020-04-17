@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------------------------------------
 // COMPONENTE
 // ------------------------------------------------------------------------------------------------
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 // ------------------------------------------------------------------------------------------------
 // RUTEO
 // ------------------------------------------------------------------------------------------------
@@ -20,6 +20,7 @@ import { HelperService } from '../../../services/helper.service';
 // VARIABLE GLOBAL
 // ------------------------------------------------------------------------------------------------
 import { GLOBAL } from '../../../services/global';
+import { EventEmitter } from 'protractor';
 
 
 @Component({
@@ -57,18 +58,13 @@ export class PublicationsComponent implements OnInit {
   public publications: Publication[];
   public noMore = false;
   // estado de las publicaciones
-  public estado: string;
-  public nuevoEstado: string;
+  @Input() estado: string;
 
   ngOnInit() {
-
-    this.helper.nuevoEstado.subscribe(st => this.estado = st);
-
-    if (this.estado === 'actualizar' || this.estado === 'esperando...') {
-      this.getPublications(this.page);
-      this.helper.cambiarEstado('actualizado');
-      console.log('desde PublicationComponent ' + this.estado);
-    }
+    this.getPublications(this.page);
+  }
+  actualizar(event){
+    this.getPublications(this.page);
   }
   // -----------------------------------------------------------------------------------------------
   // OBTENER PUBLICACIONES DESDE API

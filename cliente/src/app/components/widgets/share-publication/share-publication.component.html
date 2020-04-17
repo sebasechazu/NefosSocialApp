@@ -9,7 +9,6 @@
                 </figure>
 
             </a>
-            {{estado}}
         </div>
         <!-- profile picture end -->
 
@@ -34,7 +33,7 @@
                         </button>
 
                     </div>
-                    <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm)">
+                    <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm); enviarEstado($event);">
                         <div class="modal-body custom-scroll">
                             <textarea name="text" #text="ngModel" [(ngModel)]="publication.text"
                                 class="share-field-big custom-scroll" placeholder="Comparte Algo"></textarea>

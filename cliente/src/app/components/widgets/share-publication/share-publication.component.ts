@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------------------------------------
 // IMPORTS
 // ------------------------------------------------------------------------------------------------
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 // ------------------------------------------------------------------------------------------------
 // MODELOS
@@ -38,20 +38,18 @@ export class SharePublicationComponent implements OnInit {
     this.url = GLOBAL.url;
     this.publication = new Publication('', '', '', this.identity.id, '');
   }
-
   public title: string;
   public url: string;
   public identity;
   public token;
   public status: string;
   public publication: Publication;
-  // estado de las publicaciones
+  // evento de salida
   public estado: string;
-  public nuevoEstado: string;
+  @Output() enviar = new EventEmitter<string>();
 
   ngOnInit() {
 
-    this.helper.nuevoEstado.subscribe(st => this.estado = st);
   }
   // ----------------------------------------------------------------------------------------------
   // AGREGAR PUBLICACION
@@ -63,9 +61,6 @@ export class SharePublicationComponent implements OnInit {
           // this.publication = response.publication;
           this.status = 'success';
           form.reset();
-          console.log(this.estado);
-          this.helper.cambiarEstado('actualizar');
-          console.log('desde sharedComponent ' + this.estado);
         } else {
           this.status = 'error';
         }
@@ -78,6 +73,10 @@ export class SharePublicationComponent implements OnInit {
         }
       }
     );
+  }
+  enviarEstado(event) {
+    this.estado = 'enviado';
+    this.enviar.emit(this.estado);
   }
 
 }
