@@ -12,6 +12,7 @@ import { Publication } from '../../../models/publication';
 // ------------------------------------------------------------------------------------------------
 import { UserService } from '../../../services/user.service';
 import { PublicationService } from '../../../services/publication.service';
+import { UploadService } from '../../../services/upload.service';
 // ------------------------------------------------------------------------------------------------
 // VARIABLE GLOBAL
 // ------------------------------------------------------------------------------------------------
@@ -21,7 +22,7 @@ import { GLOBAL } from '../../../services/global';
   selector: 'app-share-publication',
   templateUrl: './share-publication.component.html',
   styleUrls: ['./share-publication.component.css'],
-  providers: [UserService, PublicationService]
+  providers: [UserService, PublicationService, UploadService]
 })
 export class SharePublicationComponent implements OnInit {
 
@@ -29,6 +30,7 @@ export class SharePublicationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
+    private uploadService: UploadService,
     private publicationService: PublicationService,
   ) {
 
@@ -43,8 +45,9 @@ export class SharePublicationComponent implements OnInit {
   public token;
   public status: string;
   public publication: Publication;
-  // evento de salida
   public estado: string;
+  public filesToUpload: Array<File>;
+  // evento de salida
   @Output() enviar = new EventEmitter<string>();
 
   ngOnInit() {
@@ -57,9 +60,14 @@ export class SharePublicationComponent implements OnInit {
     this.publicationService.addPublication(this.token, this.publication).subscribe(
       response => {
         if (response.publication) {
-          // this.publication = response.publication;
-          this.status = 'success';
-          form.reset();
+          // subir imagen
+          this.uploadService.makeFileRequest(this.url + 'upload-image-pub/' + response.publication._id, [], this.filesToUpload, this.token, 'image')
+            .then((result: any) => {
+              this.publication.file = result.image;
+              this.status = 'success';
+              form.reset();
+
+            });
         } else {
           this.status = 'error';
         }
@@ -73,6 +81,16 @@ export class SharePublicationComponent implements OnInit {
       }
     );
   }
+  // ----------------------------------------------------------------------------------------------
+  // AGREGAR FOTO A LA PUBLICACION
+  // ----------------------------------------------------------------------------------------------
+  fileChangeEvent(fileInput: any) {
+    this.filesToUpload = (fileInput.target.files as Array<File>);
+  }
+
+  // ----------------------------------------------------------------------------------------------
+  // EVENTO PARA ENVIAR A ACTUALIZAR LA PUBLICAION
+  // ----------------------------------------------------------------------------------------------
   enviarEstado(event) {
     this.estado = 'enviado';
     this.enviar.emit(this.estado);

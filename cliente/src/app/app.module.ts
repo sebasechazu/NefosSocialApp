@@ -20,6 +20,7 @@ import { ProfileBannerComponent } from './components/widgets/profile-banner/prof
 import { RecommendedUsersComponent } from './components/widgets/recommended-users/recommended-users.component';
 import { SharePublicationComponent } from './components/widgets/share-publication/share-publication.component';
 import { PublicationsComponent } from './components/widgets/publications/publications.component';
+import { UserPublicationsComponent } from './components/user-publications/user-publications.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { PublicationsComponent } from './components/widgets/publications/publica
     ProfileBannerComponent,
     RecommendedUsersComponent,
     SharePublicationComponent,
-    PublicationsComponent
+    PublicationsComponent,
+    UserPublicationsComponent
   ],
   imports: [
     BrowserModule,

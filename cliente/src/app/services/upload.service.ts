@@ -16,18 +16,17 @@ export class UploadService {
         token: string,
         fileName: string) {
         // tslint:disable-next-line: only-arrow-functions
-        return new Promise(function(resolve, reject) {
-            const formData: any = new FormData();
-            const xhr = new XMLHttpRequest();
+        return new Promise(function (resolve, reject) {
+            var formData: any = new FormData();
+            var xhr = new XMLHttpRequest();
 
             // tslint:disable-next-line: prefer-for-of
             for (let i = 0; i < files.length; i++) {
                 formData.append(fileName, files[i], files[i].name);
             }
             // tslint:disable-next-line: only-arrow-functions
-            xhr.onreadystatechange = function() {
-                console.log(xhr.readyState);
-                console.log(xhr.status);
+            xhr.onreadystatechange = function () {
+
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
                         resolve(JSON.parse(xhr.response));

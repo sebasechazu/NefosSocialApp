@@ -76,6 +76,39 @@ function getPublications(req, res) {
     });
 
 }
+//-------------------------------------------------------------------------------------------------
+//OBTENER PUBLICACIONES DE UN USUARIO - /publications-user/:page?
+//-------------------------------------------------------------------------------------------------
+function getPublicationsUser(req, res) {
+    var page = 1;
+    if (req.params.page) {
+        page = req.params.page;
+    }
+    //obtener id del usuario
+    var user =  req.user.sub;
+    if (req.params.user) {
+        user = req.params.user;
+    }
+    //contador de paginas en 4
+    var itemsPerPage = 4;
+    //usamos el operador $in para buscar dentro de una coleccion coincidencias
+    Publication.find({ user: user }).sort('-created_at').populate('user').paginate(page, itemsPerPage, (err, publications, total) => {
+
+        if (err) return res.status(500).send({ mesagge: 'error al devolver publicaciones' });
+
+        if (!publications) return res.status(404).send({ mesagge: 'no hay  publicaciones' });
+
+        return res.status(200).send({
+            total_items: total,
+            publications: publications,
+            page: page,
+            items_per_page: itemsPerPage,
+            pages: Math.ceil(total / itemsPerPage)
+        });
+    });
+
+
+}
 // -------------------------------------------------------------------------------------------------
 // OBTENER PUBLICACION
 // -------------------------------------------------------------------------------------------------
@@ -187,6 +220,7 @@ module.exports = {
     prueba,
     savePublication,
     getPublications,
+    getPublicationsUser,
     getPublication,
     deletePublication,
     uploadImage,

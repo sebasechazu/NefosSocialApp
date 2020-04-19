@@ -44,10 +44,11 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('users componente a sido cargado');
     this.actualPage();
   }
-
+  // ----------------------------------------------------------------------------------------------
+  // ACTUALIZAR PAGINA
+  // ----------------------------------------------------------------------------------------------
   actualPage() {
     this.route.params.subscribe(params => {
       let page = + params.page;
@@ -68,7 +69,9 @@ export class UsersComponent implements OnInit {
       this.getUsers(page);
     });
   }
-
+  // ----------------------------------------------------------------------------------------------
+  // OBTENER LISTA DE USUARIOS
+  // ----------------------------------------------------------------------------------------------
   getUsers(page) {
     this.userService.getUsers(page).subscribe(
       response => {
@@ -94,7 +97,9 @@ export class UsersComponent implements OnInit {
       }
     );
   }
-
+  // ----------------------------------------------------------------------------------------------
+  // ACCION PARA EL BOTON DEJAR DE SEGUI
+  // ----------------------------------------------------------------------------------------------
   // tslint:disable-next-line: variable-name
   mouseEnter(user_id) {
     this.followUserOver = user_id;
@@ -127,11 +132,14 @@ export class UsersComponent implements OnInit {
         }
       });
   }
+  // ----------------------------------------------------------------------------------------------
+  // DEJAR DE SEGUIR A UN USUARIO
+  // ----------------------------------------------------------------------------------------------
   unFollowUser(followed) {
     this.followService.deleteFollow(this.token, followed).subscribe(
       response => {
-       const search = this.follows.indexOf(followed);
-       if (search !== -1) {
+        const search = this.follows.indexOf(followed);
+        if (search !== -1) {
           this.follows.splice(search, 1);
         }
       },

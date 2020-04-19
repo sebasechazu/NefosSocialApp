@@ -1,6 +1,6 @@
-import { Component, OnInit, DoCheck} from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { UserService } from '../../../services/user.service';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { GLOBAL } from '../../../services/global';
 
 @Component({
@@ -26,7 +26,6 @@ export class NavbarComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.identity = this.userService.getIdentity();
-    console.log(this.identity);
     // funcion de jquery para que funcione el dropdown del boton de perfil
     // tslint:disable-next-line: only-arrow-functions
     $('.profile-triger').on('click', function(event) {

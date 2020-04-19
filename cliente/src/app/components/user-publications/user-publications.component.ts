@@ -9,26 +9,24 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 // ------------------------------------------------------------------------------------------------
 // MODELOS
 // ------------------------------------------------------------------------------------------------
-import { Publication } from '../../../models/publication';
+import { Publication } from '../../models/publication';
 // ------------------------------------------------------------------------------------------------
 // SERVICIOS
 // ------------------------------------------------------------------------------------------------
-import { UserService } from '../../../services/user.service';
-import { PublicationService } from '../../../services/publication.service';
+import { UserService } from '../../services/user.service';
+import { PublicationService } from '../../services/publication.service';
 // ------------------------------------------------------------------------------------------------
 // VARIABLE GLOBAL
 // ------------------------------------------------------------------------------------------------
-import { GLOBAL } from '../../../services/global';
-
-
+import { GLOBAL } from '../../services/global';
 
 @Component({
-  selector: 'app-publications',
-  templateUrl: './publications.component.html',
-  styleUrls: ['./publications.component.css'],
+  selector: 'app-user-publications',
+  templateUrl: './user-publications.component.html',
+  styleUrls: ['./user-publications.component.css'],
   providers: [UserService, PublicationService]
 })
-export class PublicationsComponent implements OnInit {
+export class UserPublicationsComponent implements OnInit {
 
 
   constructor(
@@ -57,19 +55,19 @@ export class PublicationsComponent implements OnInit {
   public publications: Publication[];
   public noMore = false;
   // estado de las publicaciones
-  @Input() estado: string;
+  @Input() user: string;
 
   ngOnInit() {
-    this.getPublications(this.page);
+    this.getPublications(this.user, this.page);
   }
   actualizar() {
-    this.getPublications(this.page);
+    this.getPublications(this.user, this.page);
   }
   // -----------------------------------------------------------------------------------------------
   // OBTENER PUBLICACIONES DESDE API
   // -----------------------------------------------------------------------------------------------
-  getPublications(page, adding = false) {
-    this.publicationService.getPublications(this.token, page).subscribe(
+  getPublications(user, page, adding = false) {
+    this.publicationService.getPublicationsUser(this.token, user, page).subscribe(
       response => {
         if (response.publications) {
           this.total = response.total_items;
@@ -81,13 +79,12 @@ export class PublicationsComponent implements OnInit {
             const arrayA = this.publications;
             const arrayB = response.publications;
             this.publications = arrayA.concat(arrayB);
-
             $('html, body').animate({ scrollTop: $('html').prop('scrollHeight') }, 500);
           }
+
         } else {
           this.status = 'error';
         }
-
       },
       error => {
         const errorMessage = error as any;
@@ -106,8 +103,10 @@ export class PublicationsComponent implements OnInit {
     if (this.page === this.pages) {
       this.noMore = true;
     }
-    this.getPublications(this.page, true);
+
+    this.getPublications(this.user, this.page, true);
   }
 
 
 }
+

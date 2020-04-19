@@ -15,22 +15,10 @@
 
         </div>
         <!-- profile picture end -->
-        <div class="posted-author" *ngIf="publication.user">
-            <h6 class="author"><a [routerLink]="['/perfil-usuario',publication.user._id]">{{publication.user.name}}</a></h6>
+        <div class="posted-author">
+            <h6 class="author"><a href="#">{{publication.user.name}}</a></h6>
             <h6 class="author"><a href="#">{{publication.user.nickname}}</a></h6>
             <span class="post-time">{{ (publication.created_at | amFromUnix)  | amLocale: 'es' | amTimeAgo }}</span>
-        </div>
-        <div class="post-settings-bar">
-            <span></span>
-            <span></span>
-            <span></span>
-            <div class="post-settings arrow-shape">
-                <ul>
-                    <li><button>adda</button></li>
-                    <li><button>edit post</button></li>
-                    <li><button>embed adda</button></li>
-                </ul>
-            </div>
         </div>
     </div>
     <!-- post title start -->

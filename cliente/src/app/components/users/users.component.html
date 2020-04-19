@@ -3,10 +3,10 @@
         <div class="panel-body">
             <!--LISTADO-->
             <div class="list-group">
-                 <div class="list-group-item d-flex justify-content-between align-items-center"
+                <div class="list-group-item d-flex justify-content-between align-items-center"
                     *ngFor="let user of users">
                     <div class="col-2">
-                        <a class="image-parent" href="#">
+                        <a class="image-parent" [routerLink]="['/perfil-usuario',user._id]">
                             <img src="{{url + 'get-image-user/' +user.image}}" alt="Card image cap" class="card-img-top"
                                 *ngIf="user.image">
                             <img src="assets/usuario.jpg" alt="Card image cap" class="card-img-top" *ngIf="!user.image">
@@ -42,8 +42,7 @@
                 <li class="page-item" *ngIf="page > 1"><a class="page-link" [routerLink]="['/gente', prevPage]">
                         anterior</a>
                 </li>
-                <li class="page-item" *ngIf="pages != page"><a class="page-link"
-                        [routerLink]="['/gente', nextPage]">
+                <li class="page-item" *ngIf="pages != page"><a class="page-link" [routerLink]="['/gente', nextPage]">
                         siguiente</a> </li>
             </ul>
         </div>

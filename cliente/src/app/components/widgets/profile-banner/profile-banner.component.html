@@ -4,12 +4,12 @@
             <a [routerLink]="['/mi-perfil']" [routerLinkActive]="['active']">
                 <img src="assets/images/banner/banner-small.jpg" alt="">
             </a>
-            <a [routerLink]="['/mi-perfil']" [routerLinkActive]="['active']" class="profile-thumb-2">
+            <a [routerLink]="['/perfil-usuario',identity._id]" [routerLinkActive]="['active']" class="profile-thumb-2">
                 <img src="{{url + 'get-image-user/'+ identity.image}}" alt="">
             </a>
         </figure>
         <div class="profile-desc text-center">
-            <h6 class="author"><a [routerLink]="['/mi-perfil']"
+            <h6 class="author"><a [routerLink]="['/perfil-usuario',identity._id]"
                     [routerLinkActive]="['active']">{{identity.name + ' ' +identity.surname}}</a>
             </h6>
             <p>{{identity.nickname}}</p>

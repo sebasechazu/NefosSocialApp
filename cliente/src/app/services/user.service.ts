@@ -120,11 +120,11 @@ export class UserService {
     // --------------------------------------------------------------------------------------------
     // OBTENER USUARIO
     // --------------------------------------------------------------------------------------------
-    getUser(): Observable<any> {
+    getUser(id): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', this.getToken());
 
-        return this.http.get(this.url + 'user/' + this.id, { headers });
+        return this.http.get(this.url + 'user/' + id, { headers });
 
     }
 

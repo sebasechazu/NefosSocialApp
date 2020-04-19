@@ -29,7 +29,6 @@ export class PublicationService {
 
         return this.http.post(this.url + 'publication', params, { headers });
     }
-
     // --------------------------------------------------------------------------------------------
     // LISTAR PUBLICACIONES
     // --------------------------------------------------------------------------------------------
@@ -37,6 +36,14 @@ export class PublicationService {
         const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
 
         return this.http.get(this.url + 'publications/' + page, { headers });
+    }
+    // --------------------------------------------------------------------------------------------
+    // LISTAR PUBLICACIONES DE USUARIO
+    // --------------------------------------------------------------------------------------------
+    getPublicationsUser(token, userId, page = 1): Observable<any> {
+        const headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+
+        return this.http.get(this.url + 'publications-user/' + userId + '/' + page, { headers });
     }
 
     // --------------------------------------------------------------------------------------------

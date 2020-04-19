@@ -28,7 +28,7 @@ export class FollowService {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', token);
 
-        return this.http.post(this.url + 'follow', params, { headers });
+        return this.http.post(this.url + 'follow/', params, { headers });
     }
     // --------------------------------------------------------------------------------------------
     // ELIMINAR UN SEGUIMIENTO
