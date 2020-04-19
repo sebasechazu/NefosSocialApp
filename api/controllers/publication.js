@@ -85,7 +85,7 @@ function getPublicationsUser(req, res) {
         page = req.params.page;
     }
     //obtener id del usuario
-    var user =  req.user.sub;
+    var user = req.user.sub;
     if (req.params.user) {
         user = req.params.user;
     }
@@ -150,7 +150,7 @@ function deletePublication(req, res) {
 //-------------------------------------------------------------------------------------------------
 function uploadImage(req, res) {
     //obtenenos el id del usuario
-    var PublicationId = req.params.id;
+    var publicationId = req.params.id;
     //corroborar si es el usuario registrado el que quiere subir la imagen
     if (req.files) {
         //sacamos el path completo de la imagen que tratamos de subir
@@ -166,10 +166,10 @@ function uploadImage(req, res) {
         //comprobar si el documento tiene una extension de archivo logueado
         if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jepg' || file_ext == 'gif') {
 
-            Publication.findOne({ 'user': req.user.sub, '_id': PublicationId }).exec((err, publication) => {
+            Publication.find({ 'user': req.user.sub, '_id': publicationId }).exec((err, publication) => {
                 if (publication) {
                     // actualizar documento de la publicacion
-                    Publication.findByIdAndUpdate(PublicationId, { file: file_name }, (err, publicationUpdated) => {
+                    Publication.findByIdAndUpdate(publicationId, { file: file_name }, { new: true }, (err, publicationUpdated) => {
                         //comprueba si hay error en la peticion
                         if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
                         //comprueba si no hay usuario en la peticion
