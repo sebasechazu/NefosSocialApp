@@ -1,15 +1,15 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
-import { UserService } from '../../../services/user.service';
+import { UserService } from '../../services/user.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { GLOBAL } from '../../../services/global';
+import { GLOBAL } from '../../services/global';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css'],
   providers: [UserService]
 })
-export class NavbarComponent implements OnInit, DoCheck {
+export class HeaderComponent implements OnInit, DoCheck {
   public title: string;
   public identity;
   public url: string;

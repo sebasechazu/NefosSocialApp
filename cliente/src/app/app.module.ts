@@ -9,7 +9,7 @@ import { MomentModule } from 'angular2-moment';
 // -------------------------------------------------------------------------------------------------
 // COMPONENTES
 // -------------------------------------------------------------------------------------------------
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
+import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
@@ -21,12 +21,13 @@ import { RecommendedUsersComponent } from './components/widgets/recommended-user
 import { SharePublicationComponent } from './components/widgets/share-publication/share-publication.component';
 import { PublicationsComponent } from './components/widgets/publications/publications.component';
 import { UserPublicationsComponent } from './components/user-publications/user-publications.component';
+import { UserFollowingComponent } from './components/user-following/user-following.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
+    HeaderComponent,
     LoginComponent,
     RegisterComponent,
     HomeComponent,
@@ -37,7 +38,8 @@ import { UserPublicationsComponent } from './components/user-publications/user-p
     RecommendedUsersComponent,
     SharePublicationComponent,
     PublicationsComponent,
-    UserPublicationsComponent
+    UserPublicationsComponent,
+    UserFollowingComponent
   ],
   imports: [
     BrowserModule,

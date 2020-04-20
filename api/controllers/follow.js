@@ -71,10 +71,14 @@ function getFollowingUsers(req, res) {
 
             if (!follows) return res.status(404).send({ mesagge: 'no esta siguiendo a ningun usuario' });
 
-            return res.status(200).send({
-                total: total,
-                pages: Math.ceil(total / itemsPerPage),
-                follows
+            followUserIds(req.user.sub).then((value) => {
+                return res.status(200).send({
+                    total: total,
+                    pages: Math.ceil(total / itemsPerPage),
+                    follows,
+                    users_following: value.following,
+                    users_follow_me: value.followed,
+                });
             });
         });
 }
@@ -102,11 +106,13 @@ function getFollowedUser(req, res) {
 
             if (!follows) return res.status(404).send({ mesagge: 'no te sigue ningun usuario' });
 
+
             return res.status(200).send({
                 total: total,
                 pages: Math.ceil(total / itemsPerPage),
                 follows
             });
+
         });
 
 }
@@ -133,6 +139,37 @@ function getMyFollows(req, res) {
         return res.status(200).send({ follows });
     });
 
+}
+//-------------------------------------------------------------------------------------------------
+//FUNCION ASYNCRONA PARA OBTENER LOS RESULTADOS DE FOLLOWING DENTRO DE USERs - /users/:id
+//-------------------------------------------------------------------------------------------------
+async function followUserIds(user_id) {
+    try {
+        var following = await Follow.find({ "user": user_id }).select({ '_id': 0, '__v': 0, 'user': 0 }).exec()
+            .then((follows) => { return follows; }).catch((err) => { return handleError(err) });
+
+        var followed = await Follow.find({ "followed": user_id }).select({ '_id': 0, '__v': 0, 'followed': 0 }).exec()
+            .then((follows) => { return follows; }).catch((err) => { return handleError(err) });
+
+        //Procesar following Ids
+        var following_clean = [];
+        following.forEach((follow) => {
+            following_clean.push(follow.followed);
+        });
+
+        //Procesar followed Ids
+        var followed_clean = [];
+        followed.forEach((follow) => {
+            followed_clean.push(follow.user);
+        });
+        return {
+            following: following_clean,
+            followed: followed_clean
+        }
+
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 //------------------------------------------------------------------------------------------------

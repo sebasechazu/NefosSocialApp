@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-5">
-                    <!-- header top navigation start -->
+                    <!---- header top navigation start ---->
                     <div class="header-top-navigation">
                         <nav>
                             <ul>
@@ -16,10 +16,10 @@
                             </ul>
                         </nav>
                     </div>
-                    <!-- header top navigation start -->
+                    <!---- header top navigation start ---->
                 </div>
                 <div class="col-md-2">
-                    <!-- brand logo start -->
+                    <!---- brand logo start 
                     <div class="brand-logo text-center">
                         <nav>
                             <ul>
@@ -31,7 +31,7 @@
                             </ul>
                         </nav>
                     </div>
-                    <!-- brand logo end -->
+                     brand logo end ---->
                 </div>
                 <div class="col-md-5">
                     <div class="header-top-right d-flex align-items-center justify-content-end">
@@ -51,16 +51,19 @@
                                     <div class="profile-body">
                                         <ul>
                                             <li> <a [routerLink]="['/perfil-usuario',identity._id]"
-                                                    [routerLinkActive]="['active']">Perfil</a></li>
+                                                    [routerLinkActive]="['active']"><i
+                                                        class="flaticon-user"></i>Perfil</a></li>
                                             <li><a href="#"><i class="flaticon-message"></i>Inbox</a></li>
                                             <li><a href="#"><i class="flaticon-document"></i>Activity</a></li>
                                         </ul>
                                         <ul>
-                                            <li><a href="#"><i class="flaticon-settings"></i>Setting</a></li>
+                                            <li><a href="#"><i class="flaticon-settings"></i>Setting</a>
+                                            </li>
 
                                             <li><a (click)="logout()" href="#"><span
                                                         class="flaticon-unlock"></span>Cerrar Sesion
-                                                </a></li>
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

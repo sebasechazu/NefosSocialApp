@@ -17,7 +17,9 @@ export class UploadService {
         fileName: string) {
         // tslint:disable-next-line: only-arrow-functions
         return new Promise(function (resolve, reject) {
+            // tslint:disable-next-line: prefer-const
             var formData: any = new FormData();
+            // tslint:disable-next-line: prefer-const
             var xhr = new XMLHttpRequest();
 
             // tslint:disable-next-line: prefer-for-of
