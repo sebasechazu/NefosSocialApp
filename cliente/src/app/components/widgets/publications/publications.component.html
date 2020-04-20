@@ -1,4 +1,8 @@
 <br>
+<!-- light gallery css -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="assets/css/plugins/lightgallery.min.css">
+
 <!-- post status start -->
 <div class="card" *ngFor='let publication of publications'>
     <!-- post title start -->
@@ -12,34 +16,68 @@
                     <img src="../../../../assets/usuario.jpg" alt="profile picture" *ngIf='!publication.user.image'>
                 </figure>
             </a>
-
         </div>
         <!-- profile picture end -->
         <div class="posted-author" *ngIf="publication.user">
-            <h6 class="author"><a [routerLink]="['/perfil-usuario',publication.user._id]">{{publication.user.name}}</a></h6>
+            <h6 class="author"><a [routerLink]="['/perfil-usuario',publication.user._id]">{{publication.user.name}}</a>
+            </h6>
             <h6 class="author"><a href="#">{{publication.user.nickname}}</a></h6>
             <span class="post-time">{{ (publication.created_at | amFromUnix)  | amLocale: 'es' | amTimeAgo }}</span>
         </div>
-        <div class="post-settings-bar">
+
+        <div class="post-settings-bar" *ngIf="publication.user._id == identity._id">
             <span></span>
             <span></span>
             <span></span>
             <div class="post-settings arrow-shape">
                 <ul>
-                    <li><button>adda</button></li>
-                    <li><button>edit post</button></li>
-                    <li><button>embed adda</button></li>
+                    <!-- Button trigger modal -->
+                    <li><button type="button" data-toggle="modal"
+                            [attr.data-target]="'#Modal' + publication._id">Eliminar</button></li>
+                    <li><button>editar</button></li>
                 </ul>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="Modal{{publication._id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Seguro que quieres eliminar la publicacion?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{publication.text}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" (click)="deletePublication(publication._id)"
+                            data-dismiss="modal">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!-- post title start -->
-
     <div class="post-content">
         <p class="post-desc pb-0">
             {{publication.text}}
-
         </p>
+        <div class="post-thumb-gallery" *ngIf="publication.file != 'null'">
+            <figure class="lightgallery">
+                <a href="{{url + 'get-image-pub/' + publication.file}}">
+                    <img src="{{url + 'get-image-pub/' + publication.file}}" alt="publication.file">
+                </a>
+                <script type="text/javascript">
+                    lightGallery(document.getElementById('lightgallery'));
+                </script>
+            </figure>
+
+        </div>
         <div class="post-meta">
             <button class="post-meta-like">
                 <i class="bi bi-heart-beat"></i>
@@ -69,3 +107,4 @@
             ver mas </button>
     </p>
 </div>
+<!-- Main JS -->

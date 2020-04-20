@@ -47,6 +47,7 @@ export class SharePublicationComponent implements OnInit {
   public publication: Publication;
   public estado: string;
   public filesToUpload: Array<File>;
+  public showImage;
   // evento de salida
   @Output() enviar = new EventEmitter<string>();
 
@@ -61,7 +62,7 @@ export class SharePublicationComponent implements OnInit {
       response => {
         if (response.publication) {
           // subir imagen
-          this.uploadService.makeFileRequest(this.url + 'upload-image-pub/' + response.publication._id, [], this.filesToUpload, this.token, 'image')
+          this.uploadService.makeFileRequest(this.url + 'upload-img-pub/' + response.publication._id, [], this.filesToUpload, this.token, 'image')
             .then((result: any) => {
               this.publication.file = result.image;
               this.status = 'success';
@@ -94,6 +95,9 @@ export class SharePublicationComponent implements OnInit {
   enviarEstado(event) {
     this.estado = 'enviado';
     this.enviar.emit(this.estado);
+  }
+  showThisImage(id) {
+    this.showImage = id;
   }
 
 }

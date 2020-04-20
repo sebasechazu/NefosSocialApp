@@ -20,8 +20,6 @@ import { PublicationService } from '../../../services/publication.service';
 // ------------------------------------------------------------------------------------------------
 import { GLOBAL } from '../../../services/global';
 
-
-
 @Component({
   selector: 'app-publications',
   templateUrl: './publications.component.html',
@@ -61,6 +59,7 @@ export class PublicationsComponent implements OnInit {
 
   ngOnInit() {
     this.getPublications(this.page);
+
   }
   actualizar() {
     this.getPublications(this.page);
@@ -107,6 +106,23 @@ export class PublicationsComponent implements OnInit {
       this.noMore = true;
     }
     this.getPublications(this.page, true);
+  }
+  // ----------------------------------------------------------------------------------------------
+  // ELIMINAR PUBLICACION
+  // ----------------------------------------------------------------------------------------------
+  deletePublication(id) {
+    this.publicationService.deletePublications(this.token, id).subscribe(
+      response => {
+        this.actualizar();
+      },
+      error => {
+        const errorMessage = error as any;
+        console.log(errorMessage);
+        if (errorMessage != null) {
+          this.status = 'error';
+        }
+      }
+    )
   }
 
 
