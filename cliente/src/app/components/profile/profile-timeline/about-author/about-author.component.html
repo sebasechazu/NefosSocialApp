@@ -1,0 +1,14 @@
+<div class="card widget-item" *ngIf ="user">
+    <h4 class="widget-title">{{user.name}}</h4>
+    <div class="widget-body">
+        <div class="about-author">
+            <p>{{user.nickname}}</p>
+            <ul class="author-into-list" *ngIf ="stats">
+                <li >Siguiendo <span class="badge badge-primary">{{stats.following}}</span></li>
+                <li>Seguidores <span class="badge badge-primary">{{stats.followed}}</span></li>
+                <li>Publicaciones <span class="badge badge-primary">{{stats.publications}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

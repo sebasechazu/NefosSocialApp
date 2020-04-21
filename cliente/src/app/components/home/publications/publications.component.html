@@ -1,0 +1,104 @@
+<br>
+
+<!-- post status start -->
+<div class="card" *ngFor='let publication of publications'>
+    <!-- post title start -->
+    <div class="post-title d-flex align-items-center">
+        <!-- profile picture end -->
+        <div class="profile-thumb">
+            <a href="#">
+                <figure class="profile-thumb-middle">
+                    <img src="{{url + 'get-image-user/' + publication.user.image}}" alt="profile picture"
+                        *ngIf='publication.user.image'>
+                    <img src="../../../../assets/usuario.jpg" alt="profile picture" *ngIf='!publication.user.image'>
+                </figure>
+            </a>
+        </div>
+        <!-- profile picture end -->
+        <div class="posted-author" *ngIf="publication.user">
+            <h6 class="author"><a [routerLink]="['/perfil-usuario',publication.user._id]">{{publication.user.name}}</a>
+            </h6>
+            <h6 class="author"><a href="#">{{publication.user.nickname}}</a></h6>
+            <span class="post-time">{{ (publication.created_at | amFromUnix)  | amLocale: 'es' | amTimeAgo }}</span>
+        </div>
+
+        <div class="post-settings-bar" *ngIf="publication.user._id == identity._id">
+            <span></span>
+            <span></span>
+            <span></span>
+            <div class="post-settings arrow-shape">
+                <ul>
+                    <!-- Button trigger modal -->
+                    <li><button type="button" data-toggle="modal"
+                            [attr.data-target]="'#Modal' + publication._id">Eliminar</button></li>
+                    <li><button>editar</button></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="Modal{{publication._id}}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Seguro que quieres eliminar la publicacion?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{publication.text}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" (click)="deletePublication(publication._id)"
+                            data-dismiss="modal">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- post title start -->
+    <div class="post-content">
+        <p class="post-desc pb-0">
+            {{publication.text}}
+        </p>
+        <div class="post-thumb-gallery" *ngIf="publication.file != 'null'">
+            <figure class="lightgallery">
+                <a href="{{url + 'get-image-pub/' + publication.file}}">
+                    <img src="{{url + 'get-image-pub/' + publication.file}}" alt="publication.file">
+                </a>
+            </figure>
+
+        </div>
+        <div class="post-meta">
+            <button class="post-meta-like">
+                <i class="bi bi-heart-beat"></i>
+                <span>You and 206 people like this</span>
+                <strong>206</strong>
+            </button>
+            <ul class="comment-share-meta">
+                <li>
+                    <button class="post-comment">
+                        <i class="bi bi-chat-bubble"></i>
+                        <span>41</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="post-share">
+                        <i class="bi bi-share"></i>
+                        <span>07</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="col-lg-12 text-center" *ngIf="publications">
+    <p>
+        <button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
+            ver mas </button>
+    </p>
+</div>
+<!-- Main JS -->

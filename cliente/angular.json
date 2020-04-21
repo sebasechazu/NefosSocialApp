@@ -24,12 +24,10 @@
               "src/assets"
             ],
             "styles": [
-              "./src/assets/styles.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "./src/assets/styles.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -124,6 +122,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "cliente"
 }

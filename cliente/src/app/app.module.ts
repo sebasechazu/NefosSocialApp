@@ -7,6 +7,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MomentModule } from 'angular2-moment';
 // -------------------------------------------------------------------------------------------------
+// SERVICIOS
+// -------------------------------------------------------------------------------------------------
+import { ProfileService } from './services/profile.service';
+// -------------------------------------------------------------------------------------------------
 // COMPONENTES
 // -------------------------------------------------------------------------------------------------
 import { HeaderComponent } from './components/header/header.component';
@@ -15,14 +19,16 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersComponent } from './components/users/users.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { ProfileBannerComponent } from './components/widgets/profile-banner/profile-banner.component';
-import { RecommendedUsersComponent } from './components/widgets/recommended-users/recommended-users.component';
-import { SharePublicationComponent } from './components/widgets/share-publication/share-publication.component';
-import { PublicationsComponent } from './components/widgets/publications/publications.component';
-import { UserPublicationsComponent } from './components/user-publications/user-publications.component';
+import { ProfileBannerComponent } from './components/home/profile-banner/profile-banner.component';
+import { SharePublicationComponent } from './components/shared/share-publication/share-publication.component';
+import { PublicationsComponent } from './components/home/publications/publications.component';
+import { UserPublicationsComponent } from './components/profile/profile-timeline/user-publications/user-publications.component';
 import { UserFollowingComponent } from './components/user-following/user-following.component';
-
+import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileTimelineComponent } from './components/profile/profile-timeline/profile-timeline.component';
+import { ProfileFollowingComponent } from './components/profile/profile-following/profile-following.component';
+import { AboutAuthorComponent } from './components/profile/profile-timeline/about-author/about-author.component';
+import { RecommendedUsersComponent } from './components/profile/profile-timeline/recommended-users/recommended-users.component';
 
 @NgModule({
   declarations: [
@@ -33,13 +39,16 @@ import { UserFollowingComponent } from './components/user-following/user-followi
     HomeComponent,
     UserEditComponent,
     UsersComponent,
-    UserProfileComponent,
     ProfileBannerComponent,
-    RecommendedUsersComponent,
     SharePublicationComponent,
     PublicationsComponent,
     UserPublicationsComponent,
-    UserFollowingComponent
+    UserFollowingComponent,
+    ProfileComponent,
+    ProfileTimelineComponent,
+    ProfileFollowingComponent,
+    AboutAuthorComponent,
+    RecommendedUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +57,7 @@ import { UserFollowingComponent } from './components/user-following/user-followi
     HttpClientModule,
     MomentModule
   ],
-  providers: [],
+  providers: [ProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

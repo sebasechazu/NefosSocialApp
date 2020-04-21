@@ -6,7 +6,7 @@
                 <div class="list-group-item d-flex justify-content-between align-items-center"
                     *ngFor="let user of users">
                     <div class="col-2">
-                        <a class="image-parent" [routerLink]="['/perfil-usuario',user._id]">
+                        <a class="image-parent" [routerLink]="['/perfil',user._id]">
                             <img src="{{url + 'get-image-user/' +user.image}}" alt="Card image cap" class="card-img-top"
                                 *ngIf="user.image">
                             <img src="assets/usuario.jpg" alt="Card image cap" class="card-img-top" *ngIf="!user.image">

@@ -1,37 +1,35 @@
-<div class="jumbotron">
-    <div class="main-wrapper pt-80">
-        <div class="container">
-            <div class="row">
+<div class="main-wrapper pt-80">
+    <div class="container">
+        <div class="row">
+            <!-------------------------------------->
+            <!----------Columnda derecha------------>
+            <!-------------------------------------->
+            <div class="col-lg-3 order-2 order-lg-1">
+                <aside class="widget-area">
+                    <!-- Tarjeta Perfil del usuario -->
+                    <app-profile-banner></app-profile-banner>
+                </aside>
+            </div>
+            <!-------------------------------------->
+            <!----------Columnda Central------------>
+            <!-------------------------------------->
+            <div class="col-lg-6 order-1 order-lg-2">
                 <!-------------------------------------->
-                <!----------Columnda derecha------------>
+                <!--------Compartir Publicacion--------->
                 <!-------------------------------------->
-                <div class="col-lg-3 order-2 order-lg-1">
-                    <aside class="widget-area">
-                        <!-- Tarjeta Perfil del usuario -->
-                        <app-profile-banner></app-profile-banner>
-                    </aside>
-                </div>
+                <app-share-publication (enviar)="publications.actualizar()"></app-share-publication>
                 <!-------------------------------------->
-                <!----------Columnda Central------------>
+                <!--------TimeLine Publicaciones-------->
                 <!-------------------------------------->
-                <div class="col-lg-6 order-1 order-lg-2">                   
-                    <!-------------------------------------->
-                    <!--------Compartir Publicacion--------->
-                    <!-------------------------------------->
-                    <app-share-publication (enviar)="publications.actualizar()"></app-share-publication>
-                    <!-------------------------------------->
-                    <!--------TimeLine Publicaciones-------->
-                    <!-------------------------------------->
-                    <app-publications #publications></app-publications>
-                </div>
-                <!-------------------------------------->
-                <!----------Columnda izquierda---------->
-                <!-------------------------------------->
-                <div class="col-lg-3 order-3">
-                    <aside class="widget-area">
-                        <app-recommended-users></app-recommended-users>
-                    </aside>
-                </div>
+                <app-publications #publications></app-publications>
+            </div>
+            <!-------------------------------------->
+            <!----------Columnda izquierda---------->
+            <!-------------------------------------->
+            <div class="col-lg-3 order-3">
+                <aside class="widget-area">
+                    <app-recommended-users></app-recommended-users>
+                </aside>
             </div>
         </div>
     </div>
