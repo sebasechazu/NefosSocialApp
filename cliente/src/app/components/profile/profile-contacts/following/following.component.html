@@ -5,7 +5,9 @@
             <div class="profile-thumb">
                 <a href="#">
                     <figure class="profile-thumb-middle">
-                        <img src="{{url + 'get-image-user/' + follow.followed.image}}" alt="profile picture">
+                        <img src="{{url + 'get-image-user/' + follow.followed.image}}" alt="profile picture" *ngIf="follow.followed.image">
+
+                        <img src="../../../../../assets/images/profile/usuario.png" alt="profile picture" *ngIf="!follow.followed.image">
                     </figure>
                 </a>
             </div>
@@ -33,17 +35,17 @@
                             <span> <i class="add-frnd"></i></span> Siguiendo
                         </ng-template>
                     </button>
-
                 </div>
             </div>
         </div>
     </div>
-    <div class="pagination justify-content-center">
-        <ul >
-            <li class="page-item" *ngIf="page > 1"><a class="page-link" [routerLink]="['/gente', prevPage]">anterior</a>
-            </li>
-            <li class="page-item" *ngIf=" pages !=page"><a class="page-link" [routerLink]="['/gente', nextPage]">
-                    siguiente</a> </li>
-        </ul>
-    </div>
+</div>
+<br>
+<div class="pagination justify-content-center">
+    <ul >
+        <li class="edit-btn" *ngIf="page > 1"><a class="page-link" [routerLink]="['/gente', prevPage]">anterior</a>
+        </li>
+        <li class="edit-btn" *ngIf=" pages !=page"><a class="page-link" [routerLink]="['/gente', nextPage]">
+                siguiente</a> </li>
+    </ul>
 </div>
