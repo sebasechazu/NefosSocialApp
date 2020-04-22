@@ -10,6 +10,8 @@ import { MomentModule } from 'angular2-moment';
 // SERVICIOS
 // -------------------------------------------------------------------------------------------------
 import { ProfileService } from './services/profile.service';
+import { UserService } from './services/user.service';
+import { FollowService } from './services/follow.service';
 // -------------------------------------------------------------------------------------------------
 // COMPONENTES
 // -------------------------------------------------------------------------------------------------
@@ -26,9 +28,11 @@ import { UserPublicationsComponent } from './components/profile/profile-timeline
 import { UserFollowingComponent } from './components/user-following/user-following.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileTimelineComponent } from './components/profile/profile-timeline/profile-timeline.component';
-import { ProfileFollowingComponent } from './components/profile/profile-following/profile-following.component';
+import { ProfileContacsComponent } from './components/profile/profile-contacts/profile-contacs.component';
 import { AboutAuthorComponent } from './components/profile/profile-timeline/about-author/about-author.component';
 import { RecommendedUsersComponent } from './components/profile/profile-timeline/recommended-users/recommended-users.component';
+import { FollowingComponent } from './components/profile/profile-contacts/following/following.component';
+
 
 @NgModule({
   declarations: [
@@ -46,9 +50,11 @@ import { RecommendedUsersComponent } from './components/profile/profile-timeline
     UserFollowingComponent,
     ProfileComponent,
     ProfileTimelineComponent,
-    ProfileFollowingComponent,
+    ProfileContacsComponent,
     AboutAuthorComponent,
-    RecommendedUsersComponent
+    RecommendedUsersComponent,
+    FollowingComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -57,7 +63,7 @@ import { RecommendedUsersComponent } from './components/profile/profile-timeline
     HttpClientModule,
     MomentModule
   ],
-  providers: [ProfileService],
+  providers: [ProfileService, UserService, FollowService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

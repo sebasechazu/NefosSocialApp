@@ -7,7 +7,7 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UsersComponent } from './components/users/users.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileTimelineComponent } from './components/profile/profile-timeline/profile-timeline.component';
-import { ProfileFollowingComponent } from './components/profile/profile-following/profile-following.component';
+import { ProfileContacsComponent } from './components/profile/profile-contacts/profile-contacs.component';
 
 
 const routes: Routes = [
@@ -21,7 +21,7 @@ const routes: Routes = [
     path: 'perfil/:id', component: ProfileComponent, children: [
       { path: '', component: ProfileTimelineComponent },
       { path: 'timeline', component: ProfileTimelineComponent },
-      { path: 'seguidores', component: ProfileFollowingComponent }]
+      { path: 'contactos', component: ProfileContacsComponent }]
   },
   { path: 'gente/:page', component: UsersComponent },
   { path: '**', component: HomeComponent }
