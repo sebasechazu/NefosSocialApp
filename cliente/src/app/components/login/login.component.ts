@@ -1,6 +1,18 @@
+// ------------------------------------------------------------------------------------------------
+// COMPONENTE LOGIN
+// ------------------------------------------------------------------------------------------------
 import { Component, OnInit } from '@angular/core';
+// ------------------------------------------------------------------------------------------------
+// ROUTING
+// ------------------------------------------------------------------------------------------------
 import { Router, ActivatedRoute, Params } from '@angular/router';
+// ------------------------------------------------------------------------------------------------
+// MODELOS
+// ------------------------------------------------------------------------------------------------
 import { User } from '../../models/user';
+// ------------------------------------------------------------------------------------------------
+// SERVICIOS
+// ------------------------------------------------------------------------------------------------
 import { UserService } from '../../services/user.service';
 
 
@@ -12,7 +24,6 @@ import { UserService } from '../../services/user.service';
 })
 export class LoginComponent implements OnInit {
 
-  public title: string;
   public user: User;
   public status: string;
   public identity;
@@ -24,13 +35,15 @@ export class LoginComponent implements OnInit {
     private userService: UserService
 
   ) {
-    this.title = 'identificate';
     this.user = new User('', '', '', '', '', '', 'ROLE_USER', '');
   }
-
   ngOnInit() {
-    console.log('Componente de login cargando...');
+    console.log('login');
+
   }
+  // ----------------------------------------------------------------------------------------------
+  // LOGEARSE EN EL SITIO
+  // ----------------------------------------------------------------------------------------------
   onSubmit() {
     // loguear al usuario y conseguir sus datos
     this.userService.signup(this.user).subscribe(
@@ -63,7 +76,6 @@ export class LoginComponent implements OnInit {
         console.log(this.token);
         if (this.token.lenght <= 0) {
           this.status = 'error';
-
         } else {
           // PERSISTIR TOKEN DEL USUARIO
           localStorage.setItem('token', JSON.stringify(this.token));

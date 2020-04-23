@@ -18,7 +18,7 @@
                                         <div class="friend-list-view">
                                             <!-- profile picture end -->
                                             <div class="profile-thumb">
-                                                <a href="#">
+                                                <a [routerLink]="['/perfil',user._id]" [routerLinkActive]="['active']">
                                                     <figure class="profile-thumb-middle">
                                                         <img src="{{url + 'get-image-user/' +user.image}}"
                                                             alt="Card image cap" class="card-img-top"
@@ -31,8 +31,9 @@
                                             </div>
                                             <!-- profile picture end -->
                                             <div class="posted-author">
-                                                <h6 class="author"><a href="profile.html">{{user.name}}
-                                                        {{user.surname}}</a></h6>
+                                                <h6 class="author"><a [routerLink]="['/perfil',user._id]"
+                                                        [routerLinkActive]="['active']">{{user.name +' '+ user.surname}}</a>
+                                                </h6>
                                             </div>
                                             <!--SEGUIR DEJAR DE SEGUIR-->
                                             <div class="col-6" *ngIf="user._id != identity._id">
@@ -58,13 +59,12 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="load-more text-center">
-
                                             <ul class="pagination justify-content-center">
-                                                <li class="load-more-btn" *ngIf="page > 1"><a class="page-link"
+                                                <li class="common-btn" *ngIf="page > 1"><a
                                                         [routerLink]="['/gente', prevPage]">
                                                         anterior</a>
                                                 </li>
-                                                <li class="load-more-btn" *ngIf="pages != page"><a class="page-link"
+                                                <li class="common-btn" *ngIf="pages != page"><a
                                                         [routerLink]="['/gente', nextPage]">
                                                         siguiente</a> </li>
                                             </ul>

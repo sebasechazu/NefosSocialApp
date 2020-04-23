@@ -37,7 +37,7 @@ export class SharePublicationComponent implements OnInit {
     this.identity = this.userService.getIdentity();
     this.token = this.userService.getToken();
     this.url = GLOBAL.url;
-    this.publication = new Publication('', '', '', this.identity.id, '');
+    this.publication = new Publication('', '', '', this.identity._id, '');
   }
   public title: string;
   public url: string;

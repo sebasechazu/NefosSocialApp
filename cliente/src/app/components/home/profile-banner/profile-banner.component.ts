@@ -1,22 +1,28 @@
+// ------------------------------------------------------------------------------------------------
+// COMPONENTE PROFILE BANNER
+// ------------------------------------------------------------------------------------------------
 import { Component, OnInit } from '@angular/core';
+// ------------------------------------------------------------------------------------------------
 // MODELOS
+// ------------------------------------------------------------------------------------------------
 import { User } from '../../../models/user';
 import { Follow } from '../../../models/follow';
+// ------------------------------------------------------------------------------------------------
 // SERVICIOS
+// ------------------------------------------------------------------------------------------------
 import { UserService } from '../../../services/user.service';
-import { FollowService } from '../../../services/follow.service';
+// ------------------------------------------------------------------------------------------------
 // VARIABLE GLOBAL
+// ------------------------------------------------------------------------------------------------
 import { GLOBAL } from '../../../services/global';
 
 @Component({
   selector: 'app-profile-banner',
   templateUrl: './profile-banner.component.html',
-  styleUrls: ['./profile-banner.component.css'],
-  providers: [UserService, FollowService]
+  styleUrls: ['./profile-banner.component.css']
 })
 export class ProfileBannerComponent implements OnInit {
 
-  public title: string;
   public url: string;
   public identity;
   public stats;
@@ -30,9 +36,6 @@ export class ProfileBannerComponent implements OnInit {
     this.url = GLOBAL.url;
 
   }
-
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
 }

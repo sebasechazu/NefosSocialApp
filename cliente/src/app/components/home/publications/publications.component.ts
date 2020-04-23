@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------------------
-// COMPONENTE
+// COMPONENTE PUBLICACIONES
 // ------------------------------------------------------------------------------------------------
 import { Component, OnInit, Input } from '@angular/core';
 // ------------------------------------------------------------------------------------------------
@@ -23,18 +23,15 @@ import { GLOBAL } from '../../../services/global';
 @Component({
   selector: 'app-publications',
   templateUrl: './publications.component.html',
-  styleUrls: ['./publications.component.css'],
-  providers: [UserService, PublicationService]
+  styleUrls: ['./publications.component.css']
 })
 export class PublicationsComponent implements OnInit {
-
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
     private publicationService: PublicationService,
-
 
   ) {
     this.identity = this.userService.getIdentity();
@@ -54,8 +51,6 @@ export class PublicationsComponent implements OnInit {
   public itemsPerPage;
   public publications: Publication[];
   public noMore = false;
-  // estado de las publicaciones
-  @Input() estado: string;
 
   ngOnInit() {
     this.getPublications(this.page);
@@ -124,6 +119,4 @@ export class PublicationsComponent implements OnInit {
       }
     );
   }
-
-
 }

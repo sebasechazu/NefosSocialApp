@@ -1968,6 +1968,22 @@ input:focus, textarea:focus {
     height: 190px;
   }
 }
+.profile-banner-large-user {
+  background-image: url("../images/banner/friends-banner.jpg");
+  height: 370px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991.98px) {
+  .profile-banner-large-user {
+    height: 270px;
+  }
+}
+
+@media only screen and (max-width: 767.98px) {
+  .profile-banner-large-users {
+    height: 190px;
+  }
+}
 
 .main-menu li {
   display: inline-block;
@@ -2034,8 +2050,8 @@ input:focus, textarea:focus {
 }
 
 .profile-picture {
-  width:100%;
-align-self: start;
+  position: relative;
+
 }
 
 @media only screen and (max-width: 575.98px) {

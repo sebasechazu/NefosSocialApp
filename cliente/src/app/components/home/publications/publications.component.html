@@ -6,7 +6,8 @@
     <div class="post-title d-flex align-items-center">
         <!-- profile picture end -->
         <div class="profile-thumb">
-            <a href="#">
+            <a [routerLink]="['/perfil', publication.user._id]"
+            [routerLinkActive]="['active']">
                 <figure class="profile-thumb-middle">
                     <img src="{{url + 'get-image-user/' + publication.user.image}}" alt="profile picture"
                         *ngIf='publication.user.image'>

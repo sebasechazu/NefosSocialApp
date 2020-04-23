@@ -43,9 +43,9 @@
 <br>
 <div class="pagination justify-content-center">
     <ul >
-        <li class="edit-btn" *ngIf="page > 1"><a class="page-link" [routerLink]="['/gente', prevPage]">anterior</a>
+        <li class="common-btn" *ngIf="page > 1"><a  [routerLink]="['/perfil/{user_id/contactos}', prevPage]">anterior</a>
         </li>
-        <li class="edit-btn" *ngIf=" pages !=page"><a class="page-link" [routerLink]="['/gente', nextPage]">
+        <li class="common-btn" *ngIf=" pages !=page"><a  [routerLink]="['/perfil/user_id/contactos', nextPage]">
                 siguiente</a> </li>
     </ul>
 </div>
