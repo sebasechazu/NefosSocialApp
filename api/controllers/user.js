@@ -163,7 +163,7 @@ function getUsers(req, res) {
     if (req.params.page) {
         page = req.params.page
     }
-    var itemsPerPage = 5;
+    var itemsPerPage = 4;
     //listar todos los usuarios de la base de datos
     User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) => {
         if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });

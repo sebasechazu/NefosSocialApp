@@ -1,51 +1,86 @@
-<div class="jumbotron">
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <!--LISTADO-->
-            <div class="list-group">
-                <div class="list-group-item d-flex justify-content-between align-items-center"
-                    *ngFor="let user of users">
-                    <div class="col-2">
-                        <a class="image-parent" [routerLink]="['/perfil',user._id]">
-                            <img src="{{url + 'get-image-user/' +user.image}}" alt="Card image cap" class="card-img-top"
-                                *ngIf="user.image">
-                            <img src="assets/usuario.jpg" alt="Card image cap" class="card-img-top" *ngIf="!user.image">
-                        </a>
-                    </div>
-                    <div class="col-4">
-                        <h5 class="card-title">{{user.nickname}}</h5>
-                        <p class="card-text">{{user.name}}</p>
+<main>
+    <div class="main-wrapper">
+        <!-- profile banner area start -->
+        <div class="profile-banner-large bg-img" style="background-image: url(assets/images/banner/friends-banner.jpg);"
+            data-bg="assets/images/banner/friends-banner.jpg">
+        </div>
+        <!-- profile banner area end -->
+        <!-- photo section start -->
+        <div class="friends-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="content-box">
+                            <h5 class="content-title">Usuarios Registrados</h5>
+                            <div class="content-body">
+                                <div class="row mt--20">
+                                    <div class="col-lg-3 col-sm-6" *ngFor="let user of users">
+                                        <div class="friend-list-view">
+                                            <!-- profile picture end -->
+                                            <div class="profile-thumb">
+                                                <a href="#">
+                                                    <figure class="profile-thumb-middle">
+                                                        <img src="{{url + 'get-image-user/' +user.image}}"
+                                                            alt="Card image cap" class="card-img-top"
+                                                            *ngIf="user.image">
+                                                        <img src="../../../assets/images/profile/usuario.png"
+                                                            alt="Card image cap" class="card-img-top"
+                                                            *ngIf="!user.image">
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                            <!-- profile picture end -->
+                                            <div class="posted-author">
+                                                <h6 class="author"><a href="profile.html">{{user.name}}
+                                                        {{user.surname}}</a></h6>
+                                            </div>
+                                            <!--SEGUIR DEJAR DE SEGUIR-->
+                                            <div class="col-6" *ngIf="user._id != identity._id">
+                                                <!--BOTON PARA SEGUIR-->
+                                                <button class="add-frnd" *ngIf="follows.indexOf(user._id) < 0"
+                                                    (click)="followUser(user._id)">
+                                                    <span><i class="fas fa-plus-circle"></i></span> Seguir
+                                                </button>
+                                                <!--BOTON PARA DEJAR DE SEGUIR-->
+                                                <button class="add-frnd" *ngIf="follows.indexOf(user._id) >= 0"
+                                                    (mouseenter)="mouseEnter(user._id)"
+                                                    (mouseleave)="mouseLeave(user._id)" (click)="unFollowUser(user._id)"
+                                                    [class.add-frnd]="user._id == followUserOver">
+                                                    <span *ngIf="user._id == followUserOver ; else following">
+                                                        Dejar de seguir
+                                                    </span>
+                                                    <ng-template #following>
+                                                        <span> </span> Siguiendo
+                                                    </ng-template>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="load-more text-center">
 
-                    </div>
-                    <!--SEGUIR DEJAR DE SEGUIR-->
-                    <div class="col-6" *ngIf="user._id != identity._id">
-                        <!--BOTON PARA SEGUIR-->
-                        <button class="btn btn-success" *ngIf="follows.indexOf(user._id) < 0"
-                            (click)="followUser(user._id)">
-                            <span><i class="fas fa-plus-circle"></i></span> Seguir
-                        </button>
-                        <!--BOTON PARA DEJAR DE SEGUIR-->
-                        <button class="btn btn-primary" *ngIf="follows.indexOf(user._id) >= 0"
-                            (mouseenter)="mouseEnter(user._id)" (mouseleave)="mouseLeave(user._id)"
-                            (click)="unFollowUser(user._id)" [class.btn-danger]="user._id == followUserOver">
-                            <span *ngIf="user._id == followUserOver ; else following">
-                                <i class="fas fa-minus-circle"></i> Dejar de seguir
-                            </span>
-                            <ng-template #following>
-                                <span> <i class="fas fa-check-circle"></i></span> Siguiendo
-                            </ng-template>
-                        </button>
+                                            <ul class="pagination justify-content-center">
+                                                <li class="load-more-btn" *ngIf="page > 1"><a class="page-link"
+                                                        [routerLink]="['/gente', prevPage]">
+                                                        anterior</a>
+                                                </li>
+                                                <li class="load-more-btn" *ngIf="pages != page"><a class="page-link"
+                                                        [routerLink]="['/gente', nextPage]">
+                                                        siguiente</a> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <ul class="pagination justify-content-center">
-                <li class="page-item" *ngIf="page > 1"><a class="page-link" [routerLink]="['/gente', prevPage]">
-                        anterior</a>
-                </li>
-                <li class="page-item" *ngIf="pages != page"><a class="page-link" [routerLink]="['/gente', nextPage]">
-                        siguiente</a> </li>
-            </ul>
         </div>
     </div>
+</main>
+<!-- Scroll to top start -->
+<div class="scroll-top not-visible">
+    <i class="bi bi-finger-index"></i>
 </div>
-<div class="clearfix"></div>
+<!-- Scroll to Top End -->

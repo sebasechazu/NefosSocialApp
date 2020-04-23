@@ -1,0 +1,19 @@
+<div class="col-lg-3 col-sm-6">
+    <div class="friend-list-view">
+        <!-- profile picture end -->
+        <div class="profile-thumb">
+            <a href="#">
+                <figure class="profile-thumb-middle">
+                    <img src="{{url + 'get-image-user/' +user.image}}" alt="Card image cap" class="card-img-top"
+                        *ngIf="user.image">
+                    <img src="assets/usuario.jpg" alt="Card image cap" class="card-img-top" *ngIf="!user.image">
+                </figure>
+            </a>
+        </div>
+        <!-- profile picture end -->
+        <div class="posted-author">
+            <h6 class="author"><a href="profile.html">Kate Midiltoin</a></h6>
+            <button class="add-frnd">add friend</button>
+        </div>
+    </div>
+</div>

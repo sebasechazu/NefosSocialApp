@@ -10,7 +10,7 @@
                 <figure class="profile-thumb-middle">
                     <img src="{{url + 'get-image-user/' + publication.user.image}}" alt="profile picture"
                         *ngIf='publication.user.image'>
-                    <img src="../../../../assets/usuario.jpg" alt="profile picture" *ngIf='!publication.user.image'>
+                    <img src="../../../../assets/images/profile/usuario.png" alt="profile picture" *ngIf='!publication.user.image'>
                 </figure>
             </a>
         </div>
@@ -97,7 +97,7 @@
 </div>
 <div class="col-lg-12 text-center" *ngIf="publications">
     <p>
-        <button class="btn btn-success" (click)="viewMore()" *ngIf="!noMore">
+        <button class="common-btn" (click)="viewMore()" *ngIf="!noMore">
             ver mas </button>
     </p>
 </div>

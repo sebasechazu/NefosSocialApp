@@ -1,12 +1,24 @@
+// ------------------------------------------------------------------------------------------------
+//  COMPONENTE USUARIOS
+// ------------------------------------------------------------------------------------------------
 import { Component, OnInit } from '@angular/core';
+// ------------------------------------------------------------------------------------------------
+// ROUTING
+// ------------------------------------------------------------------------------------------------
 import { Router, ActivatedRoute, Params } from '@angular/router';
+// ------------------------------------------------------------------------------------------------
 // MODELOS
+// ------------------------------------------------------------------------------------------------
 import { User } from '../../models/user';
 import { Follow } from '../../models/follow';
+// ------------------------------------------------------------------------------------------------
 // SERVICIOS
+// ------------------------------------------------------------------------------------------------
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
+// ------------------------------------------------------------------------------------------------
 // VARIABLE GLOBAL
+// ------------------------------------------------------------------------------------------------
 import { GLOBAL } from '../../services/global';
 
 @Component({
@@ -83,7 +95,7 @@ export class UsersComponent implements OnInit {
           this.pages = response.pages;
           this.follows = response.users_following;
 
-          page > this.pages ? this.router.navigate(['/gente', 1]) : console.log(this.pages);
+          page > this.pages ? this.router.navigate(['/usuarios', 1]) : console.log(this.pages);
         }
 
       },

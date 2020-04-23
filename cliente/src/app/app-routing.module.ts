@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegisterComponent },
   { path: 'mis-datos', component: UserEditComponent },
-   { path: 'gente', component: UsersComponent },
+   { path: 'usuarios', component: UsersComponent },
   {
     path: 'perfil/:id', component: ProfileComponent, children: [
       { path: '', component: ProfileTimelineComponent },

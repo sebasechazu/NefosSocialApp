@@ -1539,6 +1539,21 @@ input:focus, textarea:focus {
 .post-share-btn:hover {
   background-color: #333333;
 }
+.common-btn {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 14px 30px 12px;
+  border-radius: 40px;
+  background-color: #dc4734;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.common-btn:hover {
+  background-color: #333333;
+}
 
 .share-field-big {
   width: 100%;

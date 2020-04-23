@@ -32,6 +32,7 @@ import { ProfileContacsComponent } from './components/profile/profile-contacts/p
 import { AboutAuthorComponent } from './components/profile/profile-timeline/about-author/about-author.component';
 import { RecommendedUsersComponent } from './components/profile/profile-timeline/recommended-users/recommended-users.component';
 import { FollowingComponent } from './components/profile/profile-contacts/following/following.component';
+import { UserCardComponent } from './components/shared/user-card/user-card.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { FollowingComponent } from './components/profile/profile-contacts/follow
     AboutAuthorComponent,
     RecommendedUsersComponent,
     FollowingComponent,
+    UserCardComponent,
 
   ],
   imports: [
