@@ -5,9 +5,7 @@ import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
-  providers: [UserService]
+  templateUrl: './register.component.html'
 })
 export class RegisterComponent implements OnInit {
 
@@ -16,30 +14,30 @@ export class RegisterComponent implements OnInit {
   public status: string;
 
   constructor(
-    private _route: ActivatedRoute,
-    private _router: Router,
-    private _userService: UserService
+    private route: ActivatedRoute,
+    private router: Router,
+    private userService: UserService
 
   ) {
     this.title = 'Registrate';
     this.user = new User(
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "ROLE_USER",
-      ""
-    )
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+      'ROLE_USER',
+      ''
+    );
   }
 
   ngOnInit() {
-    console.log('Componente de register cargado...')
+    console.log('Componente de register cargado...');
   }
 
   onSubmit(registerForm) {
-    this._userService.register(this.user).subscribe(
+    this.userService.register(this.user).subscribe(
       response => {
         if (response.user && response.user._id) {
           this.status = 'success';
@@ -49,7 +47,7 @@ export class RegisterComponent implements OnInit {
         }
       },
       error => {
-        console.log(<any>error);
+        console.log(error as any);
       }
     );
   }

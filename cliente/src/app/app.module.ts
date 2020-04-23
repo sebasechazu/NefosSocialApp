@@ -12,6 +12,7 @@ import { ProfileService } from './services/profile.service';
 import { UserService } from './services/user.service';
 import { FollowService } from './services/follow.service';
 import { PublicationService } from './services/publication.service';
+import { HomeService } from './services/home.service';
 // -------------------------------------------------------------------------------------------------
 // COMPONENTES
 // -------------------------------------------------------------------------------------------------
@@ -20,8 +21,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 // HOME
 import { HomeComponent } from './components/home/home.component';
-import { ProfileBannerComponent } from './components/home/profile-banner/profile-banner.component';
-import { PublicationsComponent } from './components/home/publications/publications.component';
+import { HomeProfileComponent } from './components/home/home-profile/home-profile.component';
+import { HomePublicationsComponent } from './components/home/home-publications/home-publications.component';
 // HEADER
 import { HeaderComponent } from './components/header/header.component';
 // PROFILE
@@ -41,6 +42,7 @@ import { RecommendedUsersComponent } from './components/shared/recommended-users
  // -----------------------------------------------------------------------------------------------
 import { UserFollowingComponent } from './components/user-following/user-following.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+
  // -----------------------------------------------------------------------------------------------
 
 @NgModule({
@@ -52,9 +54,9 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
     HomeComponent,
     UserEditComponent,
     UsersComponent,
-    ProfileBannerComponent,
+    HomeProfileComponent,
     SharePublicationComponent,
-    PublicationsComponent,
+    HomePublicationsComponent,
     UserPublicationsComponent,
     UserFollowingComponent,
     ProfileComponent,
@@ -75,6 +77,7 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
   ],
   providers: [
     ProfileService,
+    HomeService,
     UserService,
     FollowService,
     PublicationService],

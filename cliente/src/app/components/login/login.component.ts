@@ -14,8 +14,7 @@ import { User } from '../../models/user';
 // SERVICIOS
 // ------------------------------------------------------------------------------------------------
 import { UserService } from '../../services/user.service';
-
-
+// ------------------------------------------------------------------------------------------------
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -38,18 +37,15 @@ export class LoginComponent implements OnInit {
     this.user = new User('', '', '', '', '', '', 'ROLE_USER', '');
   }
   ngOnInit() {
-    console.log('login');
-
   }
   // ----------------------------------------------------------------------------------------------
   // LOGEARSE EN EL SITIO
   // ----------------------------------------------------------------------------------------------
   onSubmit() {
-    // loguear al usuario y conseguir sus datos
+    // Otener los datos del usuario que intenta
     this.userService.signup(this.user).subscribe(
       response => {
         this.identity = response.user;
-        console.log(this.identity);
         if (!this.identity || !this.identity._id) {
           this.status = 'error';
 
@@ -69,11 +65,13 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+  // ----------------------------------------------------------------------------------------------
+  // OBTENER TOKEN VERIFICAION
+  // ----------------------------------------------------------------------------------------------
   getToken() {
     this.userService.signup(this.user, 'true').subscribe(
       response => {
         this.token = response.token;
-        console.log(this.token);
         if (this.token.lenght <= 0) {
           this.status = 'error';
         } else {
@@ -92,6 +90,9 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+  // ----------------------------------------------------------------------------------------------
+  // OBTENER CONTADORES
+  // ----------------------------------------------------------------------------------------------
   getCounters() {
     this.userService.getCounters().subscribe(
       response => {

@@ -21,11 +21,11 @@ import { PublicationService } from '../../../services/publication.service';
 import { GLOBAL } from '../../../services/global';
 
 @Component({
-  selector: 'app-publications',
-  templateUrl: './publications.component.html',
-  styleUrls: ['./publications.component.css']
+  selector: 'app-home-publications',
+  templateUrl: './home-publications.component.html'
+
 })
-export class PublicationsComponent implements OnInit {
+export class HomePublicationsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
