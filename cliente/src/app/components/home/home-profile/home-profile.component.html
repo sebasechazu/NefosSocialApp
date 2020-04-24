@@ -8,11 +8,11 @@
                 <img src="{{url + 'get-image-user/'+ identity.image}}" alt="">
             </a>
         </figure>
-        <div class="profile-desc text-center">
+        <div class="profile-desc text-center" >
             <h6 class="author"><a [routerLink]="['/perfil-usuario',identity._id]"
                     [routerLinkActive]="['active']">{{identity.name + ' ' +identity.surname}}</a>
             </h6>
-            <p *ngIf="identity">{{identity.nickname}}</p>
+            <p >{{identity.nickname}}</p>
             <p *ngIf="stats">
                 <span class="label-stats">
                     Siguiendo

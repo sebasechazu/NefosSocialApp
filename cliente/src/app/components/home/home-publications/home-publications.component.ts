@@ -23,7 +23,6 @@ import { GLOBAL } from '../../../services/global';
 @Component({
   selector: 'app-home-publications',
   templateUrl: './home-publications.component.html'
-
 })
 export class HomePublicationsComponent implements OnInit {
 
@@ -75,13 +74,11 @@ export class HomePublicationsComponent implements OnInit {
             const arrayA = this.publications;
             const arrayB = response.publications;
             this.publications = arrayA.concat(arrayB);
-
             $('html, body').animate({ scrollTop: $('html').prop('scrollHeight') }, 500);
           }
         } else {
           this.status = 'error';
         }
-
       },
       error => {
         const errorMessage = error as any;

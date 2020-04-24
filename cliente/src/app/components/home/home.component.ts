@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------------------------------------
 // COMPONENTE PROFILE BANNER
 // ------------------------------------------------------------------------------------------------
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 // ------------------------------------------------------------------------------------------------
 // MODELOS
 // ------------------------------------------------------------------------------------------------
@@ -17,12 +17,11 @@ import { HomeService } from 'src/app/services/home.service';
 // ------------------------------------------------------------------------------------------------
 import { GLOBAL } from '../../services/global';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
   public url: string;
   public identity;
@@ -31,21 +30,10 @@ export class HomeComponent implements OnInit {
   public status: string;
 
   constructor(
-    private userService: UserService,
-    private homeService: HomeService) {
-
+    private userService: UserService) {
     this.identity = this.userService.getIdentity();
-    this.homeService.selectIdentity(this.identity);
     this.token = this.userService.getToken();
-    this.homeService.selectToken(this.token);
     this.stats = this.userService.getStats();
-    this.homeService.selectStats(this.stats);
     this.url = GLOBAL.url;
-
-  }
-  ngOnInit(
-  ) {
-
-
   }
 }

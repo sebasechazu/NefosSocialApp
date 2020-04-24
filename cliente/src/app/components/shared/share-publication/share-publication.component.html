@@ -10,7 +10,6 @@
             </a>
         </div>
         <!-- profile picture end -->
-
         <!-- share content box start -->
         <div class="share-content-box w-100">
             <form class="share-text-box">
@@ -25,7 +24,6 @@
         </div>
         <!-- share content box end -->
         <!-- Modal start -->
-
         <div class="modal fade" id="textbox" aria-labelledby="textbox">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -35,9 +33,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-
                     <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm); enviarEstado($event);">
-
                         <div class="modal-body custom-scroll">
                             <textarea name="text" #text="ngModel" [(ngModel)]="publication.text"
                                 class="share-field-big custom-scroll" placeholder="Comparte Algo"></textarea>
@@ -45,15 +41,14 @@
                                 el texto de la publicacion es obligatorio
                             </span>
                         </div>
-
                         <div class="modal-body custom-scroll">
                             <label>sube tu foto</label>
                             <input type="file" placeholder="Subir imagen" (change)="fileChangeEvent($event)" />
                         </div>
-
                         <div class="modal-footer">
                             <button type="button" class="post-share-btn" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="post-share-btn" [disabled]="!newPubForm.form.valid">Publicar</button>
+                            <button type="submit" class="post-share-btn"
+                                [disabled]="!newPubForm.form.valid">Publicar</button>
                         </div>
                     </form>
                 </div>
@@ -61,4 +56,3 @@
         </div>
     </div>
 </div>
-

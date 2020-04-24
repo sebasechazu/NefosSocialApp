@@ -47,7 +47,6 @@ export class PublicationService {
 
         return this.http.get(this.url + 'publications-user/' + userId + '/' + page, { headers });
     }
-
     // --------------------------------------------------------------------------------------------
     // BORRAR PUBLICACION
     // --------------------------------------------------------------------------------------------

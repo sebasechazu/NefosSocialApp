@@ -13,6 +13,7 @@ import { UserService } from './services/user.service';
 import { FollowService } from './services/follow.service';
 import { PublicationService } from './services/publication.service';
 import { HomeService } from './services/home.service';
+import { UploadService } from './services/upload.service';
 // -------------------------------------------------------------------------------------------------
 // COMPONENTES
 // -------------------------------------------------------------------------------------------------
@@ -39,11 +40,10 @@ import { SharePublicationComponent } from './components/shared/share-publication
 import { UserCardComponent } from './components/shared/user-card/user-card.component';
 import { RecommendedUsersComponent } from './components/shared/recommended-users/recommended-users.component';
 
- // -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
 import { UserFollowingComponent } from './components/user-following/user-following.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
-
- // -----------------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------------------------
 
 @NgModule({
   declarations: [
@@ -80,7 +80,8 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
     HomeService,
     UserService,
     FollowService,
-    PublicationService],
+    PublicationService,
+    UploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

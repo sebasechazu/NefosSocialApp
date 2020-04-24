@@ -17,9 +17,8 @@ import { UserService } from '../../services/user.service';
 // ------------------------------------------------------------------------------------------------
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  providers: [UserService]
+  templateUrl: './login.component.html'
+
 })
 export class LoginComponent implements OnInit {
 
@@ -48,7 +47,6 @@ export class LoginComponent implements OnInit {
         this.identity = response.user;
         if (!this.identity || !this.identity._id) {
           this.status = 'error';
-
         } else {
           // PERSISTIR DATOS DEL USUARIO
           localStorage.setItem('identity', JSON.stringify(this.identity));
@@ -60,7 +58,6 @@ export class LoginComponent implements OnInit {
         console.log(errorMessage);
         if (errorMessage != null) {
           this.status = 'error';
-
         }
       }
     );

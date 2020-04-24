@@ -21,10 +21,20 @@ import { GLOBAL } from '../../../services/global';
 @Component({
   selector: 'app-share-publication',
   templateUrl: './share-publication.component.html',
-  styleUrls: ['./share-publication.component.css'],
-  providers: [UserService, PublicationService, UploadService]
 })
 export class SharePublicationComponent implements OnInit {
+
+  public title: string;
+  public url: string;
+  public identity;
+  public token;
+  public status: string;
+  public publication: Publication;
+  public estado: string;
+  public filesToUpload: Array<File>;
+  public showImage;
+  // evento de salida
+  @Output() enviar = new EventEmitter<string>();
 
   constructor(
     private route: ActivatedRoute,
@@ -39,17 +49,6 @@ export class SharePublicationComponent implements OnInit {
     this.url = GLOBAL.url;
     this.publication = new Publication('', '', '', this.identity._id, '');
   }
-  public title: string;
-  public url: string;
-  public identity;
-  public token;
-  public status: string;
-  public publication: Publication;
-  public estado: string;
-  public filesToUpload: Array<File>;
-  public showImage;
-  // evento de salida
-  @Output() enviar = new EventEmitter<string>();
 
   ngOnInit() {
 
@@ -88,7 +87,6 @@ export class SharePublicationComponent implements OnInit {
   fileChangeEvent(fileInput: any) {
     this.filesToUpload = (fileInput.target.files as Array<File>);
   }
-
   // ----------------------------------------------------------------------------------------------
   // EVENTO PARA ENVIAR A ACTUALIZAR LA PUBLICAION
   // ----------------------------------------------------------------------------------------------

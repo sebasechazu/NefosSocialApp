@@ -7,7 +7,11 @@
             <div class="col-lg-3 order-2 order-lg-1">
                 <aside class="widget-area">
                     <!-- Tarjeta Perfil del usuario -->
-                    <app-home-profile></app-home-profile>
+                    <app-home-profile 
+                    [stats]="stats"
+                    [identity] ="identity"
+                    [url] = "url"
+                    ></app-home-profile>
                 </aside>
             </div>
             <!-------------------------------------->

@@ -85,7 +85,7 @@ export class UserService {
         if (stats !== 'undefined') {
             this.stats = stats;
         } else {
-            this.stats = stats;
+            this.stats = null;
         }
         return this.stats;
     }
