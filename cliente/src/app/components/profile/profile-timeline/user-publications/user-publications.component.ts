@@ -1,5 +1,5 @@
 // ------------------------------------------------------------------------------------------------
-// COMPONENTE
+// COMPONENTE PUBLICACIONES DE USUARIO
 // ------------------------------------------------------------------------------------------------
 import { Component, OnInit, Input } from '@angular/core';
 // ------------------------------------------------------------------------------------------------
@@ -21,29 +21,12 @@ import { ProfileService } from '../../../../services/profile.service';
 // VARIABLE GLOBAL
 // ------------------------------------------------------------------------------------------------
 import { GLOBAL } from '../../../../services/global';
-
+// ------------------------------------------------------------------------------------------------
 @Component({
   selector: 'app-user-publications',
-  templateUrl: './user-publications.component.html',
-  styleUrls: ['./user-publications.component.css'],
-  providers: [UserService, PublicationService]
+  templateUrl: './user-publications.component.html'
 })
 export class UserPublicationsComponent implements OnInit {
-
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private userService: UserService,
-    private publicationService: PublicationService,
-    private profileService: ProfileService
-  ) {
-    this.identity = this.userService.getIdentity();
-    this.token = this.userService.getToken();
-    this.url = GLOBAL.url;
-    this.page = 1;
-
-  }
   public url: string;
   public identity;
   public token;
@@ -57,9 +40,24 @@ export class UserPublicationsComponent implements OnInit {
   public noMore = false;
   public user: User;
 
-  ngOnInit() {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private userService: UserService,
+    private publicationService: PublicationService,
+    private profileService: ProfileService
+  ) {
+    this.identity = this.userService.getIdentity();
+    this.token = this.userService.getToken();
+    this.url = GLOBAL.url;
+    this.page = 1;
     this.profileService.userSelect.subscribe(us => this.user = us);
 
+  }
+  ngOnChnage() {
+    this.getPublications(this.user._id, this.page);
+  }
+  ngOnInit() {
     this.getPublications(this.user._id, this.page);
   }
   actualizar() {
@@ -106,10 +104,7 @@ export class UserPublicationsComponent implements OnInit {
     if (this.page === this.pages) {
       this.noMore = true;
     }
-
     this.getPublications(this.user, this.page, true);
   }
-
-
 }
 
