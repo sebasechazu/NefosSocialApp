@@ -28,7 +28,7 @@ import { HomePublicationsComponent } from './components/home/home-publications/h
 import { HeaderComponent } from './components/header/header.component';
 // PROFILE
 import { ProfileComponent } from './components/profile/profile.component';
-import { FollowingComponent } from './components/profile/profile-contacts/following/following.component';
+import { ProfileFollowingComponent } from './components/profile/profile-contacts/profile-following/profile-following.component';
 import { UserPublicationsComponent } from './components/profile/profile-timeline/user-publications/user-publications.component';
 import { AboutAuthorComponent } from './components/profile/profile-timeline/about-author/about-author.component';
 import { ProfileTimelineComponent } from './components/profile/profile-timeline/profile-timeline.component';
@@ -64,7 +64,7 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
     ProfileContacsComponent,
     AboutAuthorComponent,
     RecommendedUsersComponent,
-    FollowingComponent,
+    ProfileFollowingComponent,
     UserCardComponent,
 
   ],

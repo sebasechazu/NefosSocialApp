@@ -43,10 +43,6 @@
 </div>
 <br>
 <div class="pagination justify-content-center">
-    <ul>
-        <li class="common-btn" *ngIf="page > 1"><a [routerLink]="['/perfil/{user_id/contactos}', prevPage]">anterior</a>
-        </li>
-        <li class="common-btn" *ngIf=" pages !=page"><a [routerLink]="['/perfil/user_id/contactos', nextPage]">
-                siguiente</a> </li>
-    </ul>
+    <button class="common-btn" (click)="anterior()">anterior</button>
+    <button class="common-btn" (click)="siguiente()">Siguiente</button>
 </div>

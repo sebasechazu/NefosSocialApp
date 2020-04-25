@@ -24,9 +24,8 @@ import { GLOBAL } from 'src/app/services/global';
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css'],
-  providers: [UserService, FollowService]
+  templateUrl: './profile.component.html'
+  
 })
 export class ProfileComponent implements OnInit {
 

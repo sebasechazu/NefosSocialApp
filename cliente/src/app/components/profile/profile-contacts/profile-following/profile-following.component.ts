@@ -23,11 +23,11 @@ import { ProfileService } from '../../../../services/profile.service';
 import { GLOBAL } from '../../../../services/global';
 
 @Component({
-  selector: 'app-following',
-  templateUrl: './following.component.html',
-  styleUrls: ['./following.component.css']
+  selector: 'app-profile-following',
+  templateUrl: './profile-following.component.html',
+
 })
-export class FollowingComponent implements OnInit {
+export class ProfileFollowingComponent implements OnInit {
 
   public url: string;
   public identity;
@@ -60,11 +60,8 @@ export class FollowingComponent implements OnInit {
     this.profileService.userSelect.subscribe(us => this.user = us);
   }
   ngOnInit() {
-    this.getFollows(this.user, this.page);
+    this.getFollows(this.user._id, this.page);
   }
-  // ----------------------------------------------------------------------------------------------
-  // ACTUALIZAR PAGINA
-  // ----------------------------------------------------------------------------------------------
   // ----------------------------------------------------------------------------------------------
   // OBTENER LISTA DE SEGUIDORES
   // ----------------------------------------------------------------------------------------------
@@ -79,7 +76,6 @@ export class FollowingComponent implements OnInit {
           this.following = response.follows;
           this.pages = response.pages;
           this.follows = response.users_following;
-          page > this.pages ? this.router.navigate(['/gente', 1]) : console.log(this.pages);
         }
       },
       error => {
@@ -96,15 +92,16 @@ export class FollowingComponent implements OnInit {
     this.page += 1;
     if (this.page === this.pages) {
       this.noMas = true;
+      console.log(this.page);
     }
-    this.getFollows(this.page, true);
+    this.getFollows(this.user, this.page);
   }
   anterior() {
     this.page -= 1;
     if (this.page === this.pages) {
       this.noMenos = true;
     }
-    this.getFollows(this.page, true);
+    this.getFollows(this.user, this.page);
   }
 
   // ----------------------------------------------------------------------------------------------
