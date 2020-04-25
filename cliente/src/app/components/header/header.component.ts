@@ -5,9 +5,7 @@ import { GLOBAL } from '../../services/global';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
-  providers: [UserService]
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit, DoCheck {
   public title: string;

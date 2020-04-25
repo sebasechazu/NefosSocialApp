@@ -32,7 +32,7 @@ export class FollowingComponent implements OnInit {
   public url: string;
   public identity;
   public token;
-  public page;
+  public page = 1;
   public nextPage;
   public prevPage;
   public status: string;
@@ -40,9 +40,12 @@ export class FollowingComponent implements OnInit {
   public pages;
   public user: User;
   public users: User[];
+  public noMas;
+  public noMenos;
   public follows;
   public following;
   public followUserOver;
+  public userPageId;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,36 +57,14 @@ export class FollowingComponent implements OnInit {
     this.identity = this.userService.getIdentity();
     this.token = this.userService.getToken();
     this.url = GLOBAL.url;
+    this.profileService.userSelect.subscribe(us => this.user = us);
   }
   ngOnInit() {
-    this.profileService.userSelect.subscribe(us => this.user = us);
-    this.actualPage();
+    this.getFollows(this.user, this.page);
   }
   // ----------------------------------------------------------------------------------------------
   // ACTUALIZAR PAGINA
   // ----------------------------------------------------------------------------------------------
-  actualPage() {
-    this.route.params.subscribe(params => {
-      const userId = params.id;
-      let page = + params.page;
-      this.page = page;
-      if (!params.page) {
-        page = 1;
-      }
-      if (!page) {
-        page = 1;
-      } else {
-        this.nextPage = page + 1;
-        this.prevPage = page - 1;
-        if (this.prevPage <= 0) {
-          this.prevPage = 1;
-        }
-      }
-      // devolver listado de usuarios
-
-      this.getFollows(this.user, page);
-    });
-  }
   // ----------------------------------------------------------------------------------------------
   // OBTENER LISTA DE SEGUIDORES
   // ----------------------------------------------------------------------------------------------
@@ -93,12 +74,11 @@ export class FollowingComponent implements OnInit {
         if (!response.follows) {
           this.status = 'error';
         } else {
-
+          console.log(response);
           this.total = response.total;
           this.following = response.follows;
           this.pages = response.pages;
           this.follows = response.users_following;
-
           page > this.pages ? this.router.navigate(['/gente', 1]) : console.log(this.pages);
         }
       },
@@ -112,15 +92,28 @@ export class FollowingComponent implements OnInit {
       }
     );
   }
+  siguiente() {
+    this.page += 1;
+    if (this.page === this.pages) {
+      this.noMas = true;
+    }
+    this.getFollows(this.page, true);
+  }
+  anterior() {
+    this.page -= 1;
+    if (this.page === this.pages) {
+      this.noMenos = true;
+    }
+    this.getFollows(this.page, true);
+  }
+
   // ----------------------------------------------------------------------------------------------
   // ACCION PARA EL BOTON DEJAR DE SEGUI
   // ----------------------------------------------------------------------------------------------
-  // tslint:disable-next-line: variable-name
-  mouseEnter(user_id) {
-    this.followUserOver = user_id;
+  mouseEnter(userId) {
+    this.followUserOver = userId;
   }
-  // tslint:disable-next-line: variable-name
-  mouseLeave(user_id) {
+  mouseLeave(userId) {
     this.followUserOver = 0;
   }
   // ----------------------------------------------------------------------------------------------
@@ -166,6 +159,5 @@ export class FollowingComponent implements OnInit {
           this.status = 'error';
         }
       });
-
   }
 }

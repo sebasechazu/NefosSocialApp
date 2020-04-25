@@ -5,7 +5,9 @@
         <div class="profile-thumb">
             <a href="#">
                 <figure class="profile-thumb-middle">
-                    <img src="{{url + 'get-image-user/'+ identity.image}}" alt="profile picture">
+                    <img src="{{url + 'get-image-user/'+ identity.image}}" alt="" *ngIf='identity.image'>
+                    <img src="../../../../assets/images/profile/usuario.png" alt="profile picture"
+                        *ngIf='!identity.image'>
                 </figure>
             </a>
         </div>

@@ -23,9 +23,7 @@ import { GLOBAL } from '../../services/global';
 
 @Component({
   selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css'],
-  providers: [UserService, FollowService]
+  templateUrl: './users.component.html'
 })
 export class UsersComponent implements OnInit {
 
@@ -163,6 +161,5 @@ export class UsersComponent implements OnInit {
           this.status = 'error';
         }
       });
-
   }
 }

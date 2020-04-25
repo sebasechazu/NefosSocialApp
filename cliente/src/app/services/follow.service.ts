@@ -41,13 +41,12 @@ export class FollowService {
         return this.http.delete(this.url + 'follow/' + id, { headers });
     }
     // --------------------------------------------------------------------------------------------
-    // LISTA DE SEGUIDORES
+    // LISTA DE SEGUIMIENTO
     // --------------------------------------------------------------------------------------------
     getFollowing(token, id = null, page): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', token);
-        // tslint:disable-next-line: prefer-const
-        let url = this.url + 'following';
+        const url = this.url + 'following';
         if (id != null) {
             let url = this.url + 'following/' + id + '/' + page;
         }

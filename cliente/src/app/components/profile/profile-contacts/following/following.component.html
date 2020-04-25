@@ -5,14 +5,15 @@
             <div class="profile-thumb">
                 <a href="#">
                     <figure class="profile-thumb-middle">
-                        <img src="{{url + 'get-image-user/' + follow.followed.image}}" alt="profile picture" *ngIf="follow.followed.image">
+                        <img src="{{url + 'get-image-user/' + follow.followed.image}}" alt="profile picture"
+                            *ngIf="follow.followed.image">
 
-                        <img src="../../../../../assets/images/profile/usuario.png" alt="profile picture" *ngIf="!follow.followed.image">
+                        <img src="../../../../../assets/images/profile/usuario.png" alt="profile picture"
+                            *ngIf="!follow.followed.image">
                     </figure>
                 </a>
             </div>
             <!-- profile picture end -->
-
             <div class="posted-author">
                 <h6 class="author"><a href="profile.html">{{follow.followed.name}}</a></h6>
                 <h6 class="author">{{follow.followed.surname}}</h6>
@@ -42,10 +43,10 @@
 </div>
 <br>
 <div class="pagination justify-content-center">
-    <ul >
-        <li class="common-btn" *ngIf="page > 1"><a  [routerLink]="['/perfil/{user_id/contactos}', prevPage]">anterior</a>
+    <ul>
+        <li class="common-btn" *ngIf="page > 1"><a [routerLink]="['/perfil/{user_id/contactos}', prevPage]">anterior</a>
         </li>
-        <li class="common-btn" *ngIf=" pages !=page"><a  [routerLink]="['/perfil/user_id/contactos', nextPage]">
+        <li class="common-btn" *ngIf=" pages !=page"><a [routerLink]="['/perfil/user_id/contactos', nextPage]">
                 siguiente</a> </li>
     </ul>
 </div>

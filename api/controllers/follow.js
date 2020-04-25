@@ -106,7 +106,6 @@ function getFollowedUser(req, res) {
 
             if (!follows) return res.status(404).send({ mesagge: 'no te sigue ningun usuario' });
 
-
             return res.status(200).send({
                 total: total,
                 pages: Math.ceil(total / itemsPerPage),

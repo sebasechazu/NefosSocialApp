@@ -40,7 +40,10 @@
                             <div class="profile-thumb-small">
                                 <a href="javascript:void(0)" class="profile-triger">
                                     <figure>
-                                        <img src="{{url + 'get-image-user/'+ identity.image}}" alt="profile picture">
+                                        <img src="{{url + 'get-image-user/'+ identity.image}}" alt=""
+                                            *ngIf='identity.image'>
+                                        <img src="../../../../assets/images/profile/usuario.png" alt="profile picture"
+                                            *ngIf='!identity.image'>
                                     </figure>
                                 </a>
                                 <div class="profile-dropdown">

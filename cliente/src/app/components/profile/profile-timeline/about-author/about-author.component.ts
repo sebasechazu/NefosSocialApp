@@ -1,3 +1,5 @@
+// ------------------------------------------------------------------------------------------------
+// componente
 import { Component, OnInit, Input } from '@angular/core';
 // ------------------------------------------------------------------------------------------------
 // MODELOS
@@ -10,8 +12,8 @@ import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-about-author',
-  templateUrl: './about-author.component.html',
-  styleUrls: ['./about-author.component.css']
+  templateUrl: './about-author.component.html'
+ 
 })
 export class AboutAuthorComponent implements OnInit {
 
