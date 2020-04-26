@@ -1,20 +1,17 @@
-<div class="row" *ngIf= "user">
+<div class="row" *ngIf="user">
     <div class="col-lg-3 order-2 order-lg-1">
         <aside class="widget-area profile-sidebar">
             <app-about-author></app-about-author>
         </aside>
     </div>
-
     <div class="col-lg-6 order-1 order-lg-2">
-
-        <app-share-publication *ngIf="user._id === identity._id" (enviar)="publications.actualizar()"></app-share-publication>
-
-        <app-user-publications #publications ></app-user-publications>
-        
+        <app-share-publication *ngIf="user._id === identity._id" (enviar)="publications.actualizar()">
+        </app-share-publication>
+        <app-user-publications #publications></app-user-publications>
     </div>
     <div class="col-lg-3 order-3">
         <aside class="widget-area">
-           <app-recommended-users ></app-recommended-users>
+            <app-recommended-users></app-recommended-users>
         </aside>
     </div>
 </div>
