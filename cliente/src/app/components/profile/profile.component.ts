@@ -29,7 +29,6 @@ export class ProfileComponent implements OnInit {
 
   public user: User;
   public identity;
-  public token;
   public status: string;
   public url: string;
   public stats;
@@ -46,15 +45,12 @@ export class ProfileComponent implements OnInit {
   ) {
     this.url = GLOBAL.url;
     this.identity = this.userService.getIdentity();
-    this.token = this.userService.getToken();
     this.profileService.userSelect.subscribe(us => this.user = us);
     this.profileService.statsSelect.subscribe(st => this.stats = st);
   }
 
   ngOnInit() {
-    this.identity = this.userService.getIdentity();
     this.loadPage();
-
   }
   // ----------------------------------------------------------------------------------------------
   // CARGAR PAGINA

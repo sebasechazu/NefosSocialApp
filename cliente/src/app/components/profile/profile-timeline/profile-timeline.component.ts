@@ -11,7 +11,7 @@ import { User } from '../../../models/user';
 // ------------------------------------------------------------------------------------------------
 import { ProfileService } from 'src/app/services/profile.service';
 import { UserService } from 'src/app/services/user.service';
-
+// ------------------------------------------------------------------------------------------------
 @Component({
   selector: 'app-profile-timeline',
   templateUrl: './profile-timeline.component.html'
@@ -25,11 +25,10 @@ export class ProfileTimelineComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private userService: UserService
-  ) { }
-
-  ngOnInit() {
+  ) {
     this.identity = this.userService.getIdentity();
     this.profileService.userSelect.subscribe(us => this.user = us);
   }
-
+  ngOnInit() {
+  }
 }

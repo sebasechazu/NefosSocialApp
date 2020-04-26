@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------------------------------------
 // COMPONENTE PUBLICACIONES DE USUARIO
 // ------------------------------------------------------------------------------------------------
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 // ------------------------------------------------------------------------------------------------
 // RUTEO
 // ------------------------------------------------------------------------------------------------
@@ -26,19 +26,21 @@ import { GLOBAL } from '../../../../services/global';
   selector: 'app-user-publications',
   templateUrl: './user-publications.component.html'
 })
-export class UserPublicationsComponent implements OnInit {
+export class UserPublicationsComponent implements OnInit, OnDestroy {
   public url: string;
   public identity;
   public token;
   public status;
-  public publication: Publication;
   public page;
   public total;
   public pages;
+  public id;
   public itemsPerPage;
+  public publication: Publication;
   public publications: Publication[];
   public noMore = false;
-  public user: User;
+
+  @Input() user: User;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,18 +53,19 @@ export class UserPublicationsComponent implements OnInit {
     this.token = this.userService.getToken();
     this.url = GLOBAL.url;
     this.page = 1;
-    this.profileService.userSelect.subscribe(us => this.user = us);
+  }
 
-  }
-  ngOnChnage() {
-    this.getPublications(this.user._id, this.page);
-  }
   ngOnInit() {
-    this.getPublications(this.user._id, this.page);
+    this.route.params.subscribe(params => {
+      this.id = params.id;
+    });
+    this.getPublications(this.id, this.page);
+    console.log(this.user.name);
   }
   actualizar() {
-    this.getPublications(this.user._id, this.page);
+    this.getPublications(this.id, this.page);
   }
+  
   // -----------------------------------------------------------------------------------------------
   // OBTENER PUBLICACIONES DESDE API
   // -----------------------------------------------------------------------------------------------
