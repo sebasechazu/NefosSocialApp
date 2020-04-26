@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------------------------------------
 // COMPONENTE PUBLICACIONES DE USUARIO
 // ------------------------------------------------------------------------------------------------
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 // ------------------------------------------------------------------------------------------------
 // RUTEO
 // ------------------------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ import { GLOBAL } from '../../../../services/global';
   selector: 'app-user-publications',
   templateUrl: './user-publications.component.html'
 })
-export class UserPublicationsComponent implements OnInit, OnDestroy {
+export class UserPublicationsComponent implements OnInit {
   public url: string;
   public identity;
   public token;
@@ -39,8 +39,6 @@ export class UserPublicationsComponent implements OnInit, OnDestroy {
   public publication: Publication;
   public publications: Publication[];
   public noMore = false;
-
-  @Input() user: User;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,12 +58,10 @@ export class UserPublicationsComponent implements OnInit, OnDestroy {
       this.id = params.id;
     });
     this.getPublications(this.id, this.page);
-    console.log(this.user.name);
   }
   actualizar() {
     this.getPublications(this.id, this.page);
   }
-  
   // -----------------------------------------------------------------------------------------------
   // OBTENER PUBLICACIONES DESDE API
   // -----------------------------------------------------------------------------------------------
@@ -107,7 +103,7 @@ export class UserPublicationsComponent implements OnInit, OnDestroy {
     if (this.page === this.pages) {
       this.noMore = true;
     }
-    this.getPublications(this.user, this.page, true);
+    this.getPublications(this.id, this.page, true);
   }
 }
 
