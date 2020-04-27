@@ -32,20 +32,17 @@ export class ProfileFollowingComponent implements OnInit {
   public url: string;
   public identity;
   public token;
-  public page = 1;
+  public page;
   public nextPage;
   public prevPage;
   public status: string;
   public total;
   public pages;
-  public user: User;
   public users: User[];
-  public noMas;
-  public noMenos;
   public follows;
   public following;
   public followUserOver;
-  public userPageId;
+  public user: User;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,11 +53,35 @@ export class ProfileFollowingComponent implements OnInit {
   ) {
     this.identity = this.userService.getIdentity();
     this.token = this.userService.getToken();
-    this.url = GLOBAL.url;
     this.profileService.userSelect.subscribe(us => this.user = us);
+    this.url = GLOBAL.url;
   }
   ngOnInit() {
-    this.getFollows(this.user._id, this.page);
+    this.actualPage();
+  }
+  // ----------------------------------------------------------------------------------------------
+  // ACTUALIZAR PAGINA
+  // ----------------------------------------------------------------------------------------------
+  actualPage() {
+
+    const userId = this.user._id;
+    const page = this.page;
+    /*this.page = page;
+    if (!params.page) {
+      page = 1;
+    }
+    if (!page) {
+      page = 1;
+    } else {
+      this.nextPage = page + 1;
+      this.prevPage = page - 1;
+      if (this.prevPage <= 0) {
+        this.prevPage = 1;
+      }
+    }*/
+    // devolver listado de usuarios
+    this.getFollows(userId, this.page);
+
   }
   // ----------------------------------------------------------------------------------------------
   // OBTENER LISTA DE SEGUIDORES
@@ -71,7 +92,6 @@ export class ProfileFollowingComponent implements OnInit {
         if (!response.follows) {
           this.status = 'error';
         } else {
-          console.log(response);
           this.total = response.total;
           this.following = response.follows;
           this.pages = response.pages;
@@ -81,36 +101,21 @@ export class ProfileFollowingComponent implements OnInit {
       error => {
         const errorMessage = error as any;
         console.log(errorMessage);
-
         if (errorMessage != null) {
           this.status = 'error';
         }
       }
     );
   }
-  siguiente() {
-    this.page += 1;
-    if (this.page === this.pages) {
-      this.noMas = true;
-      console.log(this.page);
-    }
-    this.getFollows(this.user, this.page);
-  }
-  anterior() {
-    this.page -= 1;
-    if (this.page === this.pages) {
-      this.noMenos = true;
-    }
-    this.getFollows(this.user, this.page);
-  }
-
   // ----------------------------------------------------------------------------------------------
   // ACCION PARA EL BOTON DEJAR DE SEGUI
   // ----------------------------------------------------------------------------------------------
-  mouseEnter(userId) {
-    this.followUserOver = userId;
+  // tslint:disable-next-line: variable-name
+  mouseEnter(user_id) {
+    this.followUserOver = user_id;
   }
-  mouseLeave(userId) {
+  // tslint:disable-next-line: variable-name
+  mouseLeave(user_id) {
     this.followUserOver = 0;
   }
   // ----------------------------------------------------------------------------------------------
@@ -156,5 +161,6 @@ export class ProfileFollowingComponent implements OnInit {
           this.status = 'error';
         }
       });
+
   }
 }

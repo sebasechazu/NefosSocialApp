@@ -7,7 +7,7 @@
     <div class="col-lg-6 order-1 order-lg-2">
         <app-share-publication *ngIf="user._id === identity._id" (enviar)="publications.actualizar()">
         </app-share-publication>
-        <app-user-publications  #publications></app-user-publications>
+        <app-user-publications [user]= "user" #publications></app-user-publications>
     </div>
     <div class="col-lg-3 order-3">
         <aside class="widget-area">

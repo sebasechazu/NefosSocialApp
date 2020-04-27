@@ -34,33 +34,29 @@ export class UserPublicationsComponent implements OnInit {
   public page;
   public total;
   public pages;
-  public id;
   public itemsPerPage;
   public publication: Publication;
   public publications: Publication[];
   public noMore = false;
+  @Input() user;
+
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private userService: UserService,
     private publicationService: PublicationService,
-    private profileService: ProfileService
   ) {
     this.identity = this.userService.getIdentity();
     this.token = this.userService.getToken();
     this.url = GLOBAL.url;
     this.page = 1;
-  }
 
+  }
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.id = params.id;
-    });
-    this.getPublications(this.id, this.page);
+    this.getPublications(this.user._id, this.page);
+    console.log(this.user.name);
   }
   actualizar() {
-    this.getPublications(this.id, this.page);
+    this.getPublications(this.user._id, this.page);
   }
   // -----------------------------------------------------------------------------------------------
   // OBTENER PUBLICACIONES DESDE API
@@ -103,7 +99,7 @@ export class UserPublicationsComponent implements OnInit {
     if (this.page === this.pages) {
       this.noMore = true;
     }
-    this.getPublications(this.id, this.page, true);
+    this.getPublications(this.user._id, this.page, true);
   }
 }
 

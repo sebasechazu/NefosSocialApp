@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------------------------------------
 // COMPONENTE PROFILE
 // ------------------------------------------------------------------------------------------------
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
 // ------------------------------------------------------------------------------------------------
 // SERVICIOS
 // ------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ import { GLOBAL } from 'src/app/services/global';
   templateUrl: './profile.component.html'
 
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
   public user: User;
   public identity;
@@ -33,6 +33,7 @@ export class ProfileComponent implements OnInit {
   public url: string;
   public stats;
   public followed;
+  public id;
   public following;
   public followUserOver;
 
@@ -48,6 +49,9 @@ export class ProfileComponent implements OnInit {
     this.profileService.userSelect.subscribe(us => this.user = us);
     this.profileService.statsSelect.subscribe(st => this.stats = st);
   }
+  ngOnDestroy(): void {
+    this.profileService.selectUser(null);
+  }
 
   ngOnInit() {
     this.loadPage();
@@ -57,9 +61,9 @@ export class ProfileComponent implements OnInit {
   // ----------------------------------------------------------------------------------------------
   loadPage() {
     this.route.params.subscribe(params => {
-      const id = params.id;
-      this.getUser(id);
-      this.getCounters(id);
+      this.id = params.id;
+      this.getUser(this.id);
+      this.getCounters(this.id);
     });
   }
   // ----------------------------------------------------------------------------------------------

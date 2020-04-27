@@ -43,13 +43,14 @@ export class FollowService {
     // --------------------------------------------------------------------------------------------
     // LISTA DE SEGUIMIENTO
     // --------------------------------------------------------------------------------------------
-    getFollowing(token, id = null, page): Observable<any> {
+    getFollowing(token, id, page = 1): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', token);
-        const url = this.url + 'following';
-        if (id != null) {
-            let url = this.url + 'following/' + id + '/' + page;
-        }
+
+        const url = this.url + 'following/' + id + '/' + page;
+
+
+        console.log(this.url + ' desde servicio');
         return this.http.get(url, { headers });
     }
 

@@ -13,7 +13,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 @Component({
   selector: 'app-about-author',
   templateUrl: './about-author.component.html'
- 
+
 })
 export class AboutAuthorComponent implements OnInit {
 

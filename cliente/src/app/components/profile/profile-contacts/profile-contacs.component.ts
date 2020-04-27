@@ -16,15 +16,14 @@ export class ProfileContacsComponent implements OnInit {
   public total;
 
   constructor(
-    private userService: UserService,
-    private followService: FollowService,
     private profileService: ProfileService
-  ) { 
+  ) {
     this.profileService.userSelect.subscribe(us => this.user = us);
     this.profileService.statsSelect.subscribe(st => this.stats = st);
     this.total = (this.stats.following + this.stats.followed);
   }
   ngOnInit() {
+    console.log(this.user.name);
   }
 
 }
