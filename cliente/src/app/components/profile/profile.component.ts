@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------------------------------------
 // COMPONENTE PROFILE
 // ------------------------------------------------------------------------------------------------
-import { Component, OnInit , OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 // ------------------------------------------------------------------------------------------------
 // SERVICIOS
 // ------------------------------------------------------------------------------------------------
@@ -49,10 +49,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.profileService.userSelect.subscribe(us => this.user = us);
     this.profileService.statsSelect.subscribe(st => this.stats = st);
   }
-  ngOnDestroy(): void {
-    this.profileService.selectUser(null);
-  }
-
+  // ----------------------------------------------------------------------------------------------
+  // INICIO DEL COMPONENTE
+  // ----------------------------------------------------------------------------------------------
   ngOnInit() {
     this.loadPage();
   }
@@ -110,5 +109,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
         console.log(errorMessage);
       }
     );
+  }
+  // ----------------------------------------------------------------------------------------------
+  // DESTRUCCION DEL COMPONENTE
+  // ----------------------------------------------------------------------------------------------
+  ngOnDestroy(): void {
+    this.profileService.selectUser(null);
   }
 }
