@@ -43,6 +43,7 @@ import { RecommendedUsersComponent } from './components/shared/recommended-users
 // -----------------------------------------------------------------------------------------------
 import { UserFollowingComponent } from './components/user-following/user-following.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { ProfileFollowedComponent } from './components/profile/profile-contacts/profile-followed/profile-followed.component';
 // -----------------------------------------------------------------------------------------------
 
 @NgModule({
@@ -66,6 +67,7 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
     RecommendedUsersComponent,
     ProfileFollowingComponent,
     UserCardComponent,
+    ProfileFollowedComponent,
 
   ],
   imports: [

@@ -8,6 +8,8 @@ import { UsersComponent } from './components/users/users.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ProfileTimelineComponent } from './components/profile/profile-timeline/profile-timeline.component';
 import { ProfileContacsComponent } from './components/profile/profile-contacts/profile-contacs.component';
+import { ProfileFollowingComponent } from './components/profile/profile-contacts/profile-following/profile-following.component';
+import { ProfileFollowedComponent } from './components/profile/profile-contacts/profile-followed/profile-followed.component';
 
 
 const routes: Routes = [
@@ -16,12 +18,21 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegisterComponent },
   { path: 'mis-datos', component: UserEditComponent },
-   { path: 'usuarios', component: UsersComponent },
+  { path: 'usuarios', component: UsersComponent },
   {
-    path: 'perfil/:id', component: ProfileComponent, children: [
+    path: 'perfil/:id', component: ProfileComponent,
+    children: [
       { path: '', component: ProfileTimelineComponent },
       { path: 'timeline', component: ProfileTimelineComponent },
-      { path: 'contactos', component: ProfileContacsComponent }]
+      {
+        path: 'contactos', component: ProfileContacsComponent,
+        children: [
+          { path: '', component: ProfileFollowingComponent },
+          { path: 'Siguiendo', component: ProfileFollowingComponent },
+          { path: 'Seguidores', component: ProfileFollowedComponent }
+        ]
+      }
+    ]
   },
   { path: 'gente/:page', component: UsersComponent },
   { path: '**', component: HomeComponent }

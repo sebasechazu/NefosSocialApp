@@ -26,6 +26,5 @@ export class HomeProfileComponent {
 
   constructor(
   ) {
-   console.log(this.url);
-  }
+   }
 }

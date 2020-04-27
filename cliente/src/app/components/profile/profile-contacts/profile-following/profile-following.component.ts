@@ -21,6 +21,7 @@ import { ProfileService } from '../../../../services/profile.service';
 // VARIABLE GLOBAL
 // ------------------------------------------------------------------------------------------------
 import { GLOBAL } from '../../../../services/global';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-profile-following',
@@ -55,33 +56,19 @@ export class ProfileFollowingComponent implements OnInit {
     this.token = this.userService.getToken();
     this.profileService.userSelect.subscribe(us => this.user = us);
     this.url = GLOBAL.url;
+    this.page = 1;
   }
   ngOnInit() {
-    this.actualPage();
+    this.actualPage(this.page);
   }
   // ----------------------------------------------------------------------------------------------
   // ACTUALIZAR PAGINA
   // ----------------------------------------------------------------------------------------------
-  actualPage() {
-
-    const userId = this.user._id;
-    const page = this.page;
-    /*this.page = page;
-    if (!params.page) {
-      page = 1;
-    }
-    if (!page) {
-      page = 1;
-    } else {
-      this.nextPage = page + 1;
-      this.prevPage = page - 1;
-      if (this.prevPage <= 0) {
-        this.prevPage = 1;
-      }
-    }*/
+  actualPage(page) {
+    this.nextPage = page + 1;
+    this.prevPage = page - 1;
     // devolver listado de usuarios
-    this.getFollows(userId, this.page);
-
+    this.getFollows(this.user._id, page);
   }
   // ----------------------------------------------------------------------------------------------
   // OBTENER LISTA DE SEGUIDORES
@@ -156,11 +143,24 @@ export class ProfileFollowingComponent implements OnInit {
       error => {
         const errorMessage = error as any;
         console.log(errorMessage);
-
         if (errorMessage != null) {
           this.status = 'error';
         }
       });
 
+  }
+  // ----------------------------------------------------------------------------------------------
+  // AVANZAR UNA PAGINA
+  // ----------------------------------------------------------------------------------------------
+  siguiente() {
+    this.page += 1;
+    this.actualPage(this.page);
+  }
+  // ----------------------------------------------------------------------------------------------
+  // RETROCEDER UNA PAGINA
+  // ----------------------------------------------------------------------------------------------
+  anterior() {
+    this.page -= 1;
+    this.actualPage(this.page);
   }
 }

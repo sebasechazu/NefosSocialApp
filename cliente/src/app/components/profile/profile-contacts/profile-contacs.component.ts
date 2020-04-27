@@ -23,7 +23,6 @@ export class ProfileContacsComponent implements OnInit {
     this.total = (this.stats.following + this.stats.followed);
   }
   ngOnInit() {
-    console.log(this.user.name);
   }
 
 }

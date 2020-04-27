@@ -43,6 +43,6 @@
 </div>
 <br>
 <div class="pagination justify-content-center">
-    <button class="common-btn" (click)="anterior()">anterior</button>
-    <button class="common-btn" (click)="siguiente()">Siguiente</button>
+    <button class="common-btn" (click)="anterior()" *ngIf="page > 1">anterior</button>
+    <button class="common-btn" (click)="siguiente()" *ngIf="pages != page">Siguiente</button>
 </div>

@@ -53,7 +53,6 @@ export class UserPublicationsComponent implements OnInit {
   }
   ngOnInit() {
     this.getPublications(this.user._id, this.page);
-    console.log(this.user.name);
   }
   actualizar() {
     this.getPublications(this.user._id, this.page);
