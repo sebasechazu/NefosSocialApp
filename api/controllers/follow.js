@@ -106,14 +106,16 @@ function getFollowedUser(req, res) {
 
             if (!follows) return res.status(404).send({ mesagge: 'no te sigue ningun usuario' });
 
-            return res.status(200).send({
-                total: total,
-                pages: Math.ceil(total / itemsPerPage),
-                follows
+            followUserIds(req.user.sub).then((value) => {
+                return res.status(200).send({
+                    total: total,
+                    pages: Math.ceil(total / itemsPerPage),
+                    follows,
+                    users_following: value.following,
+                    users_follow_me: value.followed,
+                });
             });
-
         });
-
 }
 //-------------------------------------------------------------------------------------------------
 //DEVOLVER USUARIOS QUE SIGO Y QUE ME SIGEN

@@ -21,7 +21,6 @@ import { ProfileService } from '../../../../services/profile.service';
 // VARIABLE GLOBAL
 // ------------------------------------------------------------------------------------------------
 import { GLOBAL } from '../../../../services/global';
-import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-profile-following',

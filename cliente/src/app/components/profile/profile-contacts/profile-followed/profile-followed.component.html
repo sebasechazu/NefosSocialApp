@@ -1,1 +1,48 @@
-<p>profile-followed works!</p>
+<div class="row mt--20 friends-list" *ngIf="followed">
+    <div class="col-lg-3 col-sm-6 " *ngFor="let follow of followed">
+        <div class="friend-list-view">
+            <!-- profile picture end -->
+            <div class="profile-thumb">
+                <a href="#">
+                    <figure class="profile-thumb-middle">
+                        <img src="{{url + 'get-image-user/' + follow.user.image}}" alt="profile picture"
+                            *ngIf="follow.followed.image">
+
+                        <img src="../../../../../assets/images/profile/usuario.png" alt="profile picture"
+                            *ngIf="!follow.followed.image">
+                    </figure>
+                </a>
+            </div>
+            <!-- profile picture end -->
+            <div class="posted-author">
+                <h6 class="author"><a href="profile.html">{{follow.followed.name}}</a></h6>
+                <h6 class="author">{{follow.followed.surname}}</h6>
+                <!--SEGUIR DEJAR DE SEGUIR-->
+                <div *ngIf="follow.followed._id != identity._id">
+                    <!--BOTON PARA SEGUIR-->
+                    <button class="add-frnd" *ngIf="follows.indexOf(follow.followed._id) < 0"
+                        (click)="followUser(follow.followed._id)">
+                        <span><i class="fas fa-plus-circle"></i></span> Seguir
+                    </button>
+                    <!--BOTON PARA DEJAR DE SEGUIR-->
+                    <button class="add-frnd" *ngIf="follows.indexOf(follow.followed._id) >= 0"
+                        (mouseenter)="mouseEnter(follow.followed._id)" (mouseleave)="mouseLeave(follow.followed._id)"
+                        (click)="unFollowUser(follow.followed._id)"
+                        [class.add-frnd]="follow.followed._id == followUserOver">
+                        <span *ngIf="user._id == followUserOver ; else following">
+                            <i class="fas fa-minus-circle"></i> Dejar de seguir
+                        </span>
+                        <ng-template #following>
+                            <span> <i class="add-frnd"></i></span> Siguiendo
+                        </ng-template>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="pagination justify-content-center">
+    <button class="common-btn" (click)="anterior()" *ngIf="page > 1">anterior</button>
+    <button class="common-btn" (click)="siguiente()" *ngIf="pages != page">Siguiente</button>
+</div>
