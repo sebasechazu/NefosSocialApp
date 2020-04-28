@@ -1,11 +1,11 @@
 // ------------------------------------------------------------------------------------------------
 // COMPONENTE FOLLOWED
 // ------------------------------------------------------------------------------------------------
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 // ------------------------------------------------------------------------------------------------
 // RUTEO
 // ------------------------------------------------------------------------------------------------
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 // ------------------------------------------------------------------------------------------------
 // MODELOS
 // ------------------------------------------------------------------------------------------------
@@ -44,8 +44,6 @@ export class ProfileFollowedComponent implements OnInit {
   public user: User;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private userService: UserService,
     private followService: FollowService,
     private profileService: ProfileService
@@ -57,6 +55,7 @@ export class ProfileFollowedComponent implements OnInit {
     this.page = 1;
   }
   ngOnInit() {
+
     this.actualPage(this.page);
   }
   // ----------------------------------------------------------------------------------------------
@@ -81,7 +80,9 @@ export class ProfileFollowedComponent implements OnInit {
           this.followed = response.follows;
           this.pages = response.pages;
           this.follows = response.users_following;
+          console.log(this.total);
           console.log(this.followed);
+          console.log(this.follows);
         }
       },
       error => {
@@ -109,7 +110,6 @@ export class ProfileFollowedComponent implements OnInit {
   // ----------------------------------------------------------------------------------------------
   followUser(followed) {
     const follow = new Follow('', this.identity._id, followed);
-
     this.followService.addFollow(this.token, follow).subscribe(
       response => {
         if (!response.follow) {

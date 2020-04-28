@@ -66,11 +66,8 @@ function getFollowingUsers(req, res) {
     //buscamos las listas de usuarios que estamos siguiendo y con populate cambiamos 
     Follow.find({ user: userId }).populate({ path: 'followed' })
         .paginate(page, itemsPerPage, (err, follows, total) => {
-
             if (err) return res.status(500).send({ mesagge: 'error en el servidor' });
-
             if (!follows) return res.status(404).send({ mesagge: 'no esta siguiendo a ningun usuario' });
-
             followUserIds(req.user.sub).then((value) => {
                 return res.status(200).send({
                     total: total,
@@ -101,11 +98,8 @@ function getFollowedUser(req, res) {
     //buscamos las listas de usuarios que estamos siguiendo y con populate cambiamos 
     Follow.find({ followed: userId }).populate('user')
         .paginate(page, itemsPerPage, (err, follows, total) => {
-
             if (err) return res.status(500).send({ mesagge: 'error en el servidor' });
-
             if (!follows) return res.status(404).send({ mesagge: 'no te sigue ningun usuario' });
-
             followUserIds(req.user.sub).then((value) => {
                 return res.status(200).send({
                     total: total,

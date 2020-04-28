@@ -6,29 +6,29 @@
                 <a href="#">
                     <figure class="profile-thumb-middle">
                         <img src="{{url + 'get-image-user/' + follow.user.image}}" alt="profile picture"
-                            *ngIf="follow.followed.image">
+                            *ngIf="follow.user.image">
 
                         <img src="../../../../../assets/images/profile/usuario.png" alt="profile picture"
-                            *ngIf="!follow.followed.image">
+                            *ngIf="!follow.user.image">
                     </figure>
                 </a>
             </div>
             <!-- profile picture end -->
             <div class="posted-author">
-                <h6 class="author"><a href="profile.html">{{follow.followed.name}}</a></h6>
-                <h6 class="author">{{follow.followed.surname}}</h6>
+                <h6 class="author"><a href="profile.html">{{follow.user.name}}</a></h6>
+                <h6 class="author">{{follow.user.surname}}</h6>
                 <!--SEGUIR DEJAR DE SEGUIR-->
-                <div *ngIf="follow.followed._id != identity._id">
+                <div *ngIf="follow.user._id != identity._id">
                     <!--BOTON PARA SEGUIR-->
-                    <button class="add-frnd" *ngIf="follows.indexOf(follow.followed._id) < 0"
-                        (click)="followUser(follow.followed._id)">
+                    <button class="add-frnd" *ngIf="follows.indexOf(follow.user._id) < 0"
+                        (click)="followUser(follow.user._id)">
                         <span><i class="fas fa-plus-circle"></i></span> Seguir
                     </button>
                     <!--BOTON PARA DEJAR DE SEGUIR-->
-                    <button class="add-frnd" *ngIf="follows.indexOf(follow.followed._id) >= 0"
-                        (mouseenter)="mouseEnter(follow.followed._id)" (mouseleave)="mouseLeave(follow.followed._id)"
-                        (click)="unFollowUser(follow.followed._id)"
-                        [class.add-frnd]="follow.followed._id == followUserOver">
+                    <button class="add-frnd" *ngIf="follows.indexOf(follow.user._id) >= 0"
+                        (mouseenter)="mouseEnter(follow.user._id)" (mouseleave)="mouseLeave(follow.user._id)"
+                        (click)="unFollowUser(follow.user._id)"
+                        [class.add-frnd]="follow.user._id == followUserOver">
                         <span *ngIf="user._id == followUserOver ; else following">
                             <i class="fas fa-minus-circle"></i> Dejar de seguir
                         </span>
