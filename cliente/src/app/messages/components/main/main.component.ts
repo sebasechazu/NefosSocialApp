@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -8,12 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class MainComponent implements OnInit {
   public title;
 
-  constructor() { 
-    this.title = 'menssaje privados'
+  constructor(
+
+    private route: ActivatedRoute,
+    private router: Router
+
+  ) {
+    this.title = 'mensaje privados';
   }
 
   ngOnInit() {
-    console.log('main componente cargado')
+    console.log('main componente cargado');
   }
 
 }

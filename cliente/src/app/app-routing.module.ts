@@ -35,7 +35,10 @@ const routes: Routes = [
     ]
   },
   { path: 'gente/:page', component: UsersComponent },
-  { path: '**', component: HomeComponent }
+  {
+    path: 'mensajes', loadChildren: () =>
+      import('./messages/messages.module').then(m => m.MessagesModule)
+  },
 
 ];
 

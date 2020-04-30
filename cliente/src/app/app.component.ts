@@ -1,4 +1,4 @@
-import { Component,DoCheck } from '@angular/core';
+import { Component, DoCheck } from '@angular/core';
 import { UserService } from './services/user.service';
 
 @Component({
@@ -7,18 +7,18 @@ import { UserService } from './services/user.service';
   styleUrls: ['./app.component.css'],
   providers: [UserService]
 })
-export class AppComponent implements DoCheck{
+export class AppComponent implements DoCheck {
   public title: string;
   public identity;
 
   constructor(
-    private _userService: UserService,
+    private userService: UserService,
 
   ) {
     this.title = 'NefosSocial';
   }
 
   ngDoCheck() {
-    this.identity = this._userService.getIdentity();
+    this.identity = this.userService.getIdentity();
   }
 }

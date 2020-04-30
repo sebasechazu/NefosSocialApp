@@ -8,7 +8,7 @@ export class SendedComponent implements OnInit {
   public title;
 
   constructor() {
-    this.title = 'Mensajes Recibidos';
+    this.title = 'Mensajes Enviados';
    }
 
   ngOnInit() {

@@ -6,6 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MomentModule } from 'angular2-moment';
 // -------------------------------------------------------------------------------------------------
+// MODULO CUSTOM
+// -------------------------------------------------------------------------------------------------
+import { MessagesModule } from './messages/messages.module';
+// -------------------------------------------------------------------------------------------------
 // SERVICIOS
 // -------------------------------------------------------------------------------------------------
 import { ProfileService } from './services/profile.service';
@@ -75,7 +79,8 @@ import { ProfileFollowedComponent } from './components/profile/profile-contacts/
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    MomentModule
+    MomentModule,
+    MessagesModule
   ],
   providers: [
     ProfileService,

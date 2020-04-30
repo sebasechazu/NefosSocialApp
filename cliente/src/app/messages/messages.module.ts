@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+// ------------------------------------------------------------------------------------------------
+// COMPONENTES
+// ------------------------------------------------------------------------------------------------
 import { MainComponent } from './components/main/main.component';
 import { AddComponent } from './components/add/add.component';
 import { ReceivedComponent } from './components/received/received.component';
 import { SendedComponent } from './components/sended/sended.component';
 
-
+import { MessagesRoutingModule } from './messages-routing.module';
 
 @NgModule({
   declarations:
@@ -19,7 +22,8 @@ import { SendedComponent } from './components/sended/sended.component';
   imports:
     [
       CommonModule,
-      FormsModule
+      FormsModule,
+      MessagesRoutingModule
     ],
   exports: [
     MainComponent,

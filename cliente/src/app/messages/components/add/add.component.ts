@@ -8,7 +8,7 @@ export class AddComponent implements OnInit {
   public title;
 
   constructor() {
-    this.title = 'Enviar Mensaje';
+    this.title = 'Enviar Mensajes';
   }
 
   ngOnInit() {
