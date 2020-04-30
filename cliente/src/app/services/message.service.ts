@@ -1,9 +1,12 @@
 // --------------------------------------------------------------------------------------------
-// IMPORTS
+// SERVICIO DE MENSAJES
 // --------------------------------------------------------------------------------------------
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+// --------------------------------------------------------------------------------------------
+// ROUTING
+// --------------------------------------------------------------------------------------------
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 // --------------------------------------------------------------------------------------------
 // VARIABLES GLOBALES
 // --------------------------------------------------------------------------------------------
@@ -11,63 +14,41 @@ import { GLOBAL } from './global';
 // --------------------------------------------------------------------------------------------
 // MODELO
 // --------------------------------------------------------------------------------------------
-import { Follow } from '../models/follow';
+import { Message } from '../models/message';
 
-@Injectable()
-export class FollowService {
+@Injectable({
+    providedIn: 'root'
+})
+export class MessageService {
+
     public url: string;
+
     constructor(private http: HttpClient) {
         this.url = GLOBAL.url;
     }
     // --------------------------------------------------------------------------------------------
-    // CREAR SEGUIMIENTO
+    // ENVIAR MENSAJES
     // --------------------------------------------------------------------------------------------
-    addFollow(token, follow): Observable<any> {
-
-        const params = JSON.stringify(follow);
+    addMessage(token, message): Observable<any> {
+        const params = JSON.stringify(message);
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', token);
-
-        return this.http.post(this.url + 'follow/', params, { headers });
+        return this.http.post(this.url + 'message', params, { headers });
     }
     // --------------------------------------------------------------------------------------------
-    // ELIMINAR UN SEGUIMIENTO
+    // MENSAJES RECIBIDOS
     // --------------------------------------------------------------------------------------------
-    deleteFollow(token, id): Observable<any> {
-
+    getMyMesagges(token, page = 1): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', token);
-
-        return this.http.delete(this.url + 'follow/' + id, { headers });
+        return this.http.post(this.url + 'my-messages/' + page, { headers });
     }
     // --------------------------------------------------------------------------------------------
-    // LISTA DE SEGUIMIENTO
+    // MENSAJES ENVIADOS
     // --------------------------------------------------------------------------------------------
-    getFollowing(token, id, page = 1): Observable<any> {
+    getEmmitMesagges(token, page = 1): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', token);
-
-        const url = this.url + 'following/' + id + '/' + page;
-        return this.http.get(url, { headers });
+        return this.http.post(this.url + 'messages/' + page, { headers });
     }
-    // --------------------------------------------------------------------------------------------
-    // LISTA DE SEGUIMIENTO
-    // --------------------------------------------------------------------------------------------
-    getFollowed(token, id, page = 1): Observable<any> {
-        const headers = new HttpHeaders().set('Content-Type', 'application/json')
-            .set('Authorization', token);
-
-        const url = this.url + 'followed/' + id + '/' + page;
-        return this.http.get(url, { headers });
-    }
-    // --------------------------------------------------------------------------------------------
-    // LISTA DE SEGUIDORES
-    // --------------------------------------------------------------------------------------------
-    getMyFollows(token): Observable<any> {
-        const headers = new HttpHeaders().set('Content-Type', 'application/json')
-            .set('Authorization', token);
-
-        return this.http.get(this.url + 'get-my-follows/true', { headers });
-    }
-
 }

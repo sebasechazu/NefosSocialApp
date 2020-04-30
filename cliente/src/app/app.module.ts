@@ -48,6 +48,7 @@ import { RecommendedUsersComponent } from './components/shared/recommended-users
 import { UserFollowingComponent } from './components/user-following/user-following.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { ProfileFollowedComponent } from './components/profile/profile-contacts/profile-followed/profile-followed.component';
+import { MessageService } from './services/message.service';
 // -----------------------------------------------------------------------------------------------
 
 @NgModule({
@@ -88,7 +89,8 @@ import { ProfileFollowedComponent } from './components/profile/profile-contacts/
     UserService,
     FollowService,
     PublicationService,
-    UploadService],
+    UploadService,
+    MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

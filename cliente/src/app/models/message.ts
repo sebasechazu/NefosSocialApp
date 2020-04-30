@@ -3,9 +3,9 @@ export class Message {
         public _id: string,
         public emitter: string,
         public receiver: string,
-        public text: String,
-        public viewed: String,
-        public created_at: String
+        public text: string,
+        public viewed: string,
+        public created_at: string
 
     ) { }
 }
