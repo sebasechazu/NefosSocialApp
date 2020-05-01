@@ -57,7 +57,7 @@ function getReceivedMessages(req, res) {
     var itemPerPages = 4;
 
     Message.find({ receiver: userId }).populate('emitter', 'name surname image nickname _id')
-        .paginate(page, itemPerPages, (err, messages, total) => {
+        .sort('-created_at').paginate(page, itemPerPages, (err, messages, total) => {
             if (err) return res.status(500).send({ message: 'error en la peticion' });
             if (!messages) return res.status(404).send({ message: 'no hay mensajes que mostrar' });
 
@@ -82,7 +82,7 @@ function getEmmitMessages(req, res) {
     var itemPerPages = 4;
 
     Message.find({ emitter: userId }).populate('emitter receiver', 'name surname image nickname _id')
-        .paginate(page, itemPerPages, (err, messages, total) => {
+        .sort('-created_at').paginate(page, itemPerPages, (err, messages, total) => {
             if (err) return res.status(500).send({ message: 'error en la peticion' });
             if (!messages) return res.status(404).send({ message: 'no hay mensajes que mostrar' });
 
@@ -112,13 +112,13 @@ function getUnviewedMessages(req, res) {
 function setViewedMessages(req, res) {
     var userId = req.user.sub;
 
-    Message.update({ receiver: userId, viewed: 'false' },{viewed:'true'},{'multi':true},(err, messagesUpdated) => {
+    Message.update({ receiver: userId, viewed: 'false' }, { viewed: 'true' }, { 'multi': true }, (err, messagesUpdated) => {
         if (err) return res.status(500).send({ message: 'error en la peticion' });
 
         if (!messagesUpdated) return res.status(404).send({ message: 'no hay mensajes para actualizar' });
 
         res.status(200).send({
-            messages:messagesUpdated
+            messages: messagesUpdated
         });
     });
 }

@@ -16,9 +16,7 @@ import { GLOBAL } from './global';
 // --------------------------------------------------------------------------------------------
 import { Message } from '../models/message';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class MessageService {
 
     public url: string;
@@ -41,7 +39,8 @@ export class MessageService {
     getMyMesagges(token, page = 1): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', token);
-        return this.http.post(this.url + 'my-messages/' + page, { headers });
+
+        return this.http.get(this.url + 'my-messages/' + page, { headers });
     }
     // --------------------------------------------------------------------------------------------
     // MENSAJES ENVIADOS
@@ -49,6 +48,7 @@ export class MessageService {
     getEmmitMesagges(token, page = 1): Observable<any> {
         const headers = new HttpHeaders().set('Content-Type', 'application/json')
             .set('Authorization', token);
-        return this.http.post(this.url + 'messages/' + page, { headers });
+
+        return this.http.get(this.url + 'messages/' + page, { headers });
     }
 }

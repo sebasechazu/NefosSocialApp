@@ -10,6 +10,7 @@ import { ReceivedComponent } from './components/received/received.component';
 import { SendedComponent } from './components/sended/sended.component';
 
 import { MessagesRoutingModule } from './messages-routing.module';
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
   declarations:
@@ -23,7 +24,8 @@ import { MessagesRoutingModule } from './messages-routing.module';
     [
       CommonModule,
       FormsModule,
-      MessagesRoutingModule
+      MessagesRoutingModule,
+      MomentModule
     ],
   exports: [
     MainComponent,

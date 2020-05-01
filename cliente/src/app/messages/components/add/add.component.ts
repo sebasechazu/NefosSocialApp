@@ -22,7 +22,6 @@ import { UserService } from '../../../services/user.service';
 // VARIABLE GLOBAL
 // ------------------------------------------------------------------------------------------------
 import { GLOBAL } from '../../../services/global';
-import { THIS_EXPR, IfStmt } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-add',
@@ -64,7 +63,6 @@ export class AddComponent implements OnInit {
           this.status = 'success';
           form.reset();
         }
-
       },
       error => {
         const errorMessage = error as any;
