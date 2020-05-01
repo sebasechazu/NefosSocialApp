@@ -18,6 +18,7 @@ import { FollowService } from './services/follow.service';
 import { PublicationService } from './services/publication.service';
 import { HomeService } from './services/home.service';
 import { UploadService } from './services/upload.service';
+import { UserGuard } from './services/user.guard';
 // -------------------------------------------------------------------------------------------------
 // COMPONENTES
 // -------------------------------------------------------------------------------------------------
@@ -90,7 +91,8 @@ import { MessageService } from './services/message.service';
     FollowService,
     PublicationService,
     UploadService,
-    MessageService],
+    MessageService,
+    UserGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
