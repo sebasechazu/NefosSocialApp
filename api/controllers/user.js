@@ -1,6 +1,6 @@
 'use strict'
 //-------------------------------------------------------------------------------------------------
-//IMPORTS
+//CONTROLADOR DE USUARIO
 //-------------------------------------------------------------------------------------------------
 var bcrypt = require('bcrypt-nodejs');//modulo de encriptaion
 var mongoosePaginate = require('mongoose-pagination');//paginacion en mongoose
@@ -21,7 +21,7 @@ function pruebas(req, res) {
     res.status(200).send({ message: "metodo de pruebas desde user.js en controller" });
 }
 //-------------------------------------------------------------------------------------------------
-//GUARDAR USUARIO - /register
+//REGISTRAR USUARIO - /register
 //-------------------------------------------------------------------------------------------------
 function saveUser(req, res) {
     //obtenemos los datos del usuario desde el body de la request
@@ -136,17 +136,19 @@ function getUser(req, res) {
 //FUNCION ASYNCRONA PARA OBTENER LOS RESULTADOS DE FOLLOWING DENTRO DE USER - /user/:id
 //-------------------------------------------------------------------------------------------------
 async function followThisUser(identity_user_id, user_id) {
-
+    // ingresamos a la funcion un id de usuario logueado
+    // listamos usuaris seguidos
     var following = await Follow.findOne({ "user": identity_user_id, "followed": user_id })
         .exec().then((follow) => {
             return follow;
         }).catch((err) => { return handleError(err) });
-
+    // listaos usuarios seguidos
     var followed = await Follow.findOne({ "user": user_id, "followed": identity_user_id })
         .exec().then((follow) => {
             return follow;
         }).catch((err) => { return handleError(err) });
     return {
+        // devolvemos seguidores y seguidos
         following: following,
         followed: followed
     }
@@ -172,7 +174,6 @@ function getUsers(req, res) {
         //obtenemos los usuarios registrados,el total de usuarios y la cantidad de paginas
         followUserIds(identity_users_id).then((value) => {
             return res.status(200).send({
-
                 //devuelve la cantidad de usuarios 
                 users,
                 users_following: value.following,
@@ -239,8 +240,8 @@ function updateUser(req, res) {
         users.forEach((user) => {
             if (user && user._id != userId) userIsset = true;
         });
+        //comprobamos si el usuario esta en uso
         if (userIsset) return res.status(404).send({ message: 'los datos ya estan en uso' });
-        
         //busca al usuario por id 
         User.findByIdAndUpdate(userId, update, { new: true, useFindAndModify: false }, (err, userUpdated) => {
             //comprueba si hay error en la peticion
@@ -250,9 +251,7 @@ function updateUser(req, res) {
             //actualiza los datos del usuario
             return res.status(200).send({ user: userUpdated });
         });
-
     });
-
 }
 //-------------------------------------------------------------------------------------------------
 //SUBIR ARCHIVOS DE IMAGENES/AVATAR DE USUARIO - /uploadImage
@@ -273,7 +272,7 @@ function uploadImage(req, res) {
         console.log(file_name);
         //cortamos la extension del archivo
         var ext_split = file_name.split('\.');
-        var file_ext = ext_split[1]; 
+        var file_ext = ext_split[1];
         console.log(file_ext);
         //permiso dl usuario para
         if (userId != req.user.sub) {
@@ -326,11 +325,12 @@ function removeFilesOfUploads(res, file_path, mensage) {
 //FUNCION LOCAL OBTENER CONTADORES
 //-------------------------------------------------------------------------------------------------
 function getCounters(req, res) {
-
+    //obtener usuario registrado
     var userId = req.user.sub;
     if (req.params.id) {
         userId = req.params.id;
     }
+    //obtener contadores
     getCountFollow(userId).then((value) => {
         return res.status(200).send(value);
     });

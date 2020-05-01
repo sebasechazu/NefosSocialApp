@@ -1,11 +1,11 @@
 'use strict'
 //-------------------------------------------------------------------------------------------------
-//IMPORTS
+//CONTROLADOR DE MENSAJES
 //-------------------------------------------------------------------------------------------------
 var moment = require('moment');
 var mongoosePaginate = require('mongoose-pagination');
 //-------------------------------------------------------------------------------------------------
-//MODELS
+//MODELOS
 //-------------------------------------------------------------------------------------------------
 var User = require('../models/User');
 var Follow = require('../models/Follow');
@@ -110,8 +110,9 @@ function getUnviewedMessages(req, res) {
 //MARCAR MENSAJES LEIDOS
 //-------------------------------------------------------------------------------------------------
 function setViewedMessages(req, res) {
+    // obtenenos el id de usuario
     var userId = req.user.sub;
-
+    //hacemos un update al mensaje donde marcamos al mensaje como leido
     Message.update({ receiver: userId, viewed: 'false' }, { viewed: 'true' }, { 'multi': true }, (err, messagesUpdated) => {
         if (err) return res.status(500).send({ message: 'error en la peticion' });
 
