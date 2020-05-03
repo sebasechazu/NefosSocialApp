@@ -2,26 +2,33 @@
 //-------------------------------------------------------------------------------------------------
 //CONTROLADOR DE USUARIO
 //-------------------------------------------------------------------------------------------------
-var bcrypt = require('bcrypt-nodejs');//modulo de encriptaion
-var mongoosePaginate = require('mongoose-pagination');//paginacion en mongoose
-var fs = require('fs');//trabajar con archivos
-var path = require('path');//trabajar con path de archivos
+// Modulo de encriptaion
+var bcrypt = require('bcrypt-nodejs');
+// Paginacion en mongoose
+var mongoosePaginate = require('mongoose-pagination');
+// Instanciamos fd para trabajar con archivos
+var fs = require('fs');
+// instanciamos path para trabajar con archivos
+var path = require('path');
 //-------------------------------------------------------------------------------------------------
-//MODELS AND VARS
+// MODELOS
 //-------------------------------------------------------------------------------------------------
-var User = require('../models/User');//modelo de usuario
-var Follow = require('../models/Follow');//modelo de follow
-var Publication = require('../models/Publication');//modelo de publicaciones
+var User = require('../models/User');
+var Follow = require('../models/Follow');
+var Publication = require('../models/Publication');
+//-------------------------------------------------------------------------------------------------
+// SERVICIOS
+//-------------------------------------------------------------------------------------------------
 var jwt = require('../services/jwt');//servicios 
 //-------------------------------------------------------------------------------------------------
-//METODO DE PRUEBA
+// METODO DE PRUEBA
 //-------------------------------------------------------------------------------------------------
 function pruebas(req, res) {
     console.log(req.body)
-    res.status(200).send({ message: "metodo de pruebas desde user.js en controller" });
+    res.status(200).send({ message: "metodo de pruebas desde user.js"});
 }
 //-------------------------------------------------------------------------------------------------
-//REGISTRAR USUARIO - /register
+// REGISTRAR USUARIO 
 //-------------------------------------------------------------------------------------------------
 function saveUser(req, res) {
     //obtenemos los datos del usuario desde el body de la request
@@ -30,18 +37,18 @@ function saveUser(req, res) {
     var user = new User();
     //comprobamos y recibimos como parametros el nombre,apellido,nick, imail y password
     if (params.name && params.surname && params.nickname && params.email && params.password) {
-        //guardamos en la variable user los datos de la request
+        // Guardamos en la variable user los datos de la request
         user.name = params.name;
         user.surname = params.surname;
         user.nickname = params.nickname;
         user.email = params.email;
         user.password = params.password;
-        //guardamos estos valores por defecto
+        // Guardamos el rol y la imagen con valores por defecto
         user.role = 'ROLE_USER';
         user.image = null;
-        //Verificamos si ya existe en la base de datos un usuario y un email
+        // Verificamos si ya existe en la base de datos un usuario y un email
         User.find({
-            $or: [
+            $or: [ 
                 { email: user.email.toLowerCase() },
                 { nickname: user.nickname.toLowerCase() }
             ]
@@ -68,12 +75,12 @@ function saveUser(req, res) {
             }
         });
     } else {
-        //si faltan campos en el formulario
+        // Enviamos una respuesta de si no estan todos los campos del formulario completos
         res.status(200).send({ mesagge: 'Envia todos los campos necesarios!!!' });
     }
 }
 //-------------------------------------------------------------------------------------------------
-//LOGIN DE USUARIO - /login
+// LOGIN DE USUARIO
 //-------------------------------------------------------------------------------------------------
 function loginUser(req, res) {
     //obtenemos de la request el imail y el password ingresado
@@ -110,7 +117,7 @@ function loginUser(req, res) {
     });
 }
 //-------------------------------------------------------------------------------------------------
-//DATOS DE UN USUARIO - /user/:id
+// DATOS DE UN USUARIO 
 //-------------------------------------------------------------------------------------------------
 function getUser(req, res) {
     //obtenemos del request los datos del usuario
@@ -127,13 +134,12 @@ function getUser(req, res) {
                 user,
                 following: value.following,
                 followed: value.followed
-
             });
         });
     });
 }
 //-------------------------------------------------------------------------------------------------
-//FUNCION ASYNCRONA PARA OBTENER LOS RESULTADOS DE FOLLOWING DENTRO DE USER - /user/:id
+//FUNCION ASYNCRONA PARA OBTENER LOS RESULTADOS DE FOLLOWING DENTRO DE USER 
 //-------------------------------------------------------------------------------------------------
 async function followThisUser(identity_user_id, user_id) {
     // ingresamos a la funcion un id de usuario logueado
@@ -155,23 +161,24 @@ async function followThisUser(identity_user_id, user_id) {
 }
 
 //-------------------------------------------------------------------------------------------------
-//LISTADO DE USUARIOS - /users/:page?
+// LISTADO DE USUARIOS PAGINADOS
 //-------------------------------------------------------------------------------------------------
 function getUsers(req, res) {
-    //pasamos a una variable el id del usuario que esta logeado
+    // Pasamos a una variable el id del usuario que esta logeado
     var identity_users_id = req.user.sub;
-    //inicializamos la pagina en uno
+    // Inicializamos la pagina en uno
     var page = 1;
+    // Si obtenemos por parametro un numero de pagina
     if (req.params.page) {
         page = req.params.page
     }
     var itemsPerPage = 4;
-    //listar todos los usuarios de la base de datos
+    // Lista todos los usuarios de la base de datos ordenandolos por id
     User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) => {
         if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
-        //si no existe usuarios
+        // Si no existe usuarios para listar
         if (!users) return res.status(404).send({ mesagge: 'no hay usuarios disponibles' });
-        //obtenemos los usuarios registrados,el total de usuarios y la cantidad de paginas
+        // Obtenemos los usuarios registrados,el total de usuarios y la cantidad de paginas
         followUserIds(identity_users_id).then((value) => {
             return res.status(200).send({
                 //devuelve la cantidad de usuarios 
@@ -185,14 +192,15 @@ function getUsers(req, res) {
         });
     });
 }
-//-------------------------------------------------------------------------------------------------
-//FUNCION ASYNCRONA PARA OBTENER LOS RESULTADOS DE FOLLOWING DENTRO DE USERs - /users/:id
-//-------------------------------------------------------------------------------------------------
+//-----------------------------------------------
+//FUNCION ASYNCRONA PARA OBTENER ESTADISTICAS 
+//-----------------------------------------------
 async function followUserIds(user_id) {
     try {
+        // Buscamos dentro de follows la lista de usuarios que seguimos
         var following = await Follow.find({ "user": user_id }).select({ '_id': 0, '__v': 0, 'user': 0 }).exec()
             .then((follows) => { return follows; }).catch((err) => { return handleError(err) });
-
+        // Buscamos dentro de follows la lista de usuarios que nos siguen
         var followed = await Follow.find({ "followed": user_id }).select({ '_id': 0, '__v': 0, 'followed': 0 }).exec()
             .then((follows) => { return follows; }).catch((err) => { return handleError(err) });
 
@@ -201,27 +209,28 @@ async function followUserIds(user_id) {
         following.forEach((follow) => {
             following_clean.push(follow.followed);
         });
-
         //Procesar followed Ids
         var followed_clean = [];
         followed.forEach((follow) => {
             followed_clean.push(follow.user);
         });
+        //devolvemos la lista de usuario que seguimos y que nos siguen
         return {
             following: following_clean,
             followed: followed_clean
         }
-
     } catch (e) {
         console.log(e);
     }
 }
 
 //-------------------------------------------------------------------------------------------------
-//EDITAR DATOS EL USUARIO - /update-user
+//EDITAR DATOS EL USUARIO 
 //-------------------------------------------------------------------------------------------------
 function updateUser(req, res) {
+    // Obtenemos el id del usuario logueado
     var userId = req.params.id;
+    // Obtenermos los datos que van a ser actualizados
     var update = req.body;
     // borrar la propiedad password
     delete update.password;
@@ -254,7 +263,7 @@ function updateUser(req, res) {
     });
 }
 //-------------------------------------------------------------------------------------------------
-//SUBIR ARCHIVOS DE IMAGENES/AVATAR DE USUARIO - /uploadImage
+//SUBIR ARCHIVOS DE IMAGENES/AVATAR DE USUARIO 
 //-------------------------------------------------------------------------------------------------
 function uploadImage(req, res) {
     //obtenenos el id del usuario
@@ -298,24 +307,26 @@ function uploadImage(req, res) {
     }
 }
 //-------------------------------------------------------------------------------------------------
-//DEVOLVER DE IMAGEN DE USUARIO - /get-Image-file/imageFile
+// DEVOLVER DE IMAGEN DE USUARIO 
 //-------------------------------------------------------------------------------------------------
 function getImageFile(req, res) {
+    // Obtenemos por parametro el nombre del la imagen
     var image_File = req.params.imageFile;
-
+    // creamos la variable completa donde se ubica la imagen
     var path_file = './uploads/users/' + image_File;
-
+    // utilizamos fs para buscar el archivo
     fs.exists(path_file, (exists) => {
         if (exists) {
+            // respondemos con la imagen
             res.sendFile(path.resolve(path_file));
         } else {
             res.status(200).send({ mesagge: 'no existe la imagen' });
         }
     });
 }
-//-------------------------------------------------------------------------------------------------
-//FUNCION LOCAL PARA ELIMINAR ARCHIVOS DEL CACHE
-//-------------------------------------------------------------------------------------------------
+//-----------------------------------------------
+// FUNCION LOCAL PARA ELIMINAR ARCHIVOS DEL CACHE
+//-----------------------------------------------
 function removeFilesOfUploads(res, file_path, mensage) {
     fs.unlink(file_path, (err) => {
         return res.status(200).send({ mesagge: mensage });
@@ -330,33 +341,37 @@ function getCounters(req, res) {
     if (req.params.id) {
         userId = req.params.id;
     }
-    //obtener contadores
+    // obtener contadores
     getCountFollow(userId).then((value) => {
         return res.status(200).send(value);
     });
 }
+//-----------------------------------------------
+// FUNCION ASYNCRONA PARA OBTENER LOS CONTADORES
+//-----------------------------------------------
 async function getCountFollow(user_id) {
+    // Buscamos en Follow la cantidad de seguidos
     var following = await Follow.countDocuments({ "user": user_id })
         .exec()
         .then((count) => {
             return count;
         })
         .catch((err) => { return handleError(err); });
-
+    // Buscamos en follow la cantidad de seguidores    
     var followed = await Follow.countDocuments({ "followed": user_id })
         .exec()
         .then((count) => {
             return count;
         })
         .catch((err) => { return handleError(err); });
-
+    // Buscamos en Publicatios la cantidad de publicaciones
     var publications = await Publication.countDocuments({ 'user': user_id })
         .exec()
         .then((count) => {
             return count;
         })
         .catch((err) => { return handleError(err); });
-
+    // Devolvemos los contadores
     return {
         following: following,
         followed: followed,
@@ -365,7 +380,7 @@ async function getCountFollow(user_id) {
 
 }
 //-------------------------------------------------------------------------------------------------
-// EXPORTS - A ROUTES
+// EXPORTS
 //-------------------------------------------------------------------------------------------------
 module.exports = {
     pruebas,
@@ -377,5 +392,4 @@ module.exports = {
     uploadImage,
     getImageFile,
     getCounters
-
 }
