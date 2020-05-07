@@ -2,23 +2,26 @@
 // ------------------------------------------------------------------------------------------------
 // MODELO DE MENSAJE
 // ------------------------------------------------------------------------------------------------
+// Importamos el modulo de mongose en una variable
 var mongoose = require('mongoose');
-// utlisamos schema de moongose
+// Utilizamos Schema de mongoose para crear un esquema
 var Schema = mongoose.Schema;
-//utilisamos ObjectId para relacionar con otra entidad
+// Creamos una variable utilizando objetid para establecer la realcion con otros modelos
 var ObjetId = Schema.Types.ObjectId;
-// el modelo utilisa una relacion con la entidad user
+// Creamos esquema de datos de mensaje
 var messageSchema = Schema({
     emitter: { 
-        type: ObjetId, 
+        type: ObjetId,
+        // Relacion con la entidad Usuario como usuario emisor
         ref: 'User' },
     receiver: { 
         type: ObjetId, 
+        // Relacion con la entidad Usuario como usuario Receptor
         ref: 'User' },
     text:String,
     viewed:String,
     created_at:String
-    
 });
-// exportamos el modelo
+// exportamos el modelo como 'Message'
 module.exports = mongoose.model('Message', messageSchema);
+// ------------------------------------------------------------------------------------------------

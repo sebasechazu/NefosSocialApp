@@ -2,19 +2,23 @@
 // ------------------------------------------------------------------------------------------------
 // MODELO DE FOLLOW
 // ------------------------------------------------------------------------------------------------
+// Importamos el modulo de mongose en una variable
 var mongoose = require('mongoose');
-// utlisamos schema de moongose
+// Utilizamos Schema de mongoose para crear un esquema
 var Schema = mongoose.Schema;
-//utilisamos ObjectId para relacionar con otra entidad
+// Creamos una variable utilizando objetid para establecer la realcion con otros modelos
 var ObjetId = Schema.Types.ObjectId;
-// el modelo utilisa una relacion con la entidad user
+// Creamos esquema de datos de publicacion
 var FollowSchema = Schema({
     user: { 
         type: ObjetId, 
+        // Relacion con la entidad Usuario como usuario seguido
         ref: 'User' },      
     followed: { 
         type: ObjetId, 
+        // Relacion con la entidad Usuario como usuario seguidor
         ref: 'User' }   
 });
-// exportamos el modelo
+// Exportamos el modelo como 'Follow'
 module.exports = mongoose.model('Follow', FollowSchema);
+// ------------------------------------------------------------------------------------------------
