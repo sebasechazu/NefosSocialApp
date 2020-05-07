@@ -10,7 +10,7 @@ var app = require('./app');
 var port = 3800;
 // iniciamos mongoose
 mongoose.Promise = global.Promise;
-//conexion a la base de datos alojada en mongoDb atlas
+// conexion a la base de datos alojada en mongoDb atlas
 mongoose.connect('mongodb+srv://NefosAppUser:dana2002@cluster0-rxn0l.mongodb.net/test?retryWrites=true&w=majority'
     , { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
