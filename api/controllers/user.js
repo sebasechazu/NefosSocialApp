@@ -47,7 +47,7 @@ function registerUser(req, res) {
                 { nickname: user.nickname.toLowerCase() }
             ]
         }).exec((err, users) => {
-            // si existe un error en peticion enviamos una respuetsa con el error 500
+            // si existe un error en peticion enviamos una respuesta con el error 500
             if (err) return res.status(500).send({ message: 'Error en la peticion de usuarios' });
             // si el usuario existe en la base de datos y no es mayor e igual que 0 informamos que existe
             if (users && users.length >= 1) {
@@ -66,7 +66,7 @@ function registerUser(req, res) {
                             // con un codigo de respuesta 200
                             res.status(200).send({ user: userStore });
                         } else {
-                            //sin embargo si no pudo alamcenar al usuario en la base de datos devuelve un 404
+                            //si no pudo alamcenar al usuario en la base de datos devuelve un 404
                             res.status(404).send({ mesagge: 'no se ha registrado el usuario' });
                         }
                     });
@@ -75,7 +75,7 @@ function registerUser(req, res) {
         });
         // Enviamos una respuesta de si no estan todos los campos del formulario completos
     } else {
-        res.status(200).send({ mesagge: 'Envia todos los campos necesarios!!!' });
+        res.status(200).send({ mesagge: 'Envia todos los campos necesarios' });
     }
 }
 //-------------------------------------------------------------------------------------------------
@@ -107,12 +107,14 @@ function loginUser(req, res) {
                         user.password = undefined;
                         return res.status(200).send({ user });
                     }
+                    // si la contraseña es incorrecta enviamos el codigo de respuesta 500 
                 } else {
-                    return res.status(500).send({ message: 'el usuario no se ha podido identificar' });
+                    return res.status(500).send({ message: 'la contraseña es incorrecta' });
                 }
-            })
+            });
+            // si el usuario no esta registrado en la base de datos enviamos un codigo de respuesta 404
         } else {
-            return res.status(404).send({ message: 'el usuario no se ha podido identificar!!!' });
+            return res.status(404).send({ message: 'el usuario no esciste en la base de datos' });
         }
     });
 }
@@ -124,12 +126,15 @@ function getUser(req, res) {
     var userId = req.params.id;
     //buscamos al usuario en la base de datos
     User.findById(userId, (err, user) => {
+        // si eciste un error en la peticion enviamos un codigo de respuesta 500
         if (err) return res.status(500).send({ message: 'error en la peticion' });
-        //si el usuario no existe
+        //si el usuario no existe enla base de datos
         if (!user) return res.status(404).send({ message: 'El Usuario no existe' });
-
+        // si el usuario existe en labase de datos ejecutamos una funcion asincrona
         followThisUser(req.user.sub, userId).then((value) => {
+            // bloqueamos en envio del password
             user.password = undefined;
+            // enviamos un codigo de respuesta 200 con los datos de usaurio mas la lista de seguimeinto
             return res.status(200).send({
                 user,
                 following: value.following,
@@ -138,17 +143,17 @@ function getUser(req, res) {
         });
     });
 }
-//-------------------------------------------------------------------------------------------------
-//FUNCION ASYNCRONA PARA OBTENER LOS RESULTADOS DE FOLLOWING DENTRO DE USER 
-//-------------------------------------------------------------------------------------------------
+// ----------------------------------------------
+// OBTENER LOS RESULTADOS DE FOLLOWING
+// ----------------------------------------------
 async function followThisUser(identity_user_id, user_id) {
-    // ingresamos a la funcion un id de usuario logueado
-    // listamos usuaris seguidos
+    // ingresamos a la funcion un id de usuario logueado utilizamos la entidad follow 
+    // listamos usuarios que seguimos por id
     var following = await Follow.findOne({ "user": identity_user_id, "followed": user_id })
         .exec().then((follow) => {
             return follow;
         }).catch((err) => { return handleError(err) });
-    // listaos usuarios seguidos
+    // listaos usuarios listamos los usuarios que nossiguen por id
     var followed = await Follow.findOne({ "user": user_id, "followed": identity_user_id })
         .exec().then((follow) => {
             return follow;
@@ -159,42 +164,46 @@ async function followThisUser(identity_user_id, user_id) {
         followed: followed
     }
 }
-
-//-------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
 // LISTADO DE USUARIOS PAGINADOS
-//-------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
 function getUsers(req, res) {
-    // Pasamos a una variable el id del usuario que esta logeado
+    // obtenemos de la solitud el id del usuario logueado
     var identity_users_id = req.user.sub;
-    // Inicializamos la pagina en uno
+    // declaramos una variabole pagina y la inicializamos en 1
     var page = 1;
-    // Si obtenemos por parametro un numero de pagina
+    // obtenemos por parametro de la solicitud un numero de pagina
     if (req.params.page) {
         page = req.params.page
     }
+    // inicicalizamos la variable item por pagina y la inicicalizamos en 4
     var itemsPerPage = 4;
-    // Lista todos los usuarios de la base de datos ordenandolos por id
+    // Buscamos en la base de datos  la lista de usuarios registrados que seran dividias 
+    // por pagina de acuerdo a lo que reciba como parametro como pagina y en la cantidad 
+    // de usarios por pagina
     User.find().sort('_id').paginate(page, itemsPerPage, (err, users, total) => {
+        // si existe un error en la peticionenviamos un codigo re respuesta 500 
         if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
-        // Si no existe usuarios para listar
+        // Si no existe usuarios para listar enviamos un codigo de respuesta 404
         if (!users) return res.status(404).send({ mesagge: 'no hay usuarios disponibles' });
-        // Obtenemos los usuarios registrados,el total de usuarios y la cantidad de paginas
+        // ejecutamos la funcion followUserId 
         followUserIds(identity_users_id).then((value) => {
+            //enviamos un codigo de respuesta 200
             return res.status(200).send({
-                //devuelve la cantidad de usuarios 
+                // cantidad de usuarios 
                 users,
                 users_following: value.following,
                 users_follow_me: value.followed,
                 total,
-                //devuelve la paginas
+                // la paginas
                 pages: Math.ceil(total / itemsPerPage)
             });
         });
     });
 }
-//-----------------------------------------------
-//FUNCION ASYNCRONA PARA OBTENER ESTADISTICAS 
-//-----------------------------------------------
+// ----------------------------------------------
+// FUNCION ASYNCRONA PARA OBTENER ESTADISTICAS 
+// ----------------------------------------------
 async function followUserIds(user_id) {
     try {
         // Buscamos dentro de follows la lista de usuarios que seguimos
@@ -203,18 +212,17 @@ async function followUserIds(user_id) {
         // Buscamos dentro de follows la lista de usuarios que nos siguen
         var followed = await Follow.find({ "followed": user_id }).select({ '_id': 0, '__v': 0, 'followed': 0 }).exec()
             .then((follows) => { return follows; }).catch((err) => { return handleError(err) });
-
-        //Procesar following Ids
+        // Procesar following Ids
         var following_clean = [];
         following.forEach((follow) => {
             following_clean.push(follow.followed);
         });
-        //Procesar followed Ids
+        // Procesar followed Ids
         var followed_clean = [];
         followed.forEach((follow) => {
             followed_clean.push(follow.user);
         });
-        //devolvemos la lista de usuario que seguimos y que nos siguen
+        // Devolvemos la lista de usuario que seguimos y que nos siguen
         return {
             following: following_clean,
             followed: followed_clean
@@ -223,29 +231,31 @@ async function followUserIds(user_id) {
         console.log(e);
     }
 }
-
-//-------------------------------------------------------------------------------------------------
-//EDITAR DATOS EL USUARIO 
-//-------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+// EDITAR DATOS EL USUARIO 
+// ------------------------------------------------------------------------------------------------
 function updateUser(req, res) {
     // Obtenemos el id del usuario logueado
     var userId = req.params.id;
     // Obtenermos los datos que van a ser actualizados
     var update = req.body;
-    // borrar la propiedad password
+    // Borrar la propiedad password
     delete update.password;
-    //corroborar si es el usuario registrado el que quiere actualizar datos
+    // corroborar si es el usuario logueado el que quiere actualizar datos 
     if (userId != req.user.sub) {
+        // si existe un error en la peticion enviamos un codigo de respuesta 500
         return res.status(500).send({ message: 'No tienes permisos para actualizar datos' });
     }
-    //corroborar si mail y contraseña se encuentran en la base de datos
+    // corroborar si mail y contraseña se encuentran en la base de datos
     User.find({
         $or: [
+            // para amyot comodidad pasamos pasamos a minusculas el email y el apodo
             { email: update.email.toLowerCase() },
             { nickname: update.nickname.toLowerCase() }
         ]
     }).exec((err, users) => {
         var userIsset = false;
+        //comprobamos si el email y el sobrenombre pertenencen a otro usario
         users.forEach((user) => {
             if (user && user._id != userId) userIsset = true;
         });
