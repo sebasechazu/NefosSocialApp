@@ -1,43 +1,37 @@
 'use strict'
-//-------------------------------------------------------------------------------------------------
-//CONTROLADOR DE USUARIO
-//-------------------------------------------------------------------------------------------------
-// Modulo de encriptaion
+// ------------------------------------------------------------------------------------------------
+// CONTROLADOR DE USUARIO
+// ------------------------------------------------------------------------------------------------
+// Importamos el modulo de encriptaion 
 var bcrypt = require('bcrypt-nodejs');
-// Paginacion en mongoose
+// Importamos el modulo de Paginacion en mongoose
 var mongoosePaginate = require('mongoose-pagination');
-// Instanciamos fd para trabajar con archivos
+// Importamos el modulo fs para trabajar con archivos
 var fs = require('fs');
-// instanciamos path para trabajar con archivos
+// importamos el modulo  path para trabajar con archivos
 var path = require('path');
-//-------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
 // MODELOS
-//-------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
 var User = require('../models/User');
 var Follow = require('../models/Follow');
 var Publication = require('../models/Publication');
 //-------------------------------------------------------------------------------------------------
 // SERVICIOS
 //-------------------------------------------------------------------------------------------------
+// importamos el servico de jwt para generar tokens
 var jwt = require('../services/jwt');//servicios 
-//-------------------------------------------------------------------------------------------------
-// METODO DE PRUEBA
-//-------------------------------------------------------------------------------------------------
-function pruebas(req, res) {
-    console.log(req.body)
-    res.status(200).send({ message: "metodo de pruebas desde user.js"});
-}
 //-------------------------------------------------------------------------------------------------
 // REGISTRAR USUARIO 
 //-------------------------------------------------------------------------------------------------
-function saveUser(req, res) {
-    //obtenemos los datos del usuario desde el body de la request
+function registerUser(req, res) {
+    // Obtenemos los datos del usuario desde el body por intermedio de la solicitud
     var params = req.body;
-    //creamos un usuario como variable
+    // Creamos un objeto de usuario como variable user
     var user = new User();
-    //comprobamos y recibimos como parametros el nombre,apellido,nick, imail y password
+    // si recibims los parametros obligatorios para registrar usuarop nombre, apellido, nick, email y password 
     if (params.name && params.surname && params.nickname && params.email && params.password) {
-        // Guardamos en la variable user los datos de la request
+        // Guardamos en la variable user los datos de la solicitud
         user.name = params.name;
         user.surname = params.surname;
         user.nickname = params.nickname;
@@ -48,34 +42,39 @@ function saveUser(req, res) {
         user.image = null;
         // Verificamos si ya existe en la base de datos un usuario y un email
         User.find({
-            $or: [ 
+            $or: [
                 { email: user.email.toLowerCase() },
                 { nickname: user.nickname.toLowerCase() }
             ]
         }).exec((err, users) => {
+            // si existe un error en peticion enviamos una respuetsa con el error 500
             if (err) return res.status(500).send({ message: 'Error en la peticion de usuarios' });
-            //si el usuario existe y no es mayor e igual que 0 informamos el valor
+            // si el usuario existe en la base de datos y no es mayor e igual que 0 informamos que existe
             if (users && users.length >= 1) {
                 return res.status(200).send({ mesagge: 'el usuario que intentas registrar ya existe' });
             } else {
-                //cifra y guarda los datos del usuario y del password
+                // si El usuario no existe, cifra y guarda los datos del usuario y del password
                 bcrypt.hash(params.password, null, null, (err, hash) => {
                     //el password se envia cifrada con bcrypt
                     user.password = hash;
+                    // guardamos el usuaro
                     user.save((err, userStore) => {
+                        // Si existe un error al guardar el usuario informamos con un error 500
                         if (err) return res.status(500).send({ mesagge: 'error al guardar el usuario' });
+                        // Si todo esta correcto el api nos responde los datos del usuario guardado
                         if (userStore) {
-                            //si todo esta correcto el api nos devulve los datos del usuario guardado
+                            // con un codigo de respuesta 200
                             res.status(200).send({ user: userStore });
                         } else {
+                            //sin embargo si no pudo alamcenar al usuario en la base de datos devuelve un 404
                             res.status(404).send({ mesagge: 'no se ha registrado el usuario' });
                         }
                     });
                 });
             }
         });
-    } else {
         // Enviamos una respuesta de si no estan todos los campos del formulario completos
+    } else {
         res.status(200).send({ mesagge: 'Envia todos los campos necesarios!!!' });
     }
 }
@@ -83,27 +82,28 @@ function saveUser(req, res) {
 // LOGIN DE USUARIO
 //-------------------------------------------------------------------------------------------------
 function loginUser(req, res) {
-    //obtenemos de la request el imail y el password ingresado
+    // Obtenemos de la solicitud el email y el password de un usuario registrado
     var params = req.body;
     var email = params.email;
     var password = params.password;
-    //busqueda de un solo registro si encuentra el mail en la base de datos
+    // Buscamos en la base de datos si encontramos el email
     User.findOne({ email: email }, (err, user) => {
+        // Si exite un error en esta peticion informamos con un codigo de respuesta 500
         if (err) return res.status(500).send({ message: 'error en la peticion' });
-        //si encontramos al usuario
+        // Si encontramos al usuario en la base de datos
         if (user) {
-            //comparamos al usuario en la base de datos
+            // Comparamos la contraseña  encriptada del usuario
             bcrypt.compare(password, user.password, (err, check) => {
-                //si es correcto
+                // Si es correcto
                 if (check) {
-                    //si obtenemos el token
+                    // si ademas solicitamos que nos envia el toquen de verificacion
                     if (params.gettoken) {
-                        //devolver token
+                        // Devolvemos un codigo de respuesta 200 y el token token
                         return res.status(200).send({
                             token: jwt.createToken(user)
                         });
                     } else {
-                        //devolcer datos del usuario
+                        // si no solicitamos el token devolvemos los datos del usuario
                         user.password = undefined;
                         return res.status(200).send({ user });
                     }
@@ -383,8 +383,7 @@ async function getCountFollow(user_id) {
 // EXPORTS
 //-------------------------------------------------------------------------------------------------
 module.exports = {
-    pruebas,
-    saveUser,
+    registerUser,
     loginUser,
     getUser,
     getUsers,
