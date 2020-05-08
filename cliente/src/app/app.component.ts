@@ -3,9 +3,7 @@ import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [UserService]
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements DoCheck {
   public title: string;
