@@ -259,7 +259,7 @@ function updateUser(req, res) {
         users.forEach((user) => {
             if (user && user._id != userId) userIsset = true;
         });
-        //comprobamos si el usuario esta en uso
+        //comprobamos si el usuario esta en uso ok
         if (userIsset) return res.status(404).send({ message: 'los datos ya estan en uso' });
         //busca al usuario por id 
         User.findByIdAndUpdate(userId, update, { new: true, useFindAndModify: false }, (err, userUpdated) => {
