@@ -6,7 +6,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col-lg-6">
                             <div class="timeline-logo-area d-flex align-items-center">
-                           
+
                                 <div class="timeline-tagline">
                                     <h6 class="tagline">Conectados por con la meteorologica</h6>
                                 </div>
@@ -46,10 +46,11 @@
                 <div class="container-fluid p-0">
                     <div class="row no-gutters">
                         <div class="col-lg-6 order-2 order-lg-1">
-                            <div class="timeline-bg-content bg-img" style="background-image: url(../../../../assets/images/signup/nubes.jpg);"
-                                    data-bg="assets/images/signup/nubes.jpg">
-                                    <h3 class="timeline-bg-title">Conectados por con la meteorologica</h3>
-                                </div>
+                            <div class="timeline-bg-content bg-img"
+                                style="background-image: url(../../../../assets/images/signup/nubes.jpg);"
+                                data-bg="assets/images/signup/nubes.jpg">
+                                <h3 class="timeline-bg-title">Conectados es mejor</h3>
+                            </div>
                         </div>
                         <div class="col-lg-6 order-1 order-lg-2 d-flex align-items-center justify-content-center">
                             <div class="signup-form-wrapper">
@@ -59,7 +60,12 @@
                                     <form class="signup-inner--form">
                                         <div class="row">
                                             <div class="col-12">
-                                                <input type="email" class="single-field" placeholder="Email">
+                                                <!--Nombre de usuario -->
+                                                <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name"
+                                                    class="single-field" required />
+                                                <span *ngIf="!name.valid && name.touched">
+                                                    el nombre es obligatorio !!!
+                                                </span>
                                             </div>
                                             <div class="col-md-6">
                                                 <input type="text" class="single-field" placeholder="First Name">

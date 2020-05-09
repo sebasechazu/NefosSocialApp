@@ -13,7 +13,7 @@
     <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="col-lg-10">
         <p>
             <label>nombre</label>
-            <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="form-control" required />
+            <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" class="single-field" required />
             <span *ngIf="!name.valid && name.touched">
                 el nombre es obligatorio !!!
             </span>
