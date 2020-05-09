@@ -48,7 +48,7 @@ function registerUser(req, res) {
             ]
         }).exec((err, users) => {
             // si existe un error en peticion enviamos una respuesta con el error 500
-            if (err) return res.status(500).send({ message: 'Error en la peticion de usuarios' });
+            if (err) return res.status(500).send({ message: 'Error en la peticion de actualizacion' });
             // si el usuario existe en la base de datos y no es mayor e igual que 0 informamos que existe
             if (users && users.length >= 1) {
                 return res.status(200).send({ mesagge: 'el usuario que intentas registrar ya existe' });
@@ -232,7 +232,7 @@ async function followUserIds(user_id) {
     }
 }
 // ------------------------------------------------------------------------------------------------
-// EDITAR DATOS EL USUARIO 
+// ACTUALIZAR USUARIO 
 // ------------------------------------------------------------------------------------------------
 function updateUser(req, res) {
     // Obtenemos el id del usuario logueado
@@ -262,19 +262,21 @@ function updateUser(req, res) {
         //comprobamos si el usuario esta en uso ok
         if (userIsset) return res.status(404).send({ message: 'los datos ya estan en uso' });
         //busca al usuario por id 
-        User.findByIdAndUpdate(userId, update, { new: true, useFindAndModify: false }, (err, userUpdated) => {
-            //comprueba si hay error en la peticion
-            if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
-            //comprueba si no hay usuario en la peticion
-            if (!userUpdated) return res.status(404).send({ message: 'No se ha podido actualizar el usuario' });
-            //actualiza los datos del usuario
-            return res.status(200).send({ user: userUpdated });
-        });
+        User.findByIdAndUpdate(userId, update, { new: true, useFindAndModify: false },
+            (err, userUpdated) => {
+                //comprueba si hay error en la peticion
+                if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
+                //comprueba si no hay usuario en la peticion
+                if (!userUpdated) return res.status(404)
+                    .send({ message: 'No se ha podido actualizar el usuario' });
+                //actualiza los datos del usuario
+                return res.status(200).send({ user: userUpdated });
+            });
     });
 }
-//-------------------------------------------------------------------------------------------------
-//SUBIR ARCHIVOS DE IMAGENES/AVATAR DE USUARIO 
-//-------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+// SUBIR ARCHIVOS DE IMAGENES/AVATAR DE USUARIO 
+// ------------------------------------------------------------------------------------------------
 function uploadImage(req, res) {
     //obtenenos el id del usuario
     var userId = req.params.id;
@@ -295,17 +297,21 @@ function uploadImage(req, res) {
         console.log(file_ext);
         //permiso dl usuario para
         if (userId != req.user.sub) {
-            return removeFilesOfUploads(res, file_path, 'No tienes permisos para actualizar datos');
+            return removeFilesOfUploads(res, file_path,
+                'No tienes permisos para actualizar datos');
         }
         //comprobar si el documento tiene una extension de archivo logueado
         if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jepg' || file_ext == 'gif') {
             // actualizar documento de usuario logueado
-            User.findByIdAndUpdate(userId, { image: file_name }, { new: true, useFindAndModify: false },
+            User.findByIdAndUpdate(userId, { image: file_name },
+                { new: true, useFindAndModify: false },
                 (err, userUpdated) => {
                     //comprueba si hay error en la peticion
-                    if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
+                    if (err) return res.status(500)
+                        .send({ message: 'Existe un error en la peticion' });
                     //comprueba si no hay usuario en la peticion
-                    if (!userUpdated) return res.status(404).send({ message: 'No se ha podido actualizar el usuario' });
+                    if (!userUpdated) return res.status(404)
+                        .send({ message: 'No se ha podido actualizar el usuario' });
                     //actualiza los datos del usuario
                     return res.status(200).send({ user: userUpdated });
                 });
