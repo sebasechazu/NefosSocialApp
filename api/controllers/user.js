@@ -275,96 +275,100 @@ function updateUser(req, res) {
     });
 }
 // ------------------------------------------------------------------------------------------------
-// SUBIR ARCHIVOS DE IMAGENES/AVATAR DE USUARIO 
+// SUBIR ARCHIVOS DE IMAGENES
 // ------------------------------------------------------------------------------------------------
 function uploadImage(req, res) {
-    //obtenenos el id del usuario
+    // obtenemos de la solicitud el id de usuario
     var userId = req.params.id;
-    //corroborar si es el usuario registrado el que quiere subir la imagen
+    // Obtenemos de la solicitud el archivo 
     if (req.files) {
-        //sacamos el path completo de la imagen que tratamos de subir
+        //individualizamos el path completo de la imagen que tratamos de subir
         var file_path = req.files.image.path;
-        console.log(file_path);
-        //cortamos el nombre del archivo que intentamos subir
+        // individualizamos del path el nombre del archivo que intentamos subir
         var file_split = file_path.split('\\');
-        console.log(file_split);
-        //cortamos el nombre completo del archivo
+        // individualizamos el nombre completo del archivo
         var file_name = file_split[2];
-        console.log(file_name);
-        //cortamos la extension del archivo
+        // individualizamos la extension del archivo
         var ext_split = file_name.split('\.');
         var file_ext = ext_split[1];
-        console.log(file_ext);
-        //permiso dl usuario para
+        // Verificamos si el usuario que intenta subir la imagen es el usuario logueado
         if (userId != req.user.sub) {
+            // si no es el usuario logueado ejecuta la funcion removeFilesOfUploads()
             return removeFilesOfUploads(res, file_path,
                 'No tienes permisos para actualizar datos');
         }
-        //comprobar si el documento tiene una extension de archivo logueado
+        // Comprueba si el documento tiene una extension de archivo logueado
         if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jepg' || file_ext == 'gif') {
-            // actualizar documento de usuario logueado
+            // actualiza documento de usuario logueado
             User.findByIdAndUpdate(userId, { image: file_name },
                 { new: true, useFindAndModify: false },
                 (err, userUpdated) => {
-                    //comprueba si hay error en la peticion
+                    // Si existe un error en la peticion envia un CR 500
                     if (err) return res.status(500)
                         .send({ message: 'Existe un error en la peticion' });
-                    //comprueba si no hay usuario en la peticion
+                    // si no se puede actualizar el usuario envia un CR 404
                     if (!userUpdated) return res.status(404)
                         .send({ message: 'No se ha podido actualizar el usuario' });
-                    //actualiza los datos del usuario
+                    // Si todo fue correcta envia un CR 200 y un json con los datos del usuario
                     return res.status(200).send({ user: userUpdated });
                 });
+            // si la extension no fue valida ejecuta la funcion removeFilesOfUploads();
         } else {
             return removeFilesOfUploads(res, file_path, 'extension no valida');
         }
+        // si no pudo obtener un archivo del requeriminto enviamos un CR 200
     } else {
-        return res.status(200).send({ mesagge: 'no se han subido archivos' });
+        return res.status(200).send({ mesagge: ' no se han subido archivos' });
     }
 }
-//-------------------------------------------------------------------------------------------------
-// DEVOLVER DE IMAGEN DE USUARIO 
-//-------------------------------------------------------------------------------------------------
+// ----------------------------------------------
+// FUNCION LOCAL PARA ELIMINAR ARCHIVOS DEL CACHE
+// ----------------------------------------------
+function removeFilesOfUploads(res, file_path, mensage) {
+    // analiza la solicitud y elimina los archivos que se intentan subir
+    fs.unlink(file_path, (err) => {
+        // si la eliminacion fue correcta envia un CR 200 y un json con un mensaje
+        return res.status(200).send({ mesagge: mensage });
+    });
+}
+// ------------------------------------------------------------------------------------------------
+// OBTENER IMAGEN DE USUARIO 
+// ------------------------------------------------------------------------------------------------
 function getImageFile(req, res) {
-    // Obtenemos por parametro el nombre del la imagen
+    // Obtiene de la solicitud el id de la imagen
     var image_File = req.params.imageFile;
-    // creamos la variable completa donde se ubica la imagen
+    // crea la variable del url completa donde se ubica la imagen
     var path_file = './uploads/users/' + image_File;
-    // utilizamos fs para buscar el archivo
+    // Utilizamos fs para buscar el archivo
     fs.exists(path_file, (exists) => {
+        // si la imagen existe en la url
         if (exists) {
-            // respondemos con la imagen
+            // envia la imagen como respuesta
             res.sendFile(path.resolve(path_file));
         } else {
+            // si no encuentra la imagen envia un CR 200
             res.status(200).send({ mesagge: 'no existe la imagen' });
         }
     });
 }
-//-----------------------------------------------
-// FUNCION LOCAL PARA ELIMINAR ARCHIVOS DEL CACHE
-//-----------------------------------------------
-function removeFilesOfUploads(res, file_path, mensage) {
-    fs.unlink(file_path, (err) => {
-        return res.status(200).send({ mesagge: mensage });
-    });
-}
-//-------------------------------------------------------------------------------------------------
-//FUNCION LOCAL OBTENER CONTADORES
-//-------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
+// OBTENER CONTADORES
+// ------------------------------------------------------------------------------------------------
 function getCounters(req, res) {
-    //obtener usuario registrado
+    // Puede obtener por parametro un id usario registrado en la aplicacion
     var userId = req.user.sub;
+    // Obtine el id del susario que inicio sesion a la aplicacion
     if (req.params.id) {
         userId = req.params.id;
     }
-    // obtener contadores
+    // Ejecuta la funcion getcoutFollow y envia un CR 200 con los valores recibidos de la misma 
     getCountFollow(userId).then((value) => {
         return res.status(200).send(value);
     });
 }
-//-----------------------------------------------
+// ----------------------------------------------
 // FUNCION ASYNCRONA PARA OBTENER LOS CONTADORES
-//-----------------------------------------------
+// ----------------------------------------------
 async function getCountFollow(user_id) {
     // Buscamos en Follow la cantidad de seguidos
     var following = await Follow.countDocuments({ "user": user_id })
@@ -387,7 +391,7 @@ async function getCountFollow(user_id) {
             return count;
         })
         .catch((err) => { return handleError(err); });
-    // Devolvemos los contadores
+    // Devolvemos los contadores 
     return {
         following: following,
         followed: followed,
@@ -395,9 +399,9 @@ async function getCountFollow(user_id) {
     }
 
 }
-//-------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
 // EXPORTS
-//-------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
 module.exports = {
     registerUser,
     loginUser,
