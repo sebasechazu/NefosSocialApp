@@ -133,7 +133,6 @@ function getMyFollows(req, res) {
 
         return res.status(200).send({ follows });
     });
-
 }
 //-------------------------------------------------------------------------------------------------
 //FUNCION ASYNCRONA PARA OBTENER LOS RESULTADOS DE FOLLOWING DENTRO DE USERs - /users/:id
@@ -166,7 +165,6 @@ async function followUserIds(user_id) {
         console.log(e);
     }
 }
-
 //------------------------------------------------------------------------------------------------
 //EXPORTS
 //------------------------------------------------------------------------------------------------
