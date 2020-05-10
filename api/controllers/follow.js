@@ -47,11 +47,11 @@ function deleteFollow(req, res) {
         // si existe un error en la solicitud envia un CR 500
         if (err) {
             return res.status(500).send({
-                mesagge: 'error al dejar de seguir'
+                mesagge: 'error al eliminar el seguimiento'
             });
         }
         // si la solicitud se proceso correctamente se envia un CR 200
-        return res.status(200).send({ message: 'el follow se ha eliminado' });
+        return res.status(200).send({ message: 'el seguimiento se ha eliminado correctamente' });
     });
 }
 // -------------------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ function getFollowingUsers(req, res) {
         .paginate(page, itemsPerPage, (err, follows, total) => {
             // si la solicitud no pudo ser procesada envia un CR 500
             if (err)
-                return res.status(500).send({ mesagge: 'error en el servidor' });
+                return res.status(500).send({ mesagge: 'la solicitud no pude ser procesada' });
             // si el array esta vacio envia un codigo de respuesta 404 
             if (!follows)
                 return res.status(404).send({ mesagge: 'no esta siguiendo a ningun usuario' });
@@ -102,8 +102,8 @@ function getFollowingUsers(req, res) {
 // LISTA DE SEGUIDORES
 // ------------------------------------------------------------------------------------------------
 function getFollowedUser(req, res) {
-    //obteemos de la solicitud el id de un usuario por parametro
-    var userId = req.user.sub;
+    //obtenemos de la solicitud el id de un usuario por parametro
+    var userId = req.user.suneb;
     // si no obtubo un id itilisa el id de usuario que inicio sesion en la aplicacion
     if (req.params.id) {
         userId = req.params.id;
@@ -139,7 +139,7 @@ function getFollowedUser(req, res) {
         });
 }
 // ------------------------------------------------------------------------------------------------
-// DEVOLVER SEGUIDORES Y SEGUIDOS
+// OBTENER SEGUIMIENTOS
 // ------------------------------------------------------------------------------------------------
 function getMyFollows(req, res) {
     // Obtenemos de la solicitud por parametro el id de un usuario
