@@ -4,7 +4,7 @@
 // ------------------------------------------------------------------------------------------------
 // importa el modulo path para manejar archivos
 var path = require('path');
-// importa el modulo fs para majnejar archivos
+// importa el modulo fs para manejar archivos
 var fs = require('fs');
 // importa momment para manejar fechas
 var moment = require('moment');
