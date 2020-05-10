@@ -1,12 +1,12 @@
 'use strict'
 // ------------------------------------------------------------------------------------------------
-// IMPORTS
+// CONTROLADOR DE PUBLICACIONES
 // ------------------------------------------------------------------------------------------------
-// importa el modulo path para manejar archivos
+// Importa el modulo path para manejar archivos
 var path = require('path');
-// importa el modulo fs para manejar archivos
+// Importa el modulo fs para manejar archivos
 var fs = require('fs');
-// importa momment para manejar fechas
+// Importa momment para manejar fechas
 var moment = require('moment');
 // ------------------------------------------------------------------------------------------------
 // MODELOS
