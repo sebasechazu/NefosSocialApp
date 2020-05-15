@@ -25,11 +25,11 @@ var jwt = require('../services/jwt');//servicios
 // REGISTRAR USUARIO 
 //-------------------------------------------------------------------------------------------------
 function registerUser(req, res) {
-    // Obtenemos los datos del usuario desde el body por intermedio de la solicitud
+    // Obtenemos los campos del formulario
     var params = req.body;
     // Creamos un objeto de usuario como variable user
     var user = new User();
-    // si recibims los parametros obligatorios para registrar usuarop nombre, apellido, nick, email y password 
+    // Comprueba si recibe los parametros los parametros obligatorios para registrar 
     if (params.name && params.surname && params.nickname && params.email && params.password) {
         // Guardamos en la variable user los datos de la solicitud
         user.name = params.name;
@@ -48,12 +48,12 @@ function registerUser(req, res) {
             ]
         }).exec((err, users) => {
             // si existe un error en peticion enviamos una respuesta con el error 500
-            if (err) return res.status(500).send({ message: 'Error en la peticion de actualizacion' });
-            // si el usuario existe en la base de datos y no es mayor e igual que 0 informamos que existe
+            if (err) return res.status(500).send({ message: 'Error en la peticion' });
+            // si el usuario existe y no es mayor e igual que 0 informamos que existe
             if (users && users.length >= 1) {
                 return res.status(200).send({ mesagge: 'el usuario que intentas registrar ya existe' });
             } else {
-                // si El usuario no existe, cifra y guarda los datos del usuario y del password
+                // Si El usuario no existe, cifra y guarda los datos del usuario y del password
                 bcrypt.hash(params.password, null, null, (err, hash) => {
                     //el password se envia cifrada con bcrypt
                     user.password = hash;
@@ -86,37 +86,44 @@ function loginUser(req, res) {
     var params = req.body;
     var email = params.email;
     var password = params.password;
-    // Buscamos en la base de datos si encontramos el email
-    User.findOne({ email: email }, (err, user) => {
-        // Si exite un error en esta peticion informamos con un codigo de respuesta 500
-        if (err) return res.status(500).send({ message: 'error en la peticion' });
-        // Si encontramos al usuario en la base de datos
-        if (user) {
-            // Comparamos la contraseña  encriptada del usuario
-            bcrypt.compare(password, user.password, (err, check) => {
-                // Si es correcto
-                if (check) {
-                    // si ademas solicitamos que nos envia el toquen de verificacion
-                    if (params.gettoken) {
-                        // Devolvemos un codigo de respuesta 200 y el token token
-                        return res.status(200).send({
-                            token: jwt.createToken(user)
-                        });
+    // si los campos no estan completos envia un CR 404
+    if (email && password) {
+        // Intentamos bucar en la coleccion User al usuario por mail email
+        User.findOne({ email: email }, (err, user) => {
+            // Si exite un error en esta peticion informamos con un CR 500
+            if (err)
+                return res.status(500).send({ message: 'error en la peticion' });
+            // Si encontramos al usuario en la base de datos
+            if (user) {
+                // Comparamos la contraseña  encriptada del usuario
+                bcrypt.compare(password, user.password, (err, check) => {
+                    // Si es correcto
+                    if (check) {
+                        // si ademas solicitamos que nos envia el toquen de verificacion
+                        if (params.gettoken) {
+                            // Devolvemos un codigo de respuesta 200 y el token token
+                            return res.status(200).send({
+                                token: jwt.createToken(user)
+                            });
+                        } else {
+                            // si no solicitamos el token devolvemos los datos del usuario
+                            user.password = undefined;
+                            return res.status(200).send({ user });
+                        }
+                        // si la contraseña es incorrecta enviamos el codigo de respuesta 500 
                     } else {
-                        // si no solicitamos el token devolvemos los datos del usuario
-                        user.password = undefined;
-                        return res.status(200).send({ user });
+                        return res.status(500).send({ message: 'la contraseña es incorrecta' });
                     }
-                    // si la contraseña es incorrecta enviamos el codigo de respuesta 500 
-                } else {
-                    return res.status(500).send({ message: 'la contraseña es incorrecta' });
-                }
-            });
-            // si el usuario no esta registrado en la base de datos enviamos un codigo de respuesta 404
-        } else {
-            return res.status(404).send({ message: 'el usuario no esciste en la base de datos' });
-        }
-    });
+                });
+                // si el usuario no esta registrado en la base de datos enviamos un codigo de respuesta 404
+            } else {
+                return res.status(404).send({ message: 'el email ingresado no se encuentra registado' });
+            }
+        });
+        // si el ususario no completo los campos 
+    } else {
+        return res.status(404).send({ message: 'debe completar todos los campos' })
+    }
 }
 //-------------------------------------------------------------------------------------------------
 // DATOS DE UN USUARIO 
@@ -126,10 +133,12 @@ function getUser(req, res) {
     var userId = req.params.id;
     //buscamos al usuario en la base de datos
     User.findById(userId, (err, user) => {
-        // si eciste un error en la peticion enviamos un codigo de respuesta 500
-        if (err) return res.status(500).send({ message: 'error en la peticion' });
+        // si existe un error en la peticion enviamos un codigo de respuesta 500
+        if (err)
+            return res.status(500).send({ message: 'error en la peticion' });
         //si el usuario no existe enla base de datos
-        if (!user) return res.status(404).send({ message: 'El Usuario no existe' });
+        if (!user)
+            return res.status(404).send({ message: 'El Usuario no existe' });
         // si el usuario existe en labase de datos ejecutamos una funcion asincrona
         followThisUser(req.user.sub, userId).then((value) => {
             // bloqueamos en envio del password

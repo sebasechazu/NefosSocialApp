@@ -10,11 +10,11 @@ var Follow = require('../models/Follow');
 // SEGUIR A UN USUARIO 
 // ------------------------------------------------------------------------------------------------
 function saveFollow(req, res) {
-    // Obtiene de la solitiud datos de un formulario
+    // Obtiene de la solicitud datos de un formulario con el id de usuario
     var params = req.body;
     // Declara una variable follow como un objeto de follow
     var follow = new Follow();
-    // almacena en la varible follow losdatos recibidos de la solitud 
+    // almacena en la varible follow los datos recibidos de la solitud 
     // usuario que inicio sesion en la apliccion
     follow.user = req.user.sub;
     // usuario que se desea seguir
@@ -26,8 +26,8 @@ function saveFollow(req, res) {
             return res.status(500).send({ mesagge: 'error al guardar el seguimiento' });
         // Si no existe un follow para guardar envia un CR 404  
         if (!followStored)
-            return res.status(404).send({ mesagge: 'el seguimiento no se a guardado' });
-        // Si la solicitud se proceso correctamente envia un CR 200y un json con el follow
+            return res.status(404).send({ mesagge: 'no se a encontrado seguimiento para guardar' });
+        // Si la solicitud se proceso correctamente envia un CR 200 y un json con el follow
         return res.status(200).send({ follow: followStored });
     });
 }
