@@ -133,7 +133,7 @@ function getUser(req, res) {
     var userId = req.params.id;
     //buscamos al usuario en la base de datos
     User.findById(userId, (err, user) => {
-        // si existe un error en la peticion enviamos un codigo de respuesta 500
+        // si existe un error en la peticion enviamos un CR 500
         if (err)
             return res.status(500).send({ message: 'error en la peticion' });
         //si el usuario no existe enla base de datos
