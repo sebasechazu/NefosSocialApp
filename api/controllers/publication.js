@@ -182,7 +182,7 @@ function deletePublication(req, res) {
 // SUBIR ARCHIVOS DE IMAGENES/AVATAR DE USUARIO 
 // ------------------------------------------------------------------------------------------------
 function uploadImage(req, res) {
-    //obtenenos de la solicutu id del usuario
+    //obtenenos de la solicutu id de Publicaciom
     var publicationId = req.params.id;
     //obtiene de la solitud el nombre del archivo
     if (req.files) {

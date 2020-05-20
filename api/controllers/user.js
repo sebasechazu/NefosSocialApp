@@ -244,7 +244,7 @@ async function followUserIds(user_id) {
 // ACTUALIZAR USUARIO 
 // ------------------------------------------------------------------------------------------------
 function updateUser(req, res) {
-    // Obtenemos el id del usuario logueado
+    // Obtenemos el id del usuario inicio sesion en la aplicacion
     var userId = req.params.id;
     // Obtenermos los datos que van a ser actualizados
     var update = req.body;
