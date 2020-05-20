@@ -258,7 +258,7 @@ function updateUser(req, res) {
     // corroborar si mail y contraseña se encuentran en la base de datos
     User.find({
         $or: [
-            // para amyot comodidad pasamos pasamos a minusculas el email y el apodo
+            // pasamos los datos ingresados a minusculas
             { email: update.email.toLowerCase() },
             { nickname: update.nickname.toLowerCase() }
         ]
@@ -269,15 +269,18 @@ function updateUser(req, res) {
             if (user && user._id != userId) userIsset = true;
         });
         //comprobamos si el usuario esta en uso ok
-        if (userIsset) return res.status(404).send({ message: 'los datos ya estan en uso' });
+        if (userIsset)
+            return res.status(404).send({ message: 'los datos ya estan en uso' });
         //busca al usuario por id 
         User.findByIdAndUpdate(userId, update, { new: true, useFindAndModify: false },
             (err, userUpdated) => {
                 //comprueba si hay error en la peticion
-                if (err) return res.status(500).send({ message: 'Existe un error en la peticion' });
+                if (err)
+                    return res.status(500).send({ message: 'Existe un error en la peticion' });
                 //comprueba si no hay usuario en la peticion
-                if (!userUpdated) return res.status(404)
-                    .send({ message: 'No se ha podido actualizar el usuario' });
+                if (!userUpdated)
+                    return res.status(404)
+                        .send({ message: 'No se ha podido actualizar el usuario' });
                 //actualiza los datos del usuario
                 return res.status(200).send({ user: userUpdated });
             });

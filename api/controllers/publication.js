@@ -94,7 +94,7 @@ function getPublications(req, res) {
 
 }
 // ------------------------------------------------------------------------------------------------
-// OBTENER PUBLICACIONES DE UN USUARIO 
+// OBTENER PUBLICACIONES DEL USUARIO 
 // ------------------------------------------------------------------------------------------------
 function getPublicationsUser(req, res) {
     // declara la variable pagina con el valor 1 por defecto
@@ -182,7 +182,11 @@ function deletePublication(req, res) {
 // SUBIR ARCHIVOS DE IMAGENES/AVATAR DE USUARIO 
 // ------------------------------------------------------------------------------------------------
 function uploadImage(req, res) {
+<<<<<<< HEAD
     //obtenenos de la solicutu id de Publicaciom
+=======
+    //obtenenos de la solicutu id de la publicacion
+>>>>>>> a0f02b4a63b10cfae8be86679450fdec802c0098
     var publicationId = req.params.id;
     //obtiene de la solitud el nombre del archivo
     if (req.files) {
@@ -197,7 +201,7 @@ function uploadImage(req, res) {
         var file_ext = ext_split[1];
         //comprobar si el archivo tiene una extension valida como archivo de imagen
         if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jepg' || file_ext == 'gif') {
-            // intenta buscar en la coleccion publications la publicacion por el id de usuario
+            // intenta buscar en la coleccion publications del usuario la publicacion por el id de la publicación
             Publication.find({ 'user': req.user.sub, '_id': publicationId })
                 .exec((err, publication) => {
                     // si encuentra la publicacion
@@ -235,7 +239,7 @@ function uploadImage(req, res) {
     }
 }
 // ------------------------------------------------------------------------------------------------
-// DEVOLVER DE IMAGEN DE PUBLICACION
+// DEVOLVER IMAGEN DE PUBLICACION
 // ------------------------------------------------------------------------------------------------
 function getImageFile(req, res) {
     // obtiene de la solicitus el nombre de la imagen
