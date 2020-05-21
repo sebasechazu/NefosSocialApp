@@ -113,7 +113,7 @@ function getPublicationsUser(req, res) {
     // intenta obtener de la base de datos la publicaciones del usuario paginadas
     Publication.find({ user: user }).sort('-created_at').populate('user')
         .paginate(page, itemsPerPage, (err, publications, total) => {
-            // si hubo un error en en la solicitud infoema un CR 500
+            // si hubo un error en en la solicitud informa un CR 500
             if (err)
                 return res.status(500).send({ mesagge: 'error al devolver publicaciones' });
             // si no hay publicaciones envia un CR 404
@@ -164,7 +164,7 @@ function deletePublication(req, res) {
             // si la solitud es erronea envia un CR 500
             if (err)
                 return res.status(500).send({ message: 'Error al borrar publicaciones' });
-            // si no ecunatra la publicacion para eliminar envia un CR 404
+            // si no ecuentra la publicacion para eliminar envia un CR 404
             if (!publicationRemoved)
                 return res.status(404).send({ message: 'No se ha borrado la publicacion ' });
             // si pudo eliminar la publicacion envia un CR 200
@@ -227,7 +227,7 @@ function uploadImage(req, res) {
                             + 'actualizar la publicacion');
                     }
                 });
-            // si la extension del del archivono es valida como archivo de imagen 
+            // si la extension del archivo no es valida como archivo de imagen 
             // ejecuta la funcion removeFilesOfUploads y el mensaje ---
         } else {
             return removeFilesOfUploads(res, file_path, 'extension no valida');
@@ -238,7 +238,7 @@ function uploadImage(req, res) {
 // DEVOLVER IMAGEN DE PUBLICACION
 // ------------------------------------------------------------------------------------------------
 function getImageFile(req, res) {
-    // obtiene de la solicitus el nombre de la imagen
+    // obtiene de la solicitud el nombre de la imagen
     var image_File = req.params.imageFile;
     // crea la variable con el url de la ubicacion de la imagen
     var path_file = './uploads/publications/' + image_File;
