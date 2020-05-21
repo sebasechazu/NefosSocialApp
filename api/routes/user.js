@@ -2,15 +2,15 @@
 // ------------------------------------------------------------------------------------------------
 // ROUTING DEL CONTROLADOR DE USUARIO
 // ------------------------------------------------------------------------------------------------
-// Creamos el servidor
+// Crea el servidor
 var express = require('express');
-// Instanciamos el controlador 
+// Instancia el controlador de Usuario 
 var UserController = require('../controllers/user');
-// Creacion de la variable para dirigir las rutas
+// Crea una variable para dirigir las rutas
 var api = express.Router();
-// imprtamos middleware de autenticacion
+// Importa  middleware de autenticacion
 var md_auth = require('../middlewares/authenticated');
-// importamos middleware de subida de imagenes
+// Importa Midleware para subida de images
 var multipart = require('connect-multiparty');
 // Ubicacion de la carpetas de upload
 var md_upload =  multipart({uploadDir: './uploads/users'});
