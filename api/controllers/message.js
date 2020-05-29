@@ -108,7 +108,7 @@ function getEmmitMessages(req, res) {
         });
 }
 // -------------------------------------------------------------------------------------------------
-// CONTAR MENSAJES NO RECIBIDOS
+// CONTAR MENSAJES NO LEIDOS
 // -------------------------------------------------------------------------------------------------
 function getUnviewedMessages(req, res) {
     // obtengo el id del usuario logeado
