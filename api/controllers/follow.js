@@ -35,7 +35,7 @@ function saveFollow(req, res) {
 // DEJAR DE SEGUIR A UN USUARIO
 // ------------------------------------------------------------------------------------------------
 function deleteFollow(req, res) {
-    // obtiene de la solicutd el id del usuario que inicio sesion en la aplicacion
+    // Obtiene de la solicitud el id del usuario que inicio sesion en la aplicacion
     var userId = req.user.sub;
     // obtiene por parametro el id del usuario que se desea dejar de seguir
     var followId = req.params.id;
