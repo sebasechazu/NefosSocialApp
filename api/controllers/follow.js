@@ -66,7 +66,7 @@ function getFollowingUsers(req, res) {
     }
     // crea la variable pagina y la inicializa en 1
     var page = 1;
-    //comprueba si ingresamos un numero de pagina como parametro
+    // comprueba si ingresamos un numero de pagina como parametro
     if (req.params.page) {
         page = req.params.page;
     }
