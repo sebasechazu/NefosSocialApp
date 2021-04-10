@@ -5,10 +5,12 @@ import { User } from '../models/user';
 @Injectable()
 export class ProfileService {
 
+    
     private user: User;
     private stats;
-
+    // @ts-ignore: this.prop is really assigned before being use
     private userService = new BehaviorSubject<User>(this.user);
+    // @ts-ignore: this.prop is really assigned before being use
     private statsService = new BehaviorSubject<any>(this.stats);
 
     public userSelect = this.userService.asObservable();
@@ -20,5 +22,6 @@ export class ProfileService {
     public selectStats(stats: any): void {
         this.statsService.next(stats);
     }
+    
 
 }

@@ -10,17 +10,22 @@ import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
+
 })
 export class HomeService {
-
+  
   private user: User;
   public stats;
   public identity;
   public token;
 
+  // @ts-ignore: this.prop is really assigned before being use
   private userService = new BehaviorSubject<User>(this.user);
+  // @ts-ignore: this.prop is really assigned before being use
   private statsService = new BehaviorSubject<any>(this.stats);
+  // @ts-ignore: this.prop is really assigned before being use
   private identityService = new BehaviorSubject<any>(this.identity);
+  // @ts-ignore: this.prop is really assigned before being use
   private tokenService = new BehaviorSubject<any>(this.token);
 
   public userSelect = this.userService.asObservable();
@@ -39,5 +44,8 @@ export class HomeService {
   }
   public selectToken(token: any): void {
     this.tokenService.next(token);
+    
   }
+
+  
 }
