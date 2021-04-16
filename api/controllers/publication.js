@@ -97,20 +97,20 @@ function getPublications(req, res) {
 // OBTENER PUBLICACIONES DEL USUARIO 
 // ------------------------------------------------------------------------------------------------
 function getPublicationsUser(req, res) {
-    // declara la variable pagina con el valor 1 por defecto
+    // Declara la variable pagina con el valor 1 por defecto
     var page = 1;
-    // obtiene de la solicitud el numero de pagina como parametro   
+    // Obtiene de la solicitud el numero de pagina como parametro   
     if (req.params.page) {
         page = req.params.page;
     }
-    //obtener id del usuario que inicio sesion de la solicitud
+    // Obtener id del usuario que inicio sesion de la solicitud
     var user = req.user.sub;
     if (req.params.user) {
         user = req.params.user;
     }
-    //declara la variable items por pagina y le asigna el valor 4 por defecto 
+    // Declara la variable items por pagina y le asigna el valor 4 por defecto 
     var itemsPerPage = 4;
-    // intenta obtener de la base de datos la publicaciones del usuario paginadas
+    // Intenta obtener de la base de datos la publicaciones del usuario paginadas
     Publication.find({ user: user }).sort('-created_at').populate('user')
         .paginate(page, itemsPerPage, (err, publications, total) => {
             // si hubo un error en en la solicitud informa un CR 500

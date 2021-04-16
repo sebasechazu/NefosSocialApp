@@ -58,7 +58,7 @@ function deleteFollow(req, res) {
 // LISTA DE SEGUIDOS 
 // -------------------------------------------------------------------------------------------------
 function getFollowingUsers(req, res) {
-    //obtenemos de la solicitud como parametro el id de un usuario 
+    // Obtenemos de la solicitud como parametro el id de un usuario 
     var userId = req.user.sub;
     // si no recibe un id de usuario utiliza el id del usuario que inicio sesion en la aplicacion.
     if (req.params.id) {
