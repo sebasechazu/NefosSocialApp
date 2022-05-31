@@ -13,9 +13,8 @@
 
 **Sebastián Echazú** 
 
-* [Facebook](https://www.facebook.com/sebastian.echazu.1)
-* [Instagram](https://www.instagram.com/seba_storm)
-* [Twitter](https://twitter.com/seba_storm)
+* [Instagram](https://www.instagram.com/seba.echazu)
+* [Twitter](https://twitter.com/seba_echazu)
 * [Github](https://github.com/SebastianEchazu)
 
 ## 📄 Licencia 
