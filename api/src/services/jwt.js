@@ -1,30 +1,55 @@
-'use strict'
-// ------------------------------------------------------------------------------------------------
-// SERVICIO PARA CREACION DE TOKENS
-// ------------------------------------------------------------------------------------------------
-// Importamos el modulo jwt-simple
-var jwt = require('jwt-simple');
-// importamos el modulo de moment para administrar fechas
-var moment = require('moment');
-// Creamos una variable para usar como clave secreta
-var secret = 'clave_secreta_NefosSocialApp';
-// Exportamos una fucnion que crea tokens
-exports.createToken = function (user) {
-    // creamos que datos van a ser tokenizados
-    var payload = {
+'use strict';
+
+import jwt from 'jwt-simple';
+import moment from 'moment';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const secret = process.env.JWT_SECRET;
+
+export const createToken = (user) => {
+    const payload = {
         sub: user._id,
         name: user.name,
         surname: user.surname,
-        nickname: user.nickname,
         email: user.email,
         role: user.role,
-        image: user.image,
-        // parsemamos la fecha 
-        iat: moment().unix(),
-        // informamos la cantidad de dias de expiracion del token
         exp: moment().add(30, 'days').unix()
     };
-    // devolvemos la variable pay load con los datos encriptados
+
+    console.log('---------------------------------------');
+    console.log('Token creado con éxito');
+    console.log('User:', payload.name , " - mail:", payload.email);
+    console.log('Fecha actual:', moment().format());
+    console.log('---------------------------------------');
+
     return jwt.encode(payload, secret);
 };
-// ------------------------------------------------------------------------------------------------
+
+export const authenticateUser = async (req, res, next) => {
+    try {
+        
+        if (!req.headers.authorization) {
+
+            const error = new Error('La petición no tiene la cabecera de autenticación');
+            error.status = 401;
+            throw error;
+        }
+
+        const token = req.headers.authorization.replace(/Bearer /, '').trim();
+
+        const payload = jwt.decode(token, secret);
+
+        if (payload.exp <= moment().unix()) {
+            return res.status(401).send({ message: 'El token ha expirado' });
+        }
+
+        req.user = payload;
+        next();
+
+    } catch (error) {
+        
+        return res.status(404).send({ message: 'El token no es válido' });
+    }
+};
