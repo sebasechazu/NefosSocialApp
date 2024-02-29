@@ -3,26 +3,35 @@
 import path from 'path';
 import fs from 'fs';
 import moment from 'moment';
+import mongodb from 'mongodb';
 
 import Publication from '../models/publication.model.js';
 import Follow from '../models/follow.model.js';
 
-export function savePublication(req, res) {
+const { ObjectId } = mongodb;
 
-    var params = req.body;
+
+export const savePublication = async(req, res) => {
+
+    try {
+
+    const params = req.body;
 
     if (!params.text)
 
         return res.status(200).send({ mesagge: 'la publicacion debe tener texto' });
 
-    var publication = new Publication();
+    const publication = new Publication(
+        params.text,
+        null,
+        req.user.sub,
+        moment().unix(),
+    );
 
-    publication.text = params.text;
-    publication.file = 'null';
-    publication.user = req.user.sub;
-    publication.created_at = moment().unix();
+    const existingUser = await getDatabase().collection('publications').findOne({_id: new ObjectId(userId)  });
 
-    publication.save((err, publicationStored) => {
+
+     publication.save((err, publicationStored) => {
 
         if (err)
             return res.status(500).send({ mesagge: 'error al guardar publicacion' });
@@ -32,6 +41,10 @@ export function savePublication(req, res) {
 
         return res.status(200).send({ publication: publicationStored });
     })
+    } catch (error) {
+
+        return res.status(500).send({ mesagge: 'error al guardar publicacion' });
+    }
 }
 
 export function getPublications(req, res) {

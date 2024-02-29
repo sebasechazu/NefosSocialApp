@@ -26,6 +26,7 @@ export async function connectDatabase() {
     await client.connect();
     console.log('Conexión exitosa a la base de datos');
     app.locals.db = client.db(dbName);
+    console.log('Base de datos conectada:', dbName);
   } catch (error) {
     console.error('Error al conectar con la base de datos:', error);
     throw error; 
