@@ -5,7 +5,7 @@
 // Importa expres para crear el servidor
 var express = require('express');
 // Importa el controlador de follow
-var FollowController = require('..//controllers/follow');
+var FollowController = require('../../controllers/follow');
 // Crea la variable api para 
 var api = express.Router();
 // importa el middleware de autenticacion

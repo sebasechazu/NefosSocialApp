@@ -5,11 +5,11 @@
 // Importa expres para crear las rutas
 var express = require('express');
 // Importa el controlador de publicaciones
-var PublicationController = require('../controllers/publication');
+var PublicationController = require('../../controllers/publication');
 // Crea la variable api para administrar las rutas con express
 var api = express.Router();
 // Importa el middleware de autentificacion 
-var md_auth = require('..//middlewares/authenticated');
+var md_auth = require('../middlewares/authenticated');
 // Importa multiparty para el manejo de archivos
 var multipart = require('connect-multiparty');
 // Crea la variable donde informa la ubicacion de la carpetas de archivos

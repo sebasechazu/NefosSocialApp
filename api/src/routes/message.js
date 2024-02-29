@@ -5,11 +5,11 @@
 // Creamos el servidor
 var express = require('express');
 // importamos El controlador de mensajes
-var MessageController = require('../controllers/message');
+var MessageController = require('../../controllers/message');
 // Creamos la variable de roint de exppres
 var api = express.Router();
 // importamos el middleware de autenticacion 
-var md_auth = require('..//middlewares/authenticated');
+var md_auth = require('../middlewares/authenticated');
 // -------------------------------------------------------------------------------------------------
 // RUTAS PARA EXPORTAR
 // -------------------------------------------------------s------------------------------------------
